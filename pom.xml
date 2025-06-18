@@ -8,26 +8,21 @@
 		<version>3.5.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.backend</groupId>
-	<artifactId>nutricheck</artifactId>
+	<groupId>com.nutricheck</groupId>
+	<artifactId>backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>nutricheck</name>
+	<name>nutricheck-backend</name>
 	<description>Backend for NutriCheck App</description>
 	<url/>
 	<licenses>
-		<license/>
+		<license>
+			<name>MIT License</name>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
+		</license>
 	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
 	<properties>
 		<java.version>24</java.version>
+		<spring-boot.version>3.5.0</spring-boot.version>
 	</properties>
 	<dependencies>
 		<dependency>
