@@ -1,6 +1,6 @@
-package com.nutricheck.backend.controller;
+package com.nutricheck.backend.layer.controller;
 
-import com.nutricheck.backend.service.RecipeService;
+import com.nutricheck.backend.layer.service.RecipeService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

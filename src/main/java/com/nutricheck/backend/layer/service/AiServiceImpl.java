@@ -1,4 +1,4 @@
-package com.nutricheck.backend.service;
+package com.nutricheck.backend.layer.service;
 
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
-package com.nutricheck.backend.model.repository;
+package com.nutricheck.backend.layer.model.repository;
 
-import com.nutricheck.backend.model.entity.FoodProduct;
+import com.nutricheck.backend.layer.model.entity.FoodProduct;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
-package com.nutricheck.backend.service;
+package com.nutricheck.backend.layer.service;
 
-import com.nutricheck.backend.model.repository.RecipeRepository;
+import com.nutricheck.backend.layer.model.repository.RecipeRepository;
 import org.springframework.stereotype.Service;
 
 @Service

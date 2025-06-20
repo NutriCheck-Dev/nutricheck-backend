@@ -1,4 +1,4 @@
-package com.nutricheck.backend.model.entity;
+package com.nutricheck.backend.layer.model.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,12 +14,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Report {
+public class RecipeContent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Long recipeId;
-    private String description;
-
+    private Long foodId;
+    private double quantity;
 }

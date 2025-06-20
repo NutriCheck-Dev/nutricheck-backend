@@ -1,9 +1,6 @@
-package com.nutricheck.backend.model.entity;
+package com.nutricheck.backend.layer.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,13 +11,19 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FoodProduct {
+public class Recipe {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    private String instructions;
+
     private double calories;
     private double carbohydrates;
     private double protein;
     private double fat;
+
+    private int ratingCount;
+    private double averageRating;
 }
