@@ -11,7 +11,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class IngredientID implements Serializable {
 
-    private String foodId;
+    private String recipeId;
     private String foodProductId;
 
 }

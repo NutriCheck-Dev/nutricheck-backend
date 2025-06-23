@@ -1,6 +1,7 @@
 package com.nutricheck.backend.layer.controller;
 
-import com.nutricheck.backend.dto.RecipeDTO;
+import com.nutricheck.backend.dto.RecipeRequestDTO;
+import com.nutricheck.backend.dto.RecipeResponseDTO;
 import com.nutricheck.backend.dto.ReportDTO;
 import com.nutricheck.backend.layer.service.RecipeService;
 import org.springframework.http.ResponseEntity;
@@ -16,24 +17,27 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
+    // FIXME: Why return anything?
     @PostMapping("/upload")
-    public ResponseEntity<RecipeDTO> uploadRecipe(@RequestBody RecipeDTO recipeDTO) {
+    public ResponseEntity<RecipeResponseDTO> uploadRecipe(@RequestBody RecipeRequestDTO recipeRequestDTO) {
 
         return null;
     }
 
+    // FIXME: why return anything?
     @PostMapping("/report")
     public ResponseEntity<ReportDTO> reportRecipe(@RequestBody ReportDTO reportDTO) {
         return null;
     }
 
+    // FIXME: why return anything?
     @PostMapping("/rate/{recipeId}/{rating}")
-    public ResponseEntity<RecipeDTO> rateRecipe(@PathVariable Long recipeId, @PathVariable int rating) {
+    public ResponseEntity<RecipeResponseDTO> rateRecipe(@PathVariable String recipeId, @PathVariable int rating) {
         return null;
     }
 
     @GetMapping("/download/{recipeId}")
-    public ResponseEntity<RecipeDTO> downloadRecipe(@PathVariable Long recipeId) {
+    public ResponseEntity<RecipeResponseDTO> downloadRecipe(@PathVariable String recipeId) {
         return null;
     }
 }

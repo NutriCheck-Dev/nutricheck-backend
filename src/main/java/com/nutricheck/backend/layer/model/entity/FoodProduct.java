@@ -18,6 +18,7 @@ public class FoodProduct {
     @Id
     private String id;
     private String name;
+
     private double calories;
     private double carbohydrates;
     private double protein;

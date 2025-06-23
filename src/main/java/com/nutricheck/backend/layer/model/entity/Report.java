@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Getter
@@ -16,10 +17,12 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Report {
 
+    // TODO: Replace deprecated method with different approach for UUID generation
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
-    private Long recipeId;
+    private String recipeId;
     private String description;
 
 }

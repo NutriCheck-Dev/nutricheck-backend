@@ -15,8 +15,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RecipeDTO {
-    private String id;
+public class RecipeRequestDTO {
     @NotBlank(message = "Name of a recipe cannot be blank")
     private String name;
     private String instructions;
@@ -30,11 +29,6 @@ public class RecipeDTO {
     private double protein;
     @PositiveOrZero(message = "Fat of a recipe must be a non-negative number")
     private double fat;
-    @PositiveOrZero(message = "Rating count of a recipe must be a non-negative number")
-    private int ratingCount;
-    @PositiveOrZero(message = "Average rating of a recipe must be a non-negative number")
-    private double averageRating;
-    // FIXME: Is this a correct approach?
     @Size(min = 2, message = "A recipe must contain at least two ingredients")
     private Set<IngredientDTO> ingredients;
 }
