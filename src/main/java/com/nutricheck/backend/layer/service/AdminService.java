@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface AdminService {
     List<ReportDTO> getAllReports();
-    void deleteReport(Long id);
-    void deleteAllReports();
+    ReportDTO deleteReport(Long id);
+    List<ReportDTO> deleteAllReports();
 }

@@ -26,12 +26,12 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void deleteReport(Long id) {
-        return;
+    public ReportDTO deleteReport(Long id) {
+        return null;
     }
 
     @Override
-    public void deleteAllReports() {
-        return;
+    public List<ReportDTO> deleteAllReports() {
+        return null;
     }
 }

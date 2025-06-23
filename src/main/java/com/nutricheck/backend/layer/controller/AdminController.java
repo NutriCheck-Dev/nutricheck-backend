@@ -23,12 +23,12 @@ public class AdminController {
     }
 
     @DeleteMapping("/reports/delete/{id}")
-    public void deleteReport(@PathVariable Long id) {
-        return;
+    public ResponseEntity<ReportDTO> deleteReport(@PathVariable Long id) {
+        return null;
     }
 
     @DeleteMapping("/reports/delete/all")
-    public void deleteAllReports() {
-        return;
+    public ResponseEntity<List<ReportDTO>> deleteAllReports() {
+        return null;
     }
 }
