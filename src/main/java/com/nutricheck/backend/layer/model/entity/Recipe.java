@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -15,9 +18,10 @@ public class Recipe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String id;
     private String name;
     private String instructions;
+    private int servings;
 
     private double calories;
     private double carbohydrates;
@@ -26,4 +30,18 @@ public class Recipe {
 
     private int ratingCount;
     private double averageRating;
+
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<Ingredient> ingredients = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        // TODO: Implement a proper equals method for duplicate checking
+        return false;
+    }
+    @Override
+    public int hashCode() {
+        // TODO: Implement proper hash
+        return 0;
+    }
 }

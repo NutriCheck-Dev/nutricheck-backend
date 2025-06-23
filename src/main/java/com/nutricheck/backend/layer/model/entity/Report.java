@@ -18,7 +18,7 @@ public class Report {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String id;
     private Long recipeId;
     private String description;
 

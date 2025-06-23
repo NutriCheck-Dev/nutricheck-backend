@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("nutricheck/user/recipe/")
+@RequestMapping("nutricheck/user/recipe")
 public class RecipeController {
 
     private final RecipeService recipeService;
@@ -18,6 +18,7 @@ public class RecipeController {
 
     @PostMapping("/upload")
     public ResponseEntity<RecipeDTO> uploadRecipe(@RequestBody RecipeDTO recipeDTO) {
+
         return null;
     }
 

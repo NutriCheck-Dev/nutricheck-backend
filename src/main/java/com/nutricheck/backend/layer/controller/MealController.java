@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("nutricheck/user/search/")
+@RequestMapping("nutricheck/user/search")
 public class MealController {
 
     private final MealService mealService;
