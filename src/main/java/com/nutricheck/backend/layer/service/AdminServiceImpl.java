@@ -1,5 +1,6 @@
 package com.nutricheck.backend.layer.service;
 
+import com.nutricheck.backend.dto.RecipeResponseDTO;
 import com.nutricheck.backend.dto.ReportDTO;
 import com.nutricheck.backend.layer.model.repository.RecipeRepository;
 import com.nutricheck.backend.layer.model.repository.ReportRepository;
@@ -26,12 +27,16 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public ReportDTO deleteReport(Long id) {
+    public ReportDTO deleteReport(String reportId) {
         return null;
     }
 
     @Override
     public List<ReportDTO> deleteAllReports() {
+        return null;
+    }
+    @Override
+    public RecipeResponseDTO deleteRecipe(String recipeId) {
         return null;
     }
 }

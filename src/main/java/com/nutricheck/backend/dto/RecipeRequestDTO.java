@@ -16,6 +16,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RecipeRequestDTO {
+    @NotBlank(message = "ID of a recipe cannot be blank")
+    private String id;
     @NotBlank(message = "Name of a recipe cannot be blank")
     private String name;
     private String instructions;
