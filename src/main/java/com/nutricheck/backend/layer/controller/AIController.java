@@ -4,6 +4,7 @@ import com.nutricheck.backend.dto.MealDTO;
 import com.nutricheck.backend.layer.service.AIService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,9 +17,8 @@ public class AIController {
         this.aiService = aiService;
     }
 
-    // FIXME: How to pass picture? What does Gemini accept?
-    @PostMapping("/estimate")
-    public ResponseEntity<MealDTO> estimateMeal() {
+    @PostMapping(value = "/estimate", consumes = "text/plain")
+    public ResponseEntity<MealDTO> estimateMeal(@RequestBody String encodedImage) {
         return null;
     }
 }

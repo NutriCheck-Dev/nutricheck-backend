@@ -15,6 +15,7 @@ public class ReportDTO {
     private String description;
     @NotBlank(message = "Recipe ID for a Report cannot be blank")
     private String recipeId;
+    // TODO: Annotate the properties so that Jackson can even deserialize when they are missing
     private String recipeName;
     private String recipeInstructions;
 }

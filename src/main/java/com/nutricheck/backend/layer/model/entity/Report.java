@@ -17,10 +17,8 @@ import org.hibernate.annotations.GenericGenerator;
 @AllArgsConstructor
 public class Report {
 
-    // TODO: Replace deprecated method with different approach for UUID generation
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String recipeId;
     private String description;
