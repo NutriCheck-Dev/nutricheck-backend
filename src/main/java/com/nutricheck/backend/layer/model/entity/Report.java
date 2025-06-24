@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Getter
@@ -17,9 +18,9 @@ import lombok.Setter;
 public class Report {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private Long recipeId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
+    private String recipeId;
     private String description;
 
 }

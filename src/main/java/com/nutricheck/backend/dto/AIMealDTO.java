@@ -9,5 +9,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RecipeContentDTO {
+public class AIMealDTO {
+    private String name;
+    private double calories;
+    private double carbohydrates;
+    private double protein;
+    private double fat;
 }

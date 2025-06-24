@@ -1,15 +1,17 @@
 package com.nutricheck.backend.layer.service;
 
-import com.nutricheck.backend.dto.RecipeDTO;
+import com.nutricheck.backend.dto.RecipeRequestDTO;
+import com.nutricheck.backend.dto.RecipeResponseDTO;
 import com.nutricheck.backend.dto.ReportDTO;
+import com.nutricheck.backend.exception.DuplicateRecipeException;
 
 public interface RecipeService {
 
-    RecipeDTO uploadRecipe(RecipeDTO recipeDTO);
+    RecipeResponseDTO uploadRecipe(RecipeRequestDTO recipeRequestDTO) throws DuplicateRecipeException;
 
     ReportDTO reportRecipe(ReportDTO reportDTO);
 
-    RecipeDTO rateRecipe(Long recipeId, int rating);
+    RecipeResponseDTO rateRecipe(Long recipeId, int rating);
 
-    RecipeDTO downloadRecipe(Long recipeId);
+    RecipeResponseDTO downloadRecipe(Long recipeId);
 }

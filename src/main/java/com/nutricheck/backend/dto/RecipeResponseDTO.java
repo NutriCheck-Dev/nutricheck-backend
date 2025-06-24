@@ -3,26 +3,28 @@ package com.nutricheck.backend.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FoodProductDTO {
-    @NotBlank(message = "ID of a food product cannot be blank")
+public class RecipeResponseDTO {
     private String id;
-    @NotBlank(message = "Name of a food product cannot be blank")
     private String name;
-    @Positive(message = "Calories of a food product must be a positive number")
+    private String instructions;
+    private int servings;
     private double calories;
-    @PositiveOrZero(message = "Carbohydrates of a food product must be a non-negative number")
     private double carbohydrates;
-    @PositiveOrZero(message = "Protein of a food product must be a non-negative number")
     private double protein;
-    @PositiveOrZero(message = "Fat of a food product must be a non-negative number")
     private double fat;
+    private int ratingCount;
+    private double averageRating;
+    private Set<IngredientDTO> ingredients;
 }

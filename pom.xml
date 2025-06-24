@@ -21,7 +21,7 @@
 		</license>
 	</licenses>
 	<properties>
-		<java.version>24</java.version>
+		<java.version>21</java.version>
 		<spring-boot.version>3.5.0</spring-boot.version>
 	</properties>
 	<dependencies>
@@ -38,6 +38,10 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
@@ -49,6 +53,11 @@
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
 			<version>1.6.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.genai</groupId>
+			<artifactId>google-genai</artifactId>
+			<version>1.5.0</version>
 		</dependency>
 
 		<dependency>
