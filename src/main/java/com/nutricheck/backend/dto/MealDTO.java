@@ -23,5 +23,5 @@ public class MealDTO {
     private double carbohydrates;
     private double protein;
     private double fat;
-    private Set<IngredientDTO> ingredients;
+    private Set<MealItemDTO> items;
 }

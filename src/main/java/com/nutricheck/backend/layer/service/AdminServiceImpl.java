@@ -6,11 +6,13 @@ import com.nutricheck.backend.layer.model.repository.RecipeRepository;
 import com.nutricheck.backend.layer.model.repository.ReportRepository;
 import com.nutricheck.backend.layer.service.mapper.RecipeMapper;
 import com.nutricheck.backend.layer.service.mapper.ReportMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
 
     private final ReportRepository reportRepository;
@@ -18,13 +20,6 @@ public class AdminServiceImpl implements AdminService {
     private final ReportMapper reportMapper;
     private final RecipeMapper recipeMapper;
 
-    public AdminServiceImpl(ReportRepository reportRepository, RecipeRepository recipeRepository, ReportMapper reportMapper,
-                            RecipeMapper recipeMapper) {
-        this.reportRepository = reportRepository;
-        this.recipeRepository = recipeRepository;
-        this.reportMapper = reportMapper;
-        this.recipeMapper = recipeMapper;
-    }
     @Override
     public List<ReportDTO> getAllReports() {
         return List.of();
