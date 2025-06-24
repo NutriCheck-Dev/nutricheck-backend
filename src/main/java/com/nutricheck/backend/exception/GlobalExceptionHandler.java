@@ -17,5 +17,8 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ProblemDetail> handleConstraintViolationException(ConstraintViolationException ex) {
         return null; // construct problem detail
     }
-    // TODO: Handle duplicate recipe exception
+    @ExceptionHandler(value = DuplicateRecipeException.class)
+    public ResponseEntity<ProblemDetail> handleDuplicateRecipeException(DuplicateRecipeException ex) {
+        return null; // construct problem detail
+    }
 }
