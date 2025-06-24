@@ -1,12 +1,10 @@
 package com.nutricheck.backend.layer.controller;
 
-import com.nutricheck.backend.dto.RecipeRequestDTO;
-import com.nutricheck.backend.dto.RecipeResponseDTO;
+import com.nutricheck.backend.dto.RecipeDTO;
 import com.nutricheck.backend.dto.ReportDTO;
 import com.nutricheck.backend.layer.service.RecipeService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +21,7 @@ public class RecipeController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<RecipeResponseDTO> uploadRecipe(@RequestBody @Valid RecipeRequestDTO recipeRequestDTO) {
-
+    public ResponseEntity<RecipeDTO> uploadRecipe(@RequestBody @Valid RecipeDTO recipeDTO) {
         return null;
     }
 
@@ -33,13 +30,9 @@ public class RecipeController {
         return null;
     }
 
-    @PostMapping("/rate/{recipeId}/{rating}")
-    public ResponseEntity<RecipeResponseDTO> rateRecipe(@PathVariable @NotBlank String recipeId, @PathVariable @Positive int rating) {
-        return null;
-    }
 
     @GetMapping("/download/{recipeId}")
-    public ResponseEntity<RecipeResponseDTO> downloadRecipe(@PathVariable @NotBlank String recipeId) {
+    public ResponseEntity<RecipeDTO> downloadRecipe(@PathVariable @NotBlank String recipeId) {
         return null;
     }
 }

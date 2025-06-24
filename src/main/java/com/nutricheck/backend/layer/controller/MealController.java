@@ -1,7 +1,7 @@
 package com.nutricheck.backend.layer.controller;
 
 import com.nutricheck.backend.dto.FoodProductDTO;
-import com.nutricheck.backend.dto.RecipeResponseDTO;
+import com.nutricheck.backend.dto.RecipeDTO;
 import com.nutricheck.backend.layer.service.MealService;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +30,7 @@ public class MealController {
     }
 
     @GetMapping("/recipe/{name}")
-    public ResponseEntity<List<RecipeResponseDTO>> searchRecipe(@PathVariable @NotNull String name) {
+    public ResponseEntity<List<RecipeDTO>> searchRecipe(@PathVariable @NotNull String name) {
         return null;
     }
 }

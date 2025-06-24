@@ -1,6 +1,6 @@
 package com.nutricheck.backend.layer.controller;
 
-import com.nutricheck.backend.dto.RecipeResponseDTO;
+import com.nutricheck.backend.dto.RecipeDTO;
 import com.nutricheck.backend.dto.ReportDTO;
 import com.nutricheck.backend.layer.service.AdminService;
 import jakarta.validation.constraints.NotBlank;
@@ -37,7 +37,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/recipe/delete/{recipeId}")
-    public ResponseEntity<RecipeResponseDTO> deleteRecipe(@PathVariable @NotBlank String recipeId) {
+    public ResponseEntity<RecipeDTO> deleteRecipe(@PathVariable @NotBlank String recipeId) {
         return null;
     }
 }

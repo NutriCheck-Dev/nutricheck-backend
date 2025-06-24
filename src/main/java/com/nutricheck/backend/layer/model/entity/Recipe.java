@@ -29,9 +29,6 @@ public class Recipe {
     private double protein;
     private double fat;
 
-    private int ratingCount = 0;
-    private double averageRating = 0.0;
-
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Ingredient> ingredients = new HashSet<>();
 

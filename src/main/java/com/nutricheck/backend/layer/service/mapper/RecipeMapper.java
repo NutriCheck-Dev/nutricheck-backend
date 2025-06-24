@@ -1,6 +1,6 @@
 package com.nutricheck.backend.layer.service.mapper;
 
-import com.nutricheck.backend.dto.RecipeRequestDTO;
+import com.nutricheck.backend.dto.RecipeDTO;
 import com.nutricheck.backend.layer.model.entity.Recipe;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -8,11 +8,12 @@ import org.mapstruct.Mapping;
 import java.util.List;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = org.mapstruct.ReportingPolicy.IGNORE, uses = IngredientMapper.class)
-public interface RecipeRequestMapper {
+public interface RecipeMapper {
 
     @Mapping(target = "ingredients", ignore = true) // Ingredients will be set in RecipeService
-    Recipe toEntity(RecipeRequestDTO recipeRequestDTO);
-
-    List<Recipe> toEntity(List<RecipeRequestDTO> recipeRequestDTOs);
+    Recipe toEntity(RecipeDTO recipeDTO);
+    RecipeDTO toDTO(Recipe recipe);
+    List<Recipe> toEntity(List<RecipeDTO> recipeDTOs);
+    List<RecipeDTO> toDTO(List<Recipe> recipes);
 
 }
