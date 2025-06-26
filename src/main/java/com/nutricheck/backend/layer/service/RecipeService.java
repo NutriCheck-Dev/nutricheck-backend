@@ -9,7 +9,7 @@ public interface RecipeService {
 
     RecipeDTO uploadRecipe(RecipeDTO recipeDTO) throws DuplicateRecipeException;
 
-    ReportDTO reportRecipe(ReportDTO reportDTO);
+    ReportDTO reportRecipe(ReportDTO reportDTO) throws RecipeNotFoundException;
 
     RecipeDTO downloadRecipe(String recipeId) throws RecipeNotFoundException;
 }

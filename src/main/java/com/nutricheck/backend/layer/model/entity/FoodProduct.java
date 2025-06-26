@@ -27,14 +27,4 @@ public class FoodProduct {
     @OneToMany(mappedBy = "foodProduct", fetch = FetchType.LAZY)
     private Set<Ingredient> ingredients = new HashSet<>();
 
-    @Override
-    public boolean equals(Object o) {
-        // TODO: Implement a proper equals method for duplicate checking
-        return false;
-    }
-    @Override
-    public int hashCode() {
-        // TODO: Implement proper hash
-        return 0;
-    }
 }

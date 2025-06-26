@@ -9,6 +9,7 @@ import com.nutricheck.backend.layer.model.repository.FoodProductRepository;
 import com.nutricheck.backend.layer.model.repository.RecipeRepository;
 import com.nutricheck.backend.layer.service.mapper.IngredientMapper;
 import com.nutricheck.backend.layer.service.mapper.RecipeMapper;
+import com.nutricheck.backend.layer.service.mapper.ReportMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ public class RecipeServiceImpl implements RecipeService {
     private final FoodProductRepository foodProductRepository;
     private final RecipeMapper recipeMapper;
     private final IngredientMapper ingredientMapper;
+    private final ReportMapper reportMapper;
 
     @Override
     public RecipeDTO uploadRecipe(RecipeDTO recipeDTO) throws DuplicateRecipeException {
@@ -28,7 +30,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public ReportDTO reportRecipe(ReportDTO reportDTO) {
+    public ReportDTO reportRecipe(ReportDTO reportDTO) throws RecipeNotFoundException {
         return null;
     }
 

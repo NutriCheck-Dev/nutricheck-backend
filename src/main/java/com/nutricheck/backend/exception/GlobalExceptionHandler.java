@@ -1,7 +1,6 @@
 package com.nutricheck.backend.exception;
 
 import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
