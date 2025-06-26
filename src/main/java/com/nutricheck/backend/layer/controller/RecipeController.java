@@ -2,6 +2,7 @@ package com.nutricheck.backend.layer.controller;
 
 import com.nutricheck.backend.dto.RecipeDTO;
 import com.nutricheck.backend.dto.ReportDTO;
+import com.nutricheck.backend.exception.DuplicateRecipeException;
 import com.nutricheck.backend.layer.service.RecipeService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -21,7 +22,7 @@ public class RecipeController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<RecipeDTO> uploadRecipe(@RequestBody @Valid RecipeDTO recipeDTO) {
+    public ResponseEntity<RecipeDTO> uploadRecipe(@RequestBody @Valid RecipeDTO recipeDTO) throws DuplicateRecipeException {
         return null;
     }
 

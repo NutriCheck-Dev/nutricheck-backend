@@ -1,10 +1,10 @@
 package com.nutricheck.backend.layer.client;
 
-import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchRequest;
-import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsPageResponse;
+import com.nutricheck.backend.dto.FoodProductDTO;
+import java.util.List;
 
 public interface FoodDBClient {
 
-    OpenFoodFactsPageResponse search(ProductSearchRequest request);
+    List<FoodProductDTO> search(String request);
 
 }
