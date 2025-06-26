@@ -1,0 +1,327 @@
+openapi: 3.1.0
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  /nutricheck/user/recipe/upload:
+    post:
+      tags:
+      - recipe-controller
+      operationId: uploadRecipe
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecipeDTO"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/RecipeDTO"
+  /nutricheck/user/recipe/report:
+    post:
+      tags:
+      - recipe-controller
+      operationId: reportRecipe
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReportDTO"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ReportDTO"
+  /nutricheck/user/ai/estimate:
+    post:
+      tags:
+      - ai-controller
+      operationId: estimateMeal
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/MealDTO"
+  /nutricheck/user/search/recipe/{name}:
+    get:
+      tags:
+      - meal-controller
+      operationId: searchRecipe
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RecipeDTO"
+  /nutricheck/user/search/product/{name}:
+    get:
+      tags:
+      - meal-controller
+      operationId: searchFoodProduct
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FoodProductDTO"
+  /nutricheck/user/recipe/download/{recipeId}:
+    get:
+      tags:
+      - recipe-controller
+      operationId: downloadRecipe
+      parameters:
+      - name: recipeId
+        in: path
+        required: true
+        schema:
+          type: string
+          minLength: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/RecipeDTO"
+  /nutricheck/admin/reports:
+    get:
+      tags:
+      - admin-controller
+      operationId: getAllReports
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReportDTO"
+  /nutricheck/admin/:
+    get:
+      tags:
+      - admin-controller
+      operationId: greeting
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                additionalProperties: {}
+  /nutricheck/admin/reports/delete/{reportId}:
+    delete:
+      tags:
+      - admin-controller
+      operationId: deleteReport
+      parameters:
+      - name: reportId
+        in: path
+        required: true
+        schema:
+          type: string
+          minLength: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ReportDTO"
+  /nutricheck/admin/reports/delete/all:
+    delete:
+      tags:
+      - admin-controller
+      operationId: deleteAllReports
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReportDTO"
+  /nutricheck/admin/recipe/delete/{recipeId}:
+    delete:
+      tags:
+      - admin-controller
+      operationId: deleteRecipe
+      parameters:
+      - name: recipeId
+        in: path
+        required: true
+        schema:
+          type: string
+          minLength: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/RecipeDTO"
+components:
+  schemas:
+    FoodProductDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+        name:
+          type: string
+          minLength: 1
+        calories:
+          type: number
+          format: double
+        carbohydrates:
+          type: number
+          format: double
+        protein:
+          type: number
+          format: double
+        fat:
+          type: number
+          format: double
+      required:
+      - id
+      - name
+    IngredientDTO:
+      type: object
+      properties:
+        recipeId:
+          type: string
+          minLength: 1
+        foodProductId:
+          type: string
+          minLength: 1
+        foodProduct:
+          $ref: "#/components/schemas/FoodProductDTO"
+        quantity:
+          type: number
+          format: double
+      required:
+      - foodProduct
+      - foodProductId
+      - recipeId
+    RecipeDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+        name:
+          type: string
+          minLength: 1
+        instructions:
+          type: string
+        servings:
+          type: integer
+          format: int32
+        calories:
+          type: number
+          format: double
+        carbohydrates:
+          type: number
+          format: double
+        protein:
+          type: number
+          format: double
+        fat:
+          type: number
+          format: double
+        ingredients:
+          type: array
+          items:
+            $ref: "#/components/schemas/IngredientDTO"
+          maxItems: 2147483647
+          minItems: 2
+          uniqueItems: true
+      required:
+      - id
+      - name
+    ReportDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+        recipeId:
+          type: string
+          minLength: 1
+        recipeName:
+          type: string
+        recipeInstructions:
+          type: string
+      required:
+      - recipeId
+    MealDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        calories:
+          type: number
+          format: double
+        carbohydrates:
+          type: number
+          format: double
+        protein:
+          type: number
+          format: double
+        fat:
+          type: number
+          format: double
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/MealItemDTO"
+          uniqueItems: true
+    MealItemDTO:
+      type: object
+      properties:
+        mealId:
+          type: string
+        foodProductId:
+          type: string
+        foodProduct:
+          $ref: "#/components/schemas/FoodProductDTO"
