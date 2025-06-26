@@ -2,6 +2,8 @@ package com.nutricheck.backend.layer.service;
 
 import com.nutricheck.backend.dto.RecipeDTO;
 import com.nutricheck.backend.dto.ReportDTO;
+import com.nutricheck.backend.exception.RecipeNotFoundException;
+import com.nutricheck.backend.exception.ReportNotFoundException;
 import com.nutricheck.backend.layer.model.repository.RecipeRepository;
 import com.nutricheck.backend.layer.model.repository.ReportRepository;
 import com.nutricheck.backend.layer.service.mapper.RecipeMapper;
@@ -26,7 +28,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public ReportDTO deleteReport(String reportId) {
+    public ReportDTO deleteReport(String reportId) throws ReportNotFoundException {
         return null;
     }
 
@@ -35,7 +37,7 @@ public class AdminServiceImpl implements AdminService {
         return null;
     }
     @Override
-    public RecipeDTO deleteRecipe(String recipeId) {
+    public RecipeDTO deleteRecipe(String recipeId) throws RecipeNotFoundException {
         return null;
     }
 }

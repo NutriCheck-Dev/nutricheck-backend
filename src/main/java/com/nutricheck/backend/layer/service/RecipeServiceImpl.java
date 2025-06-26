@@ -3,6 +3,7 @@ package com.nutricheck.backend.layer.service;
 import com.nutricheck.backend.dto.RecipeDTO;
 import com.nutricheck.backend.dto.ReportDTO;
 import com.nutricheck.backend.exception.DuplicateRecipeException;
+import com.nutricheck.backend.exception.RecipeNotFoundException;
 import com.nutricheck.backend.layer.model.entity.Recipe;
 import com.nutricheck.backend.layer.model.repository.FoodProductRepository;
 import com.nutricheck.backend.layer.model.repository.RecipeRepository;
@@ -32,7 +33,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public RecipeDTO downloadRecipe(String recipeId) {
+    public RecipeDTO downloadRecipe(String recipeId) throws RecipeNotFoundException {
         return null;
     }
 
