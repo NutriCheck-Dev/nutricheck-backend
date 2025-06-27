@@ -25,6 +25,6 @@ public class FoodProduct {
     private double fat;
 
     @OneToMany(mappedBy = "foodProduct", fetch = FetchType.LAZY)
-    private Set<Ingredient> ingredients = new HashSet<>();
+    private Set<Ingredient> references = new HashSet<>();
 
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class GeminiClient implements AIModelClient {
     private Client geminiClient;
 
-    GeminiClient() {
+    public GeminiClient() {
         // TODO: Init Google Gemini client
     }
     @Override

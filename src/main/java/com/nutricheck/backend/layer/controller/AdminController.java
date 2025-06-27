@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("nutricheck/admin")
+@RequestMapping("/admin")
 @Validated
 public class AdminController {
 

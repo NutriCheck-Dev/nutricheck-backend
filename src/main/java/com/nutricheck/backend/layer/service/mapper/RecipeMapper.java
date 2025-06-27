@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = org.mapstruct.ReportingPolicy.IGNORE, uses = IngredientMapper.class)
 public interface RecipeMapper {
 
-    @Mapping(target = "ingredients", ignore = true) // Ingredients will be set in RecipeService
+    @Mapping(target = "ingredients", ignore = true) // Ingredients will be created manually in RecipeService
     Recipe toEntity(RecipeDTO recipeDTO);
     RecipeDTO toDTO(Recipe recipe);
     List<Recipe> toEntity(List<RecipeDTO> recipeDTOs);

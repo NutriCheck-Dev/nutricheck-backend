@@ -11,7 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("nutricheck/user/recipe")
+@RequestMapping("/user/recipe")
 @Validated
 public class RecipeController {
 

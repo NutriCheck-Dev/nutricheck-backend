@@ -5,7 +5,7 @@ import com.nutricheck.backend.layer.model.entity.Ingredient;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import java.util.List;
+import java.util.Set;
 
 @Mapper(componentModel = "spring", uses = FoodProductMapper.class)
 public interface IngredientMapper {
@@ -16,10 +16,10 @@ public interface IngredientMapper {
 
     @Mapping(source = "foodProductId", target = "id.foodProductId") // FIXME: does this work?
     @Mapping(source = "recipeId", target = "id.recipeId")
-    @Mapping(target = "foodProduct", ignore = true) // FoodProduct will be set in RecipeService
+    @Mapping(target = "recipe", ignore = true) // Recipe and FoodProduct will be set/created manually in RecipeService
+    @Mapping(target = "foodProduct", ignore = true) // FoodProduct and Recipe will be set/created manually in RecipeService
     Ingredient toEntity(IngredientDTO ingredientDTO);
 
-    List<IngredientDTO> toDTO(List<Ingredient> ingredients);
-    List<Ingredient> toEntity(List<IngredientDTO> ingredientDTOs);
+    Set<IngredientDTO> toDTO(Set<Ingredient> ingredients);
 
 }
