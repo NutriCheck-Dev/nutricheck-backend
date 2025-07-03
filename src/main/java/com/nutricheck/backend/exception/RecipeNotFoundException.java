@@ -1,7 +1,7 @@
 package com.nutricheck.backend.exception;
 
 public class RecipeNotFoundException extends Exception {
-    private static final long serialVersionUID = 2L;
+    private static final long serialVersionUID = 3L;
 
     public RecipeNotFoundException(String message) {
         super(message);

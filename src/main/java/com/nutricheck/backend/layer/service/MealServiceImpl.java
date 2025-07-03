@@ -1,7 +1,9 @@
 package com.nutricheck.backend.layer.service;
 
 import com.nutricheck.backend.dto.FoodProductDTO;
+import com.nutricheck.backend.dto.MealDTO;
 import com.nutricheck.backend.dto.RecipeDTO;
+import com.nutricheck.backend.layer.client.AIModelClient;
 import com.nutricheck.backend.layer.client.FoodDBClient;
 import com.nutricheck.backend.layer.model.repository.FoodProductRepository;
 import com.nutricheck.backend.layer.model.repository.RecipeRepository;
@@ -21,6 +23,12 @@ public class MealServiceImpl implements MealService {
     private final RecipeMapper recipeMapper;
     private final FoodProductMapper foodProductMapper;
     private final FoodDBClient foodDBClient;
+    private final AIModelClient aiModelClient;
+
+    @Override
+    public MealDTO estimateMeal(String encodedImage) {
+        return null;
+    }
 
     @Override
     public List<FoodProductDTO> searchFoodProduct(String name) {
