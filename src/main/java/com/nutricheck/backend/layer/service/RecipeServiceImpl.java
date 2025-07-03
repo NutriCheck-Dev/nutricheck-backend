@@ -25,17 +25,17 @@ public class RecipeServiceImpl implements RecipeService {
     private final ReportMapper reportMapper;
 
     @Override
-    public RecipeDTO uploadRecipe(RecipeDTO recipeDTO) throws DuplicateRecipeException {
+    public RecipeDTO uploadRecipe(RecipeDTO recipeDTO) {
         return null;
     }
 
     @Override
-    public ReportDTO reportRecipe(ReportDTO reportDTO) throws RecipeNotFoundException {
+    public ReportDTO reportRecipe(ReportDTO reportDTO) {
         return null;
     }
 
     @Override
-    public RecipeDTO downloadRecipe(String recipeId) throws RecipeNotFoundException {
+    public RecipeDTO downloadRecipe(String recipeId) {
         return null;
     }
 

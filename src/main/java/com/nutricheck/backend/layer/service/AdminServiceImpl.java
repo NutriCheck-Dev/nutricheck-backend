@@ -28,7 +28,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public ReportDTO deleteReport(String reportId) throws ReportNotFoundException {
+    public ReportDTO deleteReport(String reportId) {
         return null;
     }
 
@@ -37,7 +37,7 @@ public class AdminServiceImpl implements AdminService {
         return null;
     }
     @Override
-    public RecipeDTO deleteRecipe(String recipeId) throws RecipeNotFoundException {
+    public RecipeDTO deleteRecipe(String recipeId) {
         return null;
     }
 }

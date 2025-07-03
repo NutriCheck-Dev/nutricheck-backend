@@ -2,8 +2,6 @@ package com.nutricheck.backend.layer.controller;
 
 import com.nutricheck.backend.dto.RecipeDTO;
 import com.nutricheck.backend.dto.ReportDTO;
-import com.nutricheck.backend.exception.RecipeNotFoundException;
-import com.nutricheck.backend.exception.ReportNotFoundException;
 import com.nutricheck.backend.layer.service.AdminService;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +26,9 @@ public class AdminController {
         List<ReportDTO> reports = adminService.getAllReports();
         return ResponseEntity.ok(reports);
     }
-    // TODO: Is throwing the exception the best practice or should exception be unchecked?
+
     @DeleteMapping("/reports/delete/{reportId}")
-    public ResponseEntity<ReportDTO> deleteReport(@PathVariable @NotBlank String reportId) throws ReportNotFoundException {
+    public ResponseEntity<ReportDTO> deleteReport(@PathVariable @NotBlank String reportId) {
         ReportDTO deletedReport = adminService.deleteReport(reportId);
         return ResponseEntity.ok(deletedReport);
     }
@@ -41,9 +39,8 @@ public class AdminController {
         return ResponseEntity.ok(deletedReports);
     }
 
-    // TODO: Is throwing the exception the best practice or should exception be unchecked?
     @DeleteMapping("/recipe/delete/{recipeId}")
-    public ResponseEntity<RecipeDTO> deleteRecipe(@PathVariable @NotBlank String recipeId) throws RecipeNotFoundException {
+    public ResponseEntity<RecipeDTO> deleteRecipe(@PathVariable @NotBlank String recipeId) {
         RecipeDTO deletedRecipe = adminService.deleteRecipe(recipeId);
         return ResponseEntity.ok(deletedRecipe);
 
