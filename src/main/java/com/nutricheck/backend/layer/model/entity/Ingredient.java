@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Objects;
+
 @Entity
 @Getter
 @Setter
@@ -21,7 +23,7 @@ public class Ingredient {
     @JoinColumn(name = "recipe_id")
     private Recipe recipe;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @MapsId("foodProductId")
     @JoinColumn(name = "food_product_id")
     private FoodProduct foodProduct;
@@ -30,12 +32,14 @@ public class Ingredient {
 
     @Override
     public boolean equals(Object o) {
-        // TODO: Implement proper equals method for duplicate checking
-        return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ingredient that = (Ingredient) o;
+        return Objects.equals(this.id.getFoodProductId(), that.getId().getFoodProductId()) &&
+                this.quantity == that.getQuantity();
     }
     @Override
     public int hashCode() {
-        // TODO: Implement proper hash
-        return 0;
+        return Objects.hash(id.getFoodProductId(), quantity);
     }
 }

@@ -6,7 +6,8 @@ import lombok.*;
 import java.io.Serializable;
 
 @Embeddable
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class IngredientID implements Serializable {
