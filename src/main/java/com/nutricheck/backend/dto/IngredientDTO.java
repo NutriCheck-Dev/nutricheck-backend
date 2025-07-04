@@ -14,8 +14,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class IngredientDTO {
-    @NotBlank(message = "Recipe ID for an ingredient cannot be blank")
-    private String recipeId;
     @NotBlank(message = "Food product ID for an ingredient cannot be blank")
     private String foodProductId;
     @NotNull(message = "An Ingredient must have a food product")

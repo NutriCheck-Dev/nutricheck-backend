@@ -7,7 +7,7 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = org.mapstruct.ReportingPolicy.IGNORE, uses = IngredientMapper.class)
+@Mapper(componentModel = "spring", uses = IngredientMapper.class)
 public interface RecipeMapper {
 
     @Mapping(target = "ingredients", ignore = true) // Ingredients will be created manually in RecipeService

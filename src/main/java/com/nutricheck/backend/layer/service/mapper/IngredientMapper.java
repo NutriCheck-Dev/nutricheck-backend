@@ -11,12 +11,11 @@ import java.util.Set;
 public interface IngredientMapper {
 
     @Mapping(source = "id.foodProductId", target = "foodProductId")
-    @Mapping(source = "id.recipeId", target = "recipeId")
     IngredientDTO toDTO(Ingredient ingredient);
 
-    @Mapping(source = "foodProductId", target = "id.foodProductId") // FIXME: does this work?
+    @Mapping(source = "foodProductId", target = "id.foodProductId")
     @Mapping(source = "recipeId", target = "id.recipeId")
-    @Mapping(target = "recipe", ignore = true) // Recipe and FoodProduct will be set/created manually in RecipeService
+    @Mapping(target = "recipe", ignore = true)
     @Mapping(target = "foodProduct", ignore = true) // FoodProduct and Recipe will be set/created manually in RecipeService
     Ingredient toEntity(IngredientDTO ingredientDTO);
 

@@ -21,7 +21,7 @@ public class Ingredient {
     @JoinColumn(name = "recipe_id")
     private Recipe recipe;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @MapsId("foodProductId")
     @JoinColumn(name = "food_product_id")
     private FoodProduct foodProduct;

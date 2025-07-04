@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -17,7 +18,6 @@ import java.util.Set;
 public class Recipe {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     private String name;
@@ -34,12 +34,16 @@ public class Recipe {
 
     @Override
     public boolean equals(Object o) {
-        // TODO: Implement a proper equals method for duplicate checking
-        return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Recipe recipe = (Recipe) o;
+        return Objects.equals(name, recipe.getName()) &&
+                Objects.equals(instructions, recipe.getInstructions()) &&
+                Objects.equals(servings, recipe.getServings()) &&
+                Objects.equals(ingredients, recipe.getIngredients());
     }
     @Override
     public int hashCode() {
-        // TODO: Implement proper hash
-        return 0;
+        return Objects.hash(name, instructions, servings, ingredients);
     }
 }
