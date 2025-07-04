@@ -24,16 +24,19 @@ public class MealController {
 
     @GetMapping("/search/product/{name}")
     public ResponseEntity<List<FoodProductDTO>> searchFoodProduct(@PathVariable @NotNull String name) {
-        return null;
+        List<FoodProductDTO> foodProducts = mealService.searchFoodProduct(name);
+        return ResponseEntity.ok(foodProducts);
     }
 
     @GetMapping("/search/recipe/{name}")
     public ResponseEntity<List<RecipeDTO>> searchRecipe(@PathVariable @NotNull String name) {
-        return null;
+        List<RecipeDTO> recipes = mealService.searchRecipe(name);
+        return ResponseEntity.ok(recipes);
     }
 
     @PostMapping(value = "/meal/estimate", consumes = "text/plain")
     public ResponseEntity<MealDTO> estimateMeal(@RequestBody String encodedImage) {
-        return null;
+        MealDTO meal = mealService.estimateMeal(encodedImage);
+        return ResponseEntity.ok(meal);
     }
 }

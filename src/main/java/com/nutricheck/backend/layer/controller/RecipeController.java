@@ -23,17 +23,20 @@ public class RecipeController {
 
     @PostMapping("/upload")
     public ResponseEntity<RecipeDTO> uploadRecipe(@RequestBody @Valid RecipeDTO recipeDTO) throws DuplicateRecipeException {
-        return null;
+        RecipeDTO uploadedRecipe = recipeService.uploadRecipe(recipeDTO);
+        return ResponseEntity.ok(uploadedRecipe);
     }
 
     @PostMapping("/report")
     public ResponseEntity<ReportDTO> reportRecipe(@RequestBody @Valid ReportDTO reportDTO) {
-        return null;
+        ReportDTO reportedRecipe = recipeService.reportRecipe(reportDTO);
+        return ResponseEntity.ok(reportedRecipe);
     }
 
 
     @GetMapping("/download/{recipeId}")
     public ResponseEntity<RecipeDTO> downloadRecipe(@PathVariable @NotBlank String recipeId) {
-        return null;
+        RecipeDTO recipe = recipeService.downloadRecipe(recipeId);
+        return ResponseEntity.ok(recipe);
     }
 }
