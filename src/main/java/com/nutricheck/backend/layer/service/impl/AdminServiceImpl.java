@@ -1,11 +1,10 @@
-package com.nutricheck.backend.layer.service;
+package com.nutricheck.backend.layer.service.impl;
 
 import com.nutricheck.backend.dto.RecipeDTO;
 import com.nutricheck.backend.dto.ReportDTO;
-import com.nutricheck.backend.exception.RecipeNotFoundException;
-import com.nutricheck.backend.exception.ReportNotFoundException;
 import com.nutricheck.backend.layer.model.repository.RecipeRepository;
 import com.nutricheck.backend.layer.model.repository.ReportRepository;
+import com.nutricheck.backend.layer.service.AdminService;
 import com.nutricheck.backend.layer.service.mapper.RecipeMapper;
 import com.nutricheck.backend.layer.service.mapper.ReportMapper;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.nutricheck.backend.layer.service;
+package com.nutricheck.backend.layer.service.impl;
 
 import com.nutricheck.backend.dto.FoodProductDTO;
 import com.nutricheck.backend.dto.MealDTO;
@@ -7,6 +7,7 @@ import com.nutricheck.backend.layer.client.AIModelClient;
 import com.nutricheck.backend.layer.client.FoodDBClient;
 import com.nutricheck.backend.layer.model.repository.FoodProductRepository;
 import com.nutricheck.backend.layer.model.repository.RecipeRepository;
+import com.nutricheck.backend.layer.service.MealService;
 import com.nutricheck.backend.layer.service.mapper.FoodProductMapper;
 import com.nutricheck.backend.layer.service.mapper.RecipeMapper;
 import lombok.RequiredArgsConstructor;
