@@ -88,6 +88,13 @@
 		</dependency>
 	</dependencies>
 
+	<repositories>
+		<repository>
+			<id>github</id>
+			<url>https://maven.pkg.github.com/AlperMulayim/openfoodfacts-spring-boot-starter</url>
+		</repository>
+	</repositories>
+
 	<build>
 		<plugins>
 			<plugin>
