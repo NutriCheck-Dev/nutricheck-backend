@@ -8,17 +8,16 @@ import com.nutricheck.backend.dto.ReportDTO;
 import com.nutricheck.backend.exception.RecipeNotFoundException;
 import com.nutricheck.backend.exception.ReportNotFoundException;
 import com.nutricheck.backend.layer.controller.AdminController;
-import com.nutricheck.backend.layer.model.entity.Report;
 import com.nutricheck.backend.layer.service.AdminService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
-import java.util.Set;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -26,7 +25,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(AdminController.class)
+@WebMvcTest(controllers = AdminController.class, excludeAutoConfiguration = SecurityAutoConfiguration.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AdminControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -38,7 +38,7 @@ public class AdminControllerTest {
     private RecipeDTO recipeDTO;
 
     @BeforeAll
-    public void setUp() {
+    public void setup() {
         reportDTO = TestDataFactory.createDefaultReportDTO();
         recipeDTO = TestDataFactory.createDefaultRecipeDTO();
     }
@@ -87,7 +87,7 @@ public class AdminControllerTest {
     public void deleteAllReportsTest() throws Exception {
         List<ReportDTO> reports = List.of(reportDTO, reportDTO);
         given(adminService.deleteAllReports()).willReturn(reports);
-        ResultActions response = mockMvc.perform(delete("admin/reports/delete/all"));
+        ResultActions response = mockMvc.perform(delete("/admin/reports/delete/all"));
 
         response
                 .andExpect(status().isOk())

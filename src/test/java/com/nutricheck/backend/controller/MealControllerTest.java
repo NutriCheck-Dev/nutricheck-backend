@@ -8,21 +8,28 @@ import com.nutricheck.backend.layer.controller.MealController;
 import com.nutricheck.backend.layer.service.MealService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
+import java.util.Base64;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 
-@WebMvcTest(MealController.class)
+@WebMvcTest(controllers = MealController.class, excludeAutoConfiguration = SecurityAutoConfiguration.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class MealControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -36,7 +43,7 @@ public class MealControllerTest {
     private FoodProductDTO foodProductDTO;
 
     @BeforeAll
-    public void setUp() {
+    public void setup() {
         mealDTO = TestDataFactory.createDefaultMealDTO();
         recipeDTO = TestDataFactory.createDefaultRecipeDTO();
         foodProductDTO = TestDataFactory.createDefaultFoodProductDTO();
@@ -58,7 +65,6 @@ public class MealControllerTest {
                 .andExpect(jsonPath("$[0].carbohydrates").value(foodProductDTO.getCarbohydrates()))
                 .andExpect(jsonPath("$[0].protein").value(foodProductDTO.getProtein()))
                 .andExpect(jsonPath("$[0].fat").value(foodProductDTO.getFat()))
-                .andExpect(jsonPath("$[0].ingredients.size()").value(recipeDTO.getIngredients().size()))
                 .andExpect(jsonPath(("$[1].id")).value(foodProductDTO.getId()))
                 .andExpect(jsonPath("$[1].name").value(foodProductDTO.getName()));
 
@@ -86,7 +92,41 @@ public class MealControllerTest {
                 .andExpect(jsonPath("$[1].name").value(recipeDTO.getName()));
     }
     @Test
-    public void estimateMealTest() {
-        // This method will contain the test for estimating a meal
+    public void estimateMealTest() throws Exception {
+        MockMultipartFile image = new MockMultipartFile(
+                "file",
+                "test.png",
+                MediaType.IMAGE_PNG_VALUE,
+                Base64.getDecoder().decode(TestDataFactory.createDefaultEncodedImage()));
+
+        given(mealService.estimateMeal(image)).willReturn(mealDTO);
+
+        ResultActions response = mockMvc.perform(multipart("/user/meal/estimate")
+                .file(image)
+                .contentType(MediaType.MULTIPART_FORM_DATA));
+
+        response
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.calories").value(mealDTO.getCalories()))
+                .andExpect(jsonPath("$.carbohydrates").value(mealDTO.getCarbohydrates()))
+                .andExpect(jsonPath("$.protein").value(mealDTO.getProtein()))
+                .andExpect(jsonPath("$.fat").value(mealDTO.getFat()))
+                .andExpect(jsonPath("$.items.size()").value(mealDTO.getItems().size()));
+    }
+
+    @Test
+    public void estimateMealWithInvalidFileTest() throws Exception {
+        MockMultipartFile invalidImage = new MockMultipartFile(
+                "file",
+                "test.txt",
+                MediaType.TEXT_PLAIN_VALUE,
+                "This is not an image".getBytes());
+
+        ResultActions response = mockMvc.perform(multipart("/user/meal/estimate")
+                .file(invalidImage)
+                .contentType(MediaType.MULTIPART_FORM_DATA));
+
+        response
+                .andExpect(status().isBadRequest());
     }
 }

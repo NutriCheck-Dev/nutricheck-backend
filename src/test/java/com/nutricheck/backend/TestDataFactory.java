@@ -61,13 +61,11 @@ public class TestDataFactory {
 
     public static MealDTO createDefaultMealDTO() {
         return MealDTO.builder()
-                .id("testMealId")
                 .calories(500)
                 .carbohydrates(100)
                 .protein(30)
                 .fat(20)
                 .items(Set.of(MealItemDTO.builder()
-                                .mealId("testMealId")
                                 .foodProductId("testFoodProductId")
                                 .foodProduct(createDefaultFoodProductDTO())
                                 .build()

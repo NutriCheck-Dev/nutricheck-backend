@@ -8,7 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MealItemDTO {
-    private String mealId;
     private String foodProductId;
     private FoodProductDTO foodProduct;
 }

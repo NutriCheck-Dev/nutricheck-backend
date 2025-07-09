@@ -12,7 +12,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MealDTO {
-    private String id;
     private double calories;
     private double carbohydrates;
     private double protein;

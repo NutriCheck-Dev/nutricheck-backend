@@ -27,6 +27,7 @@ public class Recipe {
     private double protein;
     private double fat;
 
+    @Builder.Default
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Ingredient> ingredients = new HashSet<>();
 
