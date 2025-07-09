@@ -1,7 +1,6 @@
 package com.nutricheck.backend;
 
 import com.nutricheck.backend.dto.*;
-import com.nutricheck.backend.layer.model.entity.Report;
 
 import java.util.Set;
 
@@ -86,4 +85,5 @@ public class TestDataFactory {
                 "K0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CM" +
                 "K0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMO0TAAD//2Anhf4QtqobAAAAAElFTkSuQmCC";
     }
+
 }
