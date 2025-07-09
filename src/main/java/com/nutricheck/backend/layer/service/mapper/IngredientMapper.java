@@ -11,6 +11,7 @@ import java.util.Set;
 public interface IngredientMapper {
 
     @Mapping(source = "id.foodProductId", target = "foodProductId")
+    @Mapping(source = "id.recipeId", target = "recipeId")
     IngredientDTO toDTO(Ingredient ingredient);
 
     @Mapping(source = "foodProductId", target = "id.foodProductId")

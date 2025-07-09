@@ -1,20 +1,17 @@
 package com.nutricheck.backend.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Set;
 
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class MealDTO {
-    private String id;
     private double calories;
     private double carbohydrates;
     private double protein;

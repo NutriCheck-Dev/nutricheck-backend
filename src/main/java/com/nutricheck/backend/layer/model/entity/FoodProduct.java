@@ -22,6 +22,7 @@ public class FoodProduct {
     private double protein;
     private double fat;
 
+    @Builder.Default
     @OneToMany(mappedBy = "foodProduct", fetch = FetchType.LAZY)
     private Set<Ingredient> references = new HashSet<>();
 
