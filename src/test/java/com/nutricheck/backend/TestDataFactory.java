@@ -1,7 +1,7 @@
 package com.nutricheck.backend;
 
 import com.nutricheck.backend.dto.*;
-import com.nutricheck.backend.layer.model.entity.Report;
+import com.nutricheck.backend.layer.model.entity.*;
 
 import java.util.Set;
 
@@ -83,6 +83,37 @@ public class TestDataFactory {
         return Report.builder()
                 .description("This is a test report")
                 .recipeId("testRecipeId")
+                .build();
+    }
+
+    public static FoodProduct createDefaultFoodProduct() {
+        return FoodProduct.builder()
+                .id("testFoodProductId")
+                .name("Test Food Product")
+                .calories(100)
+                .carbohydrates(25)
+                .protein(5)
+                .fat(2)
+                .build();
+    }
+
+    public static Recipe createDefaultRecipe() {
+        return Recipe.builder()
+                .id("testRecipeId")
+                .name("Test Recipe")
+                .instructions("This is a test recipe")
+                .servings(1)
+                .calories(200)
+                .carbohydrates(50)
+                .protein(10)
+                .fat(5)
+                .ingredients(Set.of(
+                        Ingredient.builder()
+                                .foodProduct(createDefaultFoodProduct())
+                                .quantity(100)
+                                .build()
+                        )
+                )
                 .build();
     }
     public static String createDefaultEncodedImage() {
