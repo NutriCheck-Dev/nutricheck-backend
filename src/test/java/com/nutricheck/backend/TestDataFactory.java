@@ -98,7 +98,7 @@ public class TestDataFactory {
     }
 
     public static Recipe createDefaultRecipe() {
-        return Recipe.builder()
+        Recipe recipe = Recipe.builder()
                 .id("testRecipeId")
                 .name("Test Recipe")
                 .instructions("This is a test recipe")
@@ -107,14 +107,19 @@ public class TestDataFactory {
                 .carbohydrates(50)
                 .protein(10)
                 .fat(5)
-                .ingredients(Set.of(
-                        Ingredient.builder()
-                                .foodProduct(createDefaultFoodProduct())
-                                .quantity(100)
-                                .build()
-                        )
-                )
                 .build();
+        FoodProduct foodProduct = createDefaultFoodProduct();
+        IngredientID ingredientID = IngredientID.builder()
+                .recipeId(recipe.getId())
+                .foodProductId(foodProduct.getId())
+                .build();
+        Ingredient ingredient = Ingredient.builder()
+                .id(ingredientID)
+                .foodProduct(foodProduct)
+                .quantity(100)
+                .build();
+        recipe.addIngredient(ingredient);
+        return recipe;
     }
     public static String createDefaultEncodedImage() {
         return "iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAADMElEQVR4nOzVwQnAIBQFQYXff81RUkQCOyDj1YOPnbXWPmeTRef+/3O/OyB" +
