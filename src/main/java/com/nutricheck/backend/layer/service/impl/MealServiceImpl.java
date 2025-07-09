@@ -12,6 +12,7 @@ import com.nutricheck.backend.layer.service.mapper.FoodProductMapper;
 import com.nutricheck.backend.layer.service.mapper.RecipeMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class MealServiceImpl implements MealService {
     private final AIModelClient aiModelClient;
 
     @Override
-    public MealDTO estimateMeal(String encodedImage) {
+    public MealDTO estimateMeal(MultipartFile image) {
         return null;
     }
 

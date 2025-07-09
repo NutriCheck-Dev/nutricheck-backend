@@ -5,9 +5,11 @@ import com.nutricheck.backend.dto.MealDTO;
 import com.nutricheck.backend.dto.RecipeDTO;
 import com.nutricheck.backend.layer.service.MealService;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -34,9 +36,13 @@ public class MealController {
         return ResponseEntity.ok(recipes);
     }
 
-    @PostMapping(value = "/meal/estimate", consumes = "text/plain")
-    public ResponseEntity<MealDTO> estimateMeal(@RequestBody String encodedImage) {
-        MealDTO meal = mealService.estimateMeal(encodedImage);
+    @PostMapping(value = "/meal/estimate")
+    public ResponseEntity<MealDTO> estimateMeal(@RequestParam("file") MultipartFile file) {
+        // for performance reasons validate image here
+        if(file.isEmpty() || !file.getContentType().equals(MediaType.IMAGE_PNG_VALUE))
+            return ResponseEntity.badRequest().build();
+
+        MealDTO meal = mealService.estimateMeal(file);
         return ResponseEntity.ok(meal);
     }
 }
