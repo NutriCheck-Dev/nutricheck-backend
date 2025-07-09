@@ -24,7 +24,7 @@ jobs:
         with:
           servers: |
             [{
-              "id": "github"
+              "id": "github",
               "username": "${{ secrets.GITHUB_ACTOR }}",
               "password": "${{ secrets.GH_PAT }}"
             }]
