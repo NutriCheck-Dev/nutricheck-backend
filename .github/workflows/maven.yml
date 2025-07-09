@@ -22,7 +22,12 @@ jobs:
       - name: Configure Maven settings
         uses: s4u/maven-settings-action@v3.1.0
         with:
-          servers: '[{"id": "github", "username": "${{ secrets.GITHUB_ACTOR }}", "password": "${{ secrets.GH_PAT }}"}]'
+          servers: |
+            [{
+              "id": "github"
+              "username": "${{ secrets.GITHUB_ACTOR }}",
+              "password": "${{ secrets.GH_PAT }}"
+            }]
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
