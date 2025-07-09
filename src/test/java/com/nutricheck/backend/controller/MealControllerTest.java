@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = MealController.class, excludeAutoConfiguration = SecurityAutoConfiguration.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class MealControllerTest {
+class MealControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockitoBean
@@ -43,13 +43,13 @@ public class MealControllerTest {
     private FoodProductDTO foodProductDTO;
 
     @BeforeAll
-    public void setup() {
+    void setup() {
         mealDTO = TestDataFactory.createDefaultMealDTO();
         recipeDTO = TestDataFactory.createDefaultRecipeDTO();
         foodProductDTO = TestDataFactory.createDefaultFoodProductDTO();
     }
     @Test
-    public void searchFoodProductTest() throws Exception {
+    void searchFoodProductTest() throws Exception {
         List<FoodProductDTO> foodProducts = List.of(foodProductDTO, foodProductDTO);
         given(mealService.searchFoodProduct(foodProductDTO.getName()))
                 .willReturn(foodProducts);
@@ -70,7 +70,7 @@ public class MealControllerTest {
 
     }
     @Test
-    public void searchRecipeTest() throws Exception {
+    void searchRecipeTest() throws Exception {
         List<RecipeDTO> recipes = List.of(recipeDTO, recipeDTO);
         given(mealService.searchRecipe(recipeDTO.getName()))
                 .willReturn(recipes);
@@ -92,7 +92,7 @@ public class MealControllerTest {
                 .andExpect(jsonPath("$[1].name").value(recipeDTO.getName()));
     }
     @Test
-    public void estimateMealTest() throws Exception {
+    void estimateMealTest() throws Exception {
         MockMultipartFile image = new MockMultipartFile(
                 "file",
                 "test.png",
@@ -115,7 +115,7 @@ public class MealControllerTest {
     }
 
     @Test
-    public void estimateMealWithInvalidFileTest() throws Exception {
+    void estimateMealWithInvalidFileTest() throws Exception {
         MockMultipartFile invalidImage = new MockMultipartFile(
                 "file",
                 "test.txt",

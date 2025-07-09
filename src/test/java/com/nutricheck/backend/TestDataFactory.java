@@ -15,12 +15,8 @@ public class TestDataFactory {
                 .carbohydrates(50)
                 .protein(10)
                 .fat(5)
-                .ingredients(Set.of(IngredientDTO.builder()
-                                .recipeId("testRecipeId")
-                                .foodProductId("testFoodProductId")
-                                .foodProduct(createDefaultFoodProductDTO())
-                                .quantity(100)
-                                .build(),
+                .ingredients(Set.of(
+                        createDefaultIngredientDTO(),
                         IngredientDTO.builder()
                                 .recipeId("testRecipeId")
                                 .foodProductId("testFoodProductId2")
@@ -37,6 +33,14 @@ public class TestDataFactory {
                 )
                 .build();
     }
+    public static IngredientDTO createDefaultIngredientDTO() {
+        return IngredientDTO.builder()
+                .recipeId("testRecipeId")
+                .foodProductId("testFoodProductId")
+                .foodProduct(createDefaultFoodProductDTO())
+                .quantity(100)
+                .build();
+    }
     public static ReportDTO createDefaultReportDTO() {
         return ReportDTO.builder()
                 .id("testReportId")
@@ -46,6 +50,7 @@ public class TestDataFactory {
                 .recipeInstructions("This is a test recipe instruction")
                 .build();
     }
+
 
     public static FoodProductDTO createDefaultFoodProductDTO() {
         return FoodProductDTO.builder()
@@ -57,6 +62,7 @@ public class TestDataFactory {
                 .fat(2)
                 .build();
     }
+
 
     public static MealDTO createDefaultMealDTO() {
         return MealDTO.builder()

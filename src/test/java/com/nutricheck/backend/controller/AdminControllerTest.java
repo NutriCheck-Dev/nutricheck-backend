@@ -1,8 +1,6 @@
 package com.nutricheck.backend.controller;
 
 import com.nutricheck.backend.TestDataFactory;
-import com.nutricheck.backend.dto.FoodProductDTO;
-import com.nutricheck.backend.dto.IngredientDTO;
 import com.nutricheck.backend.dto.RecipeDTO;
 import com.nutricheck.backend.dto.ReportDTO;
 import com.nutricheck.backend.exception.RecipeNotFoundException;
@@ -27,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = AdminController.class, excludeAutoConfiguration = SecurityAutoConfiguration.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class AdminControllerTest {
+class AdminControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockitoBean
@@ -38,13 +36,13 @@ public class AdminControllerTest {
     private RecipeDTO recipeDTO;
 
     @BeforeAll
-    public void setup() {
+    void setup() {
         reportDTO = TestDataFactory.createDefaultReportDTO();
         recipeDTO = TestDataFactory.createDefaultRecipeDTO();
     }
 
     @Test
-    public void getAllReportsTest() throws Exception {
+    void getAllReportsTest() throws Exception {
         // Precondition the service to return a list of reports
         List<ReportDTO> reports = List.of(reportDTO, reportDTO);
         given(adminService.getAllReports()).willReturn(reports);
@@ -69,7 +67,7 @@ public class AdminControllerTest {
     }
 
     @Test
-    public void deleteReportTest() throws Exception {
+    void deleteReportTest() throws Exception {
         given(adminService.deleteReport(reportDTO.getId())).willReturn(reportDTO);
 
         ResultActions response = mockMvc.perform(delete("/admin/reports/delete/{reportId}", reportDTO.getId()));
@@ -84,7 +82,7 @@ public class AdminControllerTest {
     }
 
     @Test
-    public void deleteAllReportsTest() throws Exception {
+    void deleteAllReportsTest() throws Exception {
         List<ReportDTO> reports = List.of(reportDTO, reportDTO);
         given(adminService.deleteAllReports()).willReturn(reports);
         ResultActions response = mockMvc.perform(delete("/admin/reports/delete/all"));
@@ -107,7 +105,7 @@ public class AdminControllerTest {
     }
 
     @Test
-    public void deleteRecipeTest() throws Exception {
+    void deleteRecipeTest() throws Exception {
         given(adminService.deleteRecipe(recipeDTO.getId())).willReturn(recipeDTO);
 
         ResultActions response = mockMvc.perform(delete("/admin/recipe/delete/{recipeId}", recipeDTO.getId()));
@@ -126,7 +124,7 @@ public class AdminControllerTest {
     }
 
     @Test
-    public void deleteMissingReportTest() throws Exception {
+    void deleteMissingReportTest() throws Exception {
         given(adminService.deleteReport("missingReportId")).willThrow(ReportNotFoundException.class);
 
         mockMvc.perform(delete("/admin/reports/delete/{reportId}", "missingReportId"))
@@ -134,7 +132,7 @@ public class AdminControllerTest {
     }
 
     @Test
-    public void deleteMissingRecipeTest() throws Exception {
+    void deleteMissingRecipeTest() throws Exception {
         given(adminService.deleteRecipe("missingRecipeId")).willThrow(RecipeNotFoundException.class);
 
         mockMvc.perform(delete("/admin/recipe/delete/{recipeId}", "missingRecipeId"))

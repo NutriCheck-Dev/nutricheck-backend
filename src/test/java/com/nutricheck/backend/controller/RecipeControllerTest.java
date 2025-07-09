@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = RecipeController.class, excludeAutoConfiguration = SecurityAutoConfiguration.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class RecipeControllerTest {
+class RecipeControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockitoBean
@@ -40,14 +40,14 @@ public class RecipeControllerTest {
     private ObjectMapper objectMapper;
 
     @BeforeAll
-    public void setup() {
+    void setup() {
         recipeDTO = TestDataFactory.createDefaultRecipeDTO();
         reportDTO = TestDataFactory.createDefaultReportDTO();
         objectMapper = new ObjectMapper();
     }
 
     @Test
-    public void uploadRecipeTest() throws Exception {
+    void uploadRecipeTest() throws Exception {
         given(recipeService.uploadRecipe(any(RecipeDTO.class))).willReturn(recipeDTO);
 
         ResultActions response = mockMvc.perform(post("/user/recipe/upload")
@@ -68,7 +68,7 @@ public class RecipeControllerTest {
     }
 
     @Test
-    public void reportRecipeTest() throws Exception {
+    void reportRecipeTest() throws Exception {
         given(recipeService.reportRecipe(any(ReportDTO.class))).willReturn(reportDTO);
 
         ResultActions response = mockMvc.perform(post("/user/recipe/report")
@@ -85,7 +85,7 @@ public class RecipeControllerTest {
     }
 
     @Test
-    public void downloadRecipeTest() throws Exception {
+    void downloadRecipeTest() throws Exception {
         given(recipeService.downloadRecipe(recipeDTO.getId())).willReturn(recipeDTO);
 
         ResultActions response = mockMvc.perform(get("/user/recipe/download/{recipeId}", recipeDTO.getId()));
@@ -104,7 +104,7 @@ public class RecipeControllerTest {
     }
 
     @Test
-    public void downloadMissingRecipeTest() throws Exception {
+    void downloadMissingRecipeTest() throws Exception {
         given(recipeService.downloadRecipe("missingRecipeId")).willThrow(RecipeNotFoundException.class);
 
         mockMvc.perform(get("/user/recipe/download/{recipeId}", "missingRecipeId"))
