@@ -35,10 +35,19 @@ class FoodProductRepositoryTest {
 
     @Test
     @Order(2)
+    void findFoodProductByIdTest() {
+        Optional<FoodProduct> foundFoodProduct = foodProductRepository.findById(foodProduct.getId());
+        Assertions.assertThat(foundFoodProduct)
+                .as("Check if food product can be found by id")
+                .isPresent();
+    }
+
+    @Test
+    @Order(3)
     void findFoodProductByNameTest() {
         List<FoodProduct> foodProducts = foodProductRepository.findByNameContainingIgnoreCase(foodProduct.getName());
         Assertions.assertThat(foodProducts)
-                .as("Check if food product table contains the saved food product")
+                .as("Check if food product can be found by name")
                 .hasSize(1);
         Assertions.assertThat(foodProducts.get(0).getId())
                 .as("Check that the saved food product is the one we expect")
@@ -46,7 +55,7 @@ class FoodProductRepositoryTest {
     }
 
     @Test
-    @Order(3)
+    @Order(4)
     @Rollback(false)
     void deleteFoodProductByIdTest() {
         foodProductRepository.deleteById(foodProduct.getId());

@@ -31,11 +31,6 @@ public class Recipe {
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Ingredient> ingredients = new HashSet<>();
 
-    public void addIngredient(Ingredient ingredient) {
-        this.ingredients.add(ingredient);
-        ingredient.setRecipe(this);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

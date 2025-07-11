@@ -51,7 +51,7 @@ class ReportRepositoryTest {
         reportRepository.deleteById(report.getId());
         Optional<Report> deletedReport = reportRepository.findById(report.getId());
         assertThat(deletedReport)
-                .as("Check if report table contains deleted report")
+                .as("Check if report table still contains deleted report")
                 .isEmpty();
     }
 

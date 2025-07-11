@@ -115,10 +115,11 @@ public class TestDataFactory {
                 .build();
         Ingredient ingredient = Ingredient.builder()
                 .id(ingredientID)
+                .recipe(recipe)
                 .foodProduct(foodProduct)
                 .quantity(100)
                 .build();
-        recipe.addIngredient(ingredient);
+        recipe.setIngredients(Set.of(ingredient));
         return recipe;
     }
     public static String createDefaultEncodedImage() {
