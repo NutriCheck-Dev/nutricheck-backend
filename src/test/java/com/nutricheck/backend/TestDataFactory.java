@@ -1,6 +1,7 @@
 package com.nutricheck.backend;
 
 import com.nutricheck.backend.dto.*;
+import com.nutricheck.backend.layer.model.entity.*;
 
 import java.util.Set;
 
@@ -77,6 +78,49 @@ public class TestDataFactory {
                         )
                 )
                 .build();
+    }
+    public static Report createDefaultReport() {
+        return Report.builder()
+                .description("This is a test report")
+                .recipeId("testRecipeId")
+                .build();
+    }
+
+    public static FoodProduct createDefaultFoodProduct() {
+        return FoodProduct.builder()
+                .id("testFoodProductId")
+                .name("Test Food Product")
+                .calories(100)
+                .carbohydrates(25)
+                .protein(5)
+                .fat(2)
+                .build();
+    }
+
+    public static Recipe createDefaultRecipe() {
+        Recipe recipe = Recipe.builder()
+                .id("testRecipeId")
+                .name("Test Recipe")
+                .instructions("This is a test recipe")
+                .servings(1)
+                .calories(200)
+                .carbohydrates(50)
+                .protein(10)
+                .fat(5)
+                .build();
+        FoodProduct foodProduct = createDefaultFoodProduct();
+        IngredientID ingredientID = IngredientID.builder()
+                .recipeId(recipe.getId())
+                .foodProductId(foodProduct.getId())
+                .build();
+        Ingredient ingredient = Ingredient.builder()
+                .id(ingredientID)
+                .recipe(recipe)
+                .foodProduct(foodProduct)
+                .quantity(100)
+                .build();
+        recipe.setIngredients(Set.of(ingredient));
+        return recipe;
     }
     public static String createDefaultEncodedImage() {
         return "iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAADMElEQVR4nOzVwQnAIBQFQYXff81RUkQCOyDj1YOPnbXWPmeTRef+/3O/OyB" +

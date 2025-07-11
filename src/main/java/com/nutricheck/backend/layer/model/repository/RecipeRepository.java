@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Repository interface for managing Recipe entities.
@@ -24,7 +25,7 @@ public interface RecipeRepository extends JpaRepository<Recipe, String> {
      *
      * @param name the name of the recipe
      * @param instructions the instructions of the recipe
-     * @return a list of recipes matching the specified name and instructions
+     * @return an optional containing the recipe if it can be found
      */
-    List<Recipe> findByNameAndInstructions(String name, String instructions);
+    Optional<Recipe> findByNameAndInstructions(String name, String instructions);
 }
