@@ -7,6 +7,10 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Entity representing a recipe in the system.
+ * This class is used to map recipe data to the database.
+ */
 @Entity
 @Getter
 @Setter

@@ -6,6 +6,10 @@ import lombok.*;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Entity representing a food product in the system.
+ * This class is used to map food product data to the database.
+ */
 @Entity
 @Getter
 @Setter

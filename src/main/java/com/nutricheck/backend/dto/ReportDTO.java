@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+/**
+ * Data Transfer Object (DTO) for report information.
+ * This class is used to transfer report data over the REST API.
+ */
 @Getter
 @Setter
 @Builder

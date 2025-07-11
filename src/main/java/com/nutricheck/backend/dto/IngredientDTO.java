@@ -5,7 +5,10 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.*;
 
-
+/**
+ * Data Transfer Object (DTO) for ingredients of a <code>RecipeDTO</code>.
+ * This class is used to transfer ingredient data over the REST API.
+ */
 @Getter
 @Setter
 @Builder

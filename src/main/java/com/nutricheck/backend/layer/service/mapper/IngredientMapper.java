@@ -7,6 +7,10 @@ import org.mapstruct.Mapping;
 
 import java.util.Set;
 
+/**
+ * Mapper interface for converting between Ingredient entities and IngredientDTOs.
+ * Utilizes MapStruct for automatic mapping generation.
+ */
 @Mapper(componentModel = "spring", uses = FoodProductMapper.class)
 public interface IngredientMapper {
 

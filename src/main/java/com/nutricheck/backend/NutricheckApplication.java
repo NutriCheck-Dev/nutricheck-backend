@@ -5,6 +5,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
+/**
+ * This is the entry point for the Nutricheck application.
+ */
 @SpringBootApplication
 @EnableConfigurationProperties(OpenFoodFactsWebClientProperties.class)
 public class NutricheckApplication {
