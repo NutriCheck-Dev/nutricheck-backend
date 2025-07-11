@@ -5,6 +5,10 @@ import lombok.*;
 
 import java.util.Objects;
 
+/**
+ * Entity representing an ingredient in a recipe.
+ * This class is used to map ingredient data to the database.
+ */
 @Entity
 @Getter
 @Setter

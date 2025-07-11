@@ -9,6 +9,11 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
+/**
+ * Configuration class for the web security of the application.
+ * This class sets up the security filter chain, disables CSRF protection,
+ * and configures HTTP basic authentication for the admin.
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
