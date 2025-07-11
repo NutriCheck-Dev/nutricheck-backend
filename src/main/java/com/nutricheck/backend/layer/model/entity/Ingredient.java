@@ -21,12 +21,13 @@ public class Ingredient {
     @JoinColumn(name = "recipe_id")
     private Recipe recipe;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @MapsId("foodProductId")
     @JoinColumn(name = "food_product_id")
     private FoodProduct foodProduct;
 
     private double quantity;
+
 
     @Override
     public boolean equals(Object o) {

@@ -8,6 +8,7 @@ import java.io.Serializable;
 @Embeddable
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class IngredientID implements Serializable {
