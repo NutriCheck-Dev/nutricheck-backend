@@ -6,13 +6,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class GeminiClient implements AIModelClient {
-    private Client geminiClient;
+    private final Client geminiClient;
 
     public GeminiClient() {
-        // TODO: Init Google Gemini client
+        this.geminiClient = new Client();
     }
     @Override
-    public AIMealDTO estimateMeal(String encodedImage) {
+    public AIMealDTO estimateMeal(byte[] image) {
         return null;
     }
 }

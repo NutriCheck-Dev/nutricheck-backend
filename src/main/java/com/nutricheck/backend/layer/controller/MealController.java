@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -59,7 +60,7 @@ public class MealController {
      * @return the estimated MealDTO object.
      */
     @PostMapping(value = "/meal/estimate")
-    public ResponseEntity<MealDTO> estimateMeal(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<MealDTO> estimateMeal(@RequestParam("file") MultipartFile file) throws IOException {
         // for performance reasons validate image here
         if(file.isEmpty() || !file.getContentType().equals(MediaType.IMAGE_PNG_VALUE))
             return ResponseEntity.badRequest().build();

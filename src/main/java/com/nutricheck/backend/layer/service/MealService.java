@@ -5,6 +5,7 @@ import com.nutricheck.backend.dto.MealDTO;
 import com.nutricheck.backend.dto.RecipeDTO;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -36,5 +37,5 @@ public interface MealService {
      * @param image the image file of the meal to be estimated.
      * @return a MealDTO object containing the estimated meal information.
      */
-    MealDTO estimateMeal(MultipartFile image);
+    MealDTO estimateMeal(MultipartFile image) throws IOException;
 }
