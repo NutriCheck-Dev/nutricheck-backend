@@ -24,7 +24,10 @@ public class RecipeServiceImpl implements RecipeService {
     private final ReportMapper reportMapper;
 
     @Override
+    @Transactional
     public RecipeDTO uploadRecipe(RecipeDTO recipeDTO) {
+        // Contains logic to create a new recipe for complex business logic needed as foodProducts need to be looked up in
+        // db and potentially created if they do not exist.
         return null;
     }
 
@@ -38,10 +41,4 @@ public class RecipeServiceImpl implements RecipeService {
         return null;
     }
 
-    @Transactional
-    private Recipe createRecipe(RecipeDTO recipeDTO) {
-        // Logic to create a new recipe for complex business logic needed as foodProducts need to be looked up in
-        // db and potentially created if they do not exist.
-        return null;
-    }
 }
