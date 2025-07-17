@@ -9,6 +9,8 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OpenFoodFactsResponseDTO {
-    private List<OpenFoodFactsFoodProductDTO> products;
+public class SwissFoodCDFoodProductDTO {
+    private String id;
+    private String name;
+    private List<SwissFoodCDValueDTO> values;
 }

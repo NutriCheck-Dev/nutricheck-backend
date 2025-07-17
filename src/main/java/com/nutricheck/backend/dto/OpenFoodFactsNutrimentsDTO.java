@@ -9,12 +9,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OpenFoodFactsNutrimentsDTO {
-    @JsonProperty("fat")
-    private Double fat;
+    private double fat;
     @JsonProperty("energy-kcal")
-    private Double energyKcal;
-    @JsonProperty("carbohydrates")
-    private Double carbohydrates;
-    @JsonProperty("proteins")
-    private Double proteins;
+    private double energyKcal;
+    private double carbohydrates;
+    private double proteins;
 }
