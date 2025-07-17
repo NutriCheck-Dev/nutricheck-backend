@@ -9,11 +9,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OpenFoodFactsFoodProductDTO {
-
-    @JsonProperty("id")
     private String id;
     @JsonProperty("product_name")
     private String name;
-    @JsonProperty("nutriments")
     private OpenFoodFactsNutrimentsDTO nutriments;
 }

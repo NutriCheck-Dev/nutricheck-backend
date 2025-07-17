@@ -5,7 +5,6 @@ import java.util.List;
 
 /**
  * Client interface for interacting with the FoodDB API.
- * This interface defines methods to search for food products.
  */
 
 public interface FoodDBClient {

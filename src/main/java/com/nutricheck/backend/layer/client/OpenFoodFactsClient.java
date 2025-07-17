@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Client implementation for interacting with the Open Food Facts API.
@@ -17,13 +16,13 @@ import java.util.stream.Collectors;
 @Component
 public class OpenFoodFactsClient implements FoodDBClient {
 
-    private RestClient webClient;
+    private RestClient restClient;
 
     private OpenFoodFactsFoodProductMapper mapper;
 
-    public OpenFoodFactsClient(OpenFoodFactsFoodProductMapper mapper) {
+    public OpenFoodFactsClient(OpenFoodFactsFoodProductMapper mapper, RestClient.Builder builder) {
         this.mapper = mapper;
-        this.webClient = RestClient.builder()
+        this.restClient = builder
                 .baseUrl("https://world.openfoodfacts.org")
                 .defaultHeader(HttpHeaders.USER_AGENT, "NutriCheck/1.0 (uvtal@student.kit.edu)")
                 .build();
@@ -32,13 +31,11 @@ public class OpenFoodFactsClient implements FoodDBClient {
     public List<FoodProductDTO> search(String request) {
         OpenFoodFactsResponseDTO response = getData(request);
         List<OpenFoodFactsFoodProductDTO> foodProducts = response.getProducts();
-        return foodProducts.stream()
-                .map(mapper::toDTO)
-                .collect(Collectors.toList());
+        return mapper.toDTO(foodProducts);
     }
 
     private OpenFoodFactsResponseDTO getData(String request) {
-        return webClient.get()
+        return restClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/cgi/search.pl")
                         .queryParam("action", "process")
