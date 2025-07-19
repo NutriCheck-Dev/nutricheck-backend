@@ -3,7 +3,7 @@ package com.nutricheck.backend.layer.client;
 import com.nutricheck.backend.dto.FoodProductDTO;
 import com.nutricheck.backend.dto.SwissFoodCDFoodProductDTO;
 import com.nutricheck.backend.dto.SwissFoodCDResponseDTO;
-import com.nutricheck.backend.layer.client.mapper.SwissFoodCDFoodProductMapper;
+import com.nutricheck.backend.layer.client.mapper.SwissFoodCDMapper;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -19,9 +19,9 @@ import java.util.List;
 public class SwissFoodCompositionDatabaseClient implements FoodDBClient {
 
     private final RestClient restClient;
-    private final SwissFoodCDFoodProductMapper mapper;
+    private final SwissFoodCDMapper mapper;
 
-    public SwissFoodCompositionDatabaseClient(SwissFoodCDFoodProductMapper mapper, RestClient.Builder builder) {
+    public SwissFoodCompositionDatabaseClient(SwissFoodCDMapper mapper, RestClient.Builder builder) {
         this.mapper = mapper;
         this.restClient = builder
                 .baseUrl("https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api")

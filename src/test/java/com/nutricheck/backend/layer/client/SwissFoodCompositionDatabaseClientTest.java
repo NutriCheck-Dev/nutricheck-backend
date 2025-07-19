@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nutricheck.backend.TestDataFactory;
 import com.nutricheck.backend.dto.FoodProductDTO;
 import com.nutricheck.backend.dto.SwissFoodCDResponseDTO;
-import com.nutricheck.backend.layer.client.mapper.SwissFoodCDFoodProductMapper;
+import com.nutricheck.backend.layer.client.mapper.SwissFoodCDMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
@@ -29,7 +29,7 @@ class SwissFoodCompositionDatabaseClientTest {
     @Autowired
     MockRestServiceServer server;
     @MockitoBean
-    SwissFoodCDFoodProductMapper mapper;
+    SwissFoodCDMapper mapper;
     @Autowired
     SwissFoodCompositionDatabaseClient client;
     @Autowired

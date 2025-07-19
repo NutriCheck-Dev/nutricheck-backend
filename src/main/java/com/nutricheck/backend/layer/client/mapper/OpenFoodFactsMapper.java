@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface OpenFoodFactsFoodProductMapper {
+public interface OpenFoodFactsMapper {
     @Mapping(source = "nutriments.fat", target = "fat")
     @Mapping(source = "nutriments.energyKcal", target = "calories")
     @Mapping(source = "nutriments.carbohydrates", target = "carbohydrates")

@@ -10,7 +10,7 @@ import org.mapstruct.Named;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface SwissFoodCDFoodProductMapper {
+public interface SwissFoodCDMapper {
     @Mapping(source = "values", target = "fat", qualifiedByName = "mapFatFromValues")
     @Mapping(source = "values", target = "calories", qualifiedByName = "mapCaloriesFromValues")
     @Mapping(source = "values", target = "carbohydrates", qualifiedByName = "mapCarbohydratesFromValues")
