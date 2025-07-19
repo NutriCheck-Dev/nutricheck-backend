@@ -11,6 +11,7 @@ import com.nutricheck.backend.layer.service.MealService;
 import com.nutricheck.backend.layer.service.mapper.FoodProductMapper;
 import com.nutricheck.backend.layer.service.mapper.RecipeMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,7 +25,8 @@ public class MealServiceImpl implements MealService {
     private final FoodProductRepository foodProductRepository;
     private final RecipeMapper recipeMapper;
     private final FoodProductMapper foodProductMapper;
-    private final FoodDBClient foodDBClient;
+    @Qualifier("openFoodFacts") private final FoodDBClient openFoodFactsClient;
+    @Qualifier("swiss") private final FoodDBClient swissFoodCompositionDatabaseClient;
     private final AIModelClient aiModelClient;
 
     @Override

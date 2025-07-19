@@ -3,6 +3,7 @@ package com.nutricheck.backend.layer.client;
 import com.nutricheck.backend.dto.FoodProductDTO;
 import com.nutricheck.backend.dto.OpenFoodFactsFoodProductDTO;
 import com.nutricheck.backend.dto.OpenFoodFactsResponseDTO;
+import com.nutricheck.backend.layer.client.mapper.OpenFoodFactsFoodProductMapper;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -13,7 +14,7 @@ import java.util.List;
 /**
  * Client implementation for interacting with the Open Food Facts API.
  */
-@Component
+@Component("openFoodFacts")
 public class OpenFoodFactsClient implements FoodDBClient {
 
     private RestClient restClient;

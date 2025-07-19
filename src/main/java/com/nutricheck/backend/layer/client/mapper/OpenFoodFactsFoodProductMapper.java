@@ -1,4 +1,4 @@
-package com.nutricheck.backend.layer.client;
+package com.nutricheck.backend.layer.client.mapper;
 
 import com.nutricheck.backend.dto.FoodProductDTO;
 import com.nutricheck.backend.dto.OpenFoodFactsFoodProductDTO;

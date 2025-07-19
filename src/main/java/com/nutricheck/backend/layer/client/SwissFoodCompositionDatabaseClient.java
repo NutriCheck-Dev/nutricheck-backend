@@ -3,6 +3,7 @@ package com.nutricheck.backend.layer.client;
 import com.nutricheck.backend.dto.FoodProductDTO;
 import com.nutricheck.backend.dto.SwissFoodCDFoodProductDTO;
 import com.nutricheck.backend.dto.SwissFoodCDResponseDTO;
+import com.nutricheck.backend.layer.client.mapper.SwissFoodCDFoodProductMapper;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,7 @@ import java.util.List;
 /**
  * Client implementation for interacting with the Swiss Food Composition Database (SwissFoodCD).
  */
-@Component
+@Component("swiss")
 public class SwissFoodCompositionDatabaseClient implements FoodDBClient {
 
     private final RestClient restClient;
