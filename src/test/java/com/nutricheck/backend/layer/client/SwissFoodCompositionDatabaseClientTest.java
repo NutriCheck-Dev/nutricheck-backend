@@ -46,7 +46,7 @@ class SwissFoodCompositionDatabaseClientTest {
         server.expect(requestTo( "https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api/foods?search=" +
                         searchTerm + "&lang=en&limit=20"))
                 .andRespond(withSuccess(responseRaw, MediaType.APPLICATION_JSON));
-        List<SwissFoodCDResponseDTO> response = objectMapper.readValue(responseRaw, new TypeReference<List<SwissFoodCDResponseDTO>>() {});
+        List<SwissFoodCDResponseDTO> response = objectMapper.readValue(responseRaw, new TypeReference<>() {});
 
         server.expect(requestTo("https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api/food/" +
                         response.get(0).getId() + "?lang=en"))
