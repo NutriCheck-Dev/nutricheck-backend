@@ -31,12 +31,12 @@ public class SwissFoodCompositionDatabaseClient implements FoodDBClient {
     public List<FoodProductDTO> search(String request) {
         // TODO: implement german language
         List<SwissFoodCDResponseDTO> foods = getFoods(request, "en");
-        List<FoodProductDTO> foodProducts = new ArrayList<>();
+        List<SwissFoodCDFoodProductDTO> foodProducts = new ArrayList<>();
         for (SwissFoodCDResponseDTO food: foods) {
             SwissFoodCDFoodProductDTO foodProductDTO = getParticularFood(food.getId(), "en");
-            foodProducts.add(mapper.toDTO(foodProductDTO));
+            foodProducts.add(foodProductDTO);
         }
-        return foodProducts;
+        return mapper.toDTO(foodProducts);
     }
 
     private List<SwissFoodCDResponseDTO> getFoods(String request, String language) {
@@ -49,7 +49,7 @@ public class SwissFoodCompositionDatabaseClient implements FoodDBClient {
                         .build())
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .body(new ParameterizedTypeReference<>() {}); //?
+                .body(new ParameterizedTypeReference<>() {});
     }
 
     private SwissFoodCDFoodProductDTO getParticularFood(String id, String language) {

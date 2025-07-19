@@ -1,7 +1,12 @@
 package com.nutricheck.backend.layer.client;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nutricheck.backend.TestDataFactory;
 import com.nutricheck.backend.dto.FoodProductDTO;
+import com.nutricheck.backend.dto.SwissFoodCDResponseDTO;
+import com.nutricheck.backend.layer.client.mapper.SwissFoodCDFoodProductMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
@@ -12,6 +17,8 @@ import org.springframework.test.web.client.MockRestServiceServer;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
@@ -22,35 +29,41 @@ class SwissFoodCompositionDatabaseClientTest {
     @Autowired
     MockRestServiceServer server;
     @MockitoBean
+    SwissFoodCDFoodProductMapper mapper;
+    @Autowired
     SwissFoodCompositionDatabaseClient client;
+    @Autowired
+    ObjectMapper objectMapper;
 
 
     @Test
-    void searchTest() {
-        // given
+    void searchTest() throws JsonProcessingException {
         String searchTerm = "potato";
-        String response = TestDataFactory.createDefaultSwissFoodCDResponse();
-        String firstProduct = TestDataFactory.createDefaultSwissFoodCDFoodProductOne();
-        int firstProductId = TestDataFactory.createDefaultSwissFoodCDFoodProductOneId();
-        String secondProduct = TestDataFactory.createDefaultSwissFoodCDFoodProductTwo();
-        int secondProductId = TestDataFactory.createDefaultSwissFoodCDFoodProductTwoId();
+        String responseRaw = TestDataFactory.createRawSwissFoodCDResponse();
+        String firstProductRaw = TestDataFactory.createRawSwissFoodCDFoodProductOne();
+        String secondProductRaw = TestDataFactory.createRawSwissFoodCDFoodProductTwo();
 
-        // when
-        server.expect(requestTo( "https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api/foods?search=" + searchTerm + "&lang=en&limit=20"))
-                .andRespond(withSuccess(response, MediaType.APPLICATION_JSON));
+        server.expect(requestTo( "https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api/foods?search=" +
+                        searchTerm + "&lang=en&limit=20"))
+                .andRespond(withSuccess(responseRaw, MediaType.APPLICATION_JSON));
+        List<SwissFoodCDResponseDTO> response = objectMapper.readValue(responseRaw, new TypeReference<List<SwissFoodCDResponseDTO>>() {});
 
-        server.expect(requestTo("https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api/food/" + firstProductId + "?lang=en"))
-                .andRespond(withSuccess(firstProduct, MediaType.APPLICATION_JSON));
+        server.expect(requestTo("https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api/food/" +
+                        response.get(0).getId() + "?lang=en"))
+                .andRespond(withSuccess(firstProductRaw, MediaType.APPLICATION_JSON));
 
-        server.expect(requestTo("https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api/food/" + secondProductId + "?lang=en"))
-                .andRespond(withSuccess(secondProduct, MediaType.APPLICATION_JSON));
+        server.expect(requestTo("https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api/food/" +
+                        response.get(1).getId() + "?lang=en"))
+                .andRespond(withSuccess(secondProductRaw, MediaType.APPLICATION_JSON));
 
-        //then
+        List<FoodProductDTO> expectedProducts = List.of(
+                TestDataFactory.createExternalFoodProductDTOOne(),
+                TestDataFactory.createExternalFoodProductDTOTwo());
+        // mapper will be tested with own unit tests
+        given(mapper.toDTO(anyList()))
+                .willReturn(expectedProducts);
+
         List<FoodProductDTO> result = client.search(searchTerm);
-        assertEquals(2, result.size());
-        assertEquals("Mashed potatoes, instant, prepared (with water and butter)", result.getFirst().getName());
-        assertEquals(11.5, result.getFirst().getCarbohydrates());
-        assertEquals(8.4, result.get(1).getFat());
-        assertEquals(139, result.get(1).getCalories());
+        assertEquals(result, expectedProducts);
     }
 }

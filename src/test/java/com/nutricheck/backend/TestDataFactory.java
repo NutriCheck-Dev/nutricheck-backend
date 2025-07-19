@@ -92,7 +92,7 @@ public class TestDataFactory {
                 "K0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMO0TAAD//2Anhf4QtqobAAAAAElFTkSuQmCC";
     }
 
-    public static String createDefaultSwissFoodCDResponse() {
+    public static String createRawSwissFoodCDResponse() {
         return "[ \n" +
                 "{\n" +
                 "    \"id\": 349447,\n" +
@@ -111,11 +111,11 @@ public class TestDataFactory {
                 "    \"amount\": 0,\n" +
                 "    \"foodid\": 1519,\n" +
                 "    \"valueTypeCode\": \"\"\n" +
-                "  },\n" +
+                "  }\n" +
                 "]";
     }
 
-    public static String createDefaultSwissFoodCDFoodProductOne() {
+    public static String createRawSwissFoodCDFoodProductOne() {
         return "{\n" +
                 "  \"name\": \"Mashed potatoes, instant, prepared (with water and butter)\",\n" +
                 "  \"id\": 349447,\n" +
@@ -124,7 +124,7 @@ public class TestDataFactory {
                 "       \"id\": 6256919,\n" +
                 "       \"value\": 2, \n" +
                 "       \"component\": {\n" +
-                "         \"name\": \"Protein\",\n" +
+                "         \"name\": \"Protein\"\n" +
                 "         }\n" +
                 "    },\n" +
                 "    {\n" +
@@ -148,12 +148,12 @@ public class TestDataFactory {
                 "         \"name\": \"Energy, kilocalories\"\n" +
                 "         }\n" +
                 "    }\n" +
-                "  ],\n" +
+                "  ]\n" +
                 "}";
 
     }
 
-    public static String createDefaultSwissFoodCDFoodProductTwo() {
+    public static String createRawSwissFoodCDFoodProductTwo() {
         return "{\n" +
                 "  \"name\": \"Mashed potatoes, prepared (with cream and butter)\",\n" +
                 "  \"id\": 350440,\n" +
@@ -162,7 +162,7 @@ public class TestDataFactory {
                 "       \"id\": 6301201,\n" +
                 "       \"value\": 2, \n" +
                 "       \"component\": {\n" +
-                "         \"name\": \"Protein\",\n" +
+                "         \"name\": \"Protein\"\n" +
                 "         }\n" +
                 "    },\n" +
                 "    {\n" +
@@ -186,16 +186,31 @@ public class TestDataFactory {
                 "         \"name\": \"Energy, kilocalories\"\n" +
                 "         }\n" +
                 "    }\n" +
-                "  ],\n" +
+                "  ]\n" +
                 "}";
 
     }
 
-    public static int createDefaultSwissFoodCDFoodProductOneId() {
-        return 349447;
+    public static FoodProductDTO createExternalFoodProductDTOOne() {
+        return FoodProductDTO.builder()
+                .id("349447")
+                .name("Mashed potatoes, instant, prepared (with water and butter)")
+                .carbohydrates(11.5)
+                .fat(2.8)
+                .calories(80)
+                .protein(2)
+                .build();
     }
 
-    public static int createDefaultSwissFoodCDFoodProductTwoId() {
-        return 350440;
+    public static FoodProductDTO createExternalFoodProductDTOTwo() {
+        return FoodProductDTO.builder()
+                .id("350440")
+                .name("Mashed potatoes, prepared (with cream and butter)")
+                .carbohydrates(12.9)
+                .fat(8.4)
+                .calories(139)
+                .protein(2)
+                .build();
     }
+
 }
