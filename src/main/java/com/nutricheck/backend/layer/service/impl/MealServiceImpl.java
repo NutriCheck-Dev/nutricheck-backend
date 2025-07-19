@@ -35,7 +35,8 @@ public class MealServiceImpl implements MealService {
         AIMealDTO aiEstimatedMeal = aiModelClient.estimateMeal(imageBytes);
         /*
          * Convert AIMealDTO to MealDTO by setting the whole meal as one ingredient.
-         * In this way, we do not need a new dialog for logging an AI estimated meal.
+         * In this way, we do not need a new dialog in the frontend
+         * for logging an AI estimated meal.
          */
         MealDTO estimatedMeal = MealDTO.builder()
                 .calories(aiEstimatedMeal.getCalories())
