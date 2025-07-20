@@ -7,28 +7,32 @@
       "id": 6256919,
       "value": 2,
       "component": {
-        "name": "Protein"
+        "name": "Protein",
+        "code": "PROT625"
       }
     },
     {
       "id": 6256920,
       "value": 2.8,
       "component": {
-        "name": "Fat, total"
+        "name": "Fat, total",
+        "code": "FAT"
       }
     },
     {
       "id": 6256906,
       "value": 11.5,
       "component": {
-        "name": "Carbohydrates, available"
+        "name": "Carbohydrates, available",
+        "code": "CHO"
       }
     },
     {
       "id": 6256888,
       "value": 80,
       "component": {
-        "name": "Energy, kilocalories"
+        "name": "Energy, kilocalories",
+        "code": "ENERCC"
       }
     }
   ]

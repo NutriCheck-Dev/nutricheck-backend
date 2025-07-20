@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface MealService {
 
-    List<FoodProductDTO> searchFoodProduct(String name);
+    List<FoodProductDTO> searchFoodProduct(String name, String language);
 
     List<RecipeDTO> searchRecipe(String name);
 

@@ -38,7 +38,7 @@ class SwissFoodCDClientTest {
 
 
     @Test
-    void searchTest() throws IOException {
+    void searchTestEn() throws IOException {
         String searchTerm = "potato";
         String responseRaw = FileUtil.readFileAsString("swiss-search-response-example.json");
         String firstProductRaw = FileUtil.readFileAsString("swiss-food-product-one-example.json");
@@ -64,7 +64,40 @@ class SwissFoodCDClientTest {
         given(mapper.toDTO(anyList()))
                 .willReturn(expectedProducts);
 
-        List<FoodProductDTO> result = client.search(searchTerm);
+        List<FoodProductDTO> result = client.search(searchTerm, "en");
         assertEquals(result, expectedProducts);
+    }
+
+    @Test
+    void seachTestDe() throws IOException {
+        String searchTerm = "Kartoffel";
+        String responseRaw = FileUtil.readFileAsString("swiss-search-response-de-example.json");
+        String firstProductRaw = FileUtil.readFileAsString("swiss-food-product-one-de-example.json");
+        String secondProductRaw = FileUtil.readFileAsString("swiss-food-product-two-de-example.json");
+
+        server.expect(requestTo( "https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api/foods?search=" +
+                        searchTerm + "&lang=de&limit=20"))
+                .andRespond(withSuccess(responseRaw, MediaType.APPLICATION_JSON));
+
+        List<SwissFoodCDResponseDTO> response = objectMapper.readValue(responseRaw, new TypeReference<>() {});
+
+        server.expect(requestTo("https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api/food/" +
+                        response.get(0).getId() + "?lang=de"))
+                .andRespond(withSuccess(firstProductRaw, MediaType.APPLICATION_JSON));
+
+        server.expect(requestTo("https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api/food/" +
+                        response.get(1).getId() + "?lang=de"))
+                .andRespond(withSuccess(secondProductRaw, MediaType.APPLICATION_JSON));
+
+        List<FoodProductDTO> expectedProducts = List.of(
+                TestDataFactory.createFoodProductDTOOneFromSwissDB(),
+                TestDataFactory.createFoodProductDTOTwoFromSwissDB());
+        // mapper will be tested with own unit tests
+        given(mapper.toDTO(anyList()))
+                .willReturn(expectedProducts);
+
+        List<FoodProductDTO> result = client.search(searchTerm, "de");
+        assertEquals(result, expectedProducts);
+
     }
 }

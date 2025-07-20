@@ -14,6 +14,6 @@ public interface FoodDBClient {
      * @param request the search request string, which can be a food name
      * @return a list of FoodProductDTO objects that match the search criteria
      */
-    List<FoodProductDTO> search(String request);
+    List<FoodProductDTO> search(String request, String language);
 
 }

@@ -52,7 +52,7 @@ class OpenFoodFactsClientTest {
         given(mapper.toDTO(anyList()))
                 .willReturn(expectedProducts);
 
-        List<FoodProductDTO> result = client.search(searchTerm);
+        List<FoodProductDTO> result = client.search(searchTerm, "en");
         assertEquals(expectedProducts, result);
     }
 }

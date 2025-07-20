@@ -35,7 +35,7 @@ public class MealServiceImpl implements MealService {
     }
 
     @Override
-    public List<FoodProductDTO> searchFoodProduct(String name) {
+    public List<FoodProductDTO> searchFoodProduct(String name, String language) {
         return null;
     }
 

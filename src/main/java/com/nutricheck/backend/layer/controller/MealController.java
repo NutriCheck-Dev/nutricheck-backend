@@ -24,9 +24,9 @@ public class MealController {
         this.mealService = mealService;
     }
 
-    @GetMapping("/search/product/{name}")
-    public ResponseEntity<List<FoodProductDTO>> searchFoodProduct(@PathVariable @NotNull String name) {
-        List<FoodProductDTO> foodProducts = mealService.searchFoodProduct(name);
+    @GetMapping("/search/product/{name}/{language}")
+    public ResponseEntity<List<FoodProductDTO>> searchFoodProduct(@PathVariable @NotNull String name, @PathVariable @NotNull String language) {
+        List<FoodProductDTO> foodProducts = mealService.searchFoodProduct(name, language);
         return ResponseEntity.ok(foodProducts);
     }
 

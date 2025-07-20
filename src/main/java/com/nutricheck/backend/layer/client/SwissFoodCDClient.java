@@ -28,12 +28,11 @@ public class SwissFoodCDClient implements FoodDBClient {
                 .build();
     }
     @Override
-    public List<FoodProductDTO> search(String request) {
-        // TODO: implement german language
-        List<SwissFoodCDResponseDTO> foods = getFoods(request, "en");
+    public List<FoodProductDTO> search(String request, String language) {
+        List<SwissFoodCDResponseDTO> foods = getFoods(request, language);
         List<SwissFoodCDFoodProductDTO> foodProducts = new ArrayList<>();
         for (SwissFoodCDResponseDTO food: foods) {
-            SwissFoodCDFoodProductDTO foodProductDTO = getParticularFood(food.getId(), "en");
+            SwissFoodCDFoodProductDTO foodProductDTO = getParticularFood(food.getId(), language);
             foodProducts.add(foodProductDTO);
         }
         return mapper.toDTO(foodProducts);

@@ -22,7 +22,7 @@ public interface SwissFoodCDMapper {
     @Named("mapFatFromValues")
     default double mapFromValues(List<SwissFoodCDValueDTO> values) {
         for (SwissFoodCDValueDTO value : values) {
-            if (value.getComponent().getName().equals("Fat, total")) {
+            if (value.getComponent().getCode().equals("FAT")) {
                 return value.getValue();
             }
         }
@@ -32,7 +32,7 @@ public interface SwissFoodCDMapper {
     @Named("mapCaloriesFromValues")
     default double mapCaloriesFromValues(List<SwissFoodCDValueDTO> values) {
         for (SwissFoodCDValueDTO value : values) {
-            if (value.getComponent().getName().equals("Energy, kilocalories")) {
+            if (value.getComponent().getCode().equals("ENERCC")) {
                 return value.getValue();
             }
         }
@@ -42,7 +42,7 @@ public interface SwissFoodCDMapper {
     @Named("mapCarbohydratesFromValues")
     default double mapCarbohydratesFromValues(List<SwissFoodCDValueDTO> values) {
         for (SwissFoodCDValueDTO value : values) {
-            if (value.getComponent().getName().equals("Carbohydrates, available")) {
+            if (value.getComponent().getCode().equals("CHO")) {
                 return value.getValue();
             }
         }
@@ -52,7 +52,7 @@ public interface SwissFoodCDMapper {
     @Named("mapProteinFromValues")
     default double mapProteinFromValues(List<SwissFoodCDValueDTO> values) {
         for (SwissFoodCDValueDTO value : values) {
-            if (value.getComponent().getName().equals("Protein")) {
+            if (value.getComponent().getCode().equals("PROT625")) {
                 return value.getValue();
             }
         }

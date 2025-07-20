@@ -29,7 +29,7 @@ public class OpenFoodFactsClient implements FoodDBClient {
                 .build();
     }
     @Override
-    public List<FoodProductDTO> search(String request) {
+    public List<FoodProductDTO> search(String request, String language) {
         OpenFoodFactsResponseDTO response = getData(request);
         List<OpenFoodFactsFoodProductDTO> foodProducts = response.getProducts();
         return mapper.toDTO(foodProducts);

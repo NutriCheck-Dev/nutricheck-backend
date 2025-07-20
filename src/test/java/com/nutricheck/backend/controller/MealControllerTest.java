@@ -52,11 +52,11 @@ class MealControllerTest {
     @Test
     void searchFoodProductTest() throws Exception {
         List<FoodProductDTO> foodProducts = List.of(foodProductDTO, foodProductDTO);
-        given(mealService.searchFoodProduct(foodProductDTO.getName()))
+        given(mealService.searchFoodProduct(foodProductDTO.getName(), "en"))
                 .willReturn(foodProducts);
 
-        ResultActions response = mockMvc.perform(get("/user/search/product/{name}",
-                foodProductDTO.getName()));
+        ResultActions response = mockMvc.perform(get("/user/search/product/{name}/{language}",
+                foodProductDTO.getName(), "en"));
         response
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()").value(foodProducts.size()))
