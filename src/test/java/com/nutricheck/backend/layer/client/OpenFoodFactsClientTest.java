@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nutricheck.backend.TestDataFactory;
 import com.nutricheck.backend.dto.FoodProductDTO;
 import com.nutricheck.backend.layer.client.mapper.OpenFoodFactsMapper;
+import com.nutricheck.backend.util.FileUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
@@ -11,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.client.MockRestServiceServer;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -32,9 +34,9 @@ class OpenFoodFactsClientTest {
     ObjectMapper objectMapper;
 
     @Test
-    void searchTest() {
+    void searchTest() throws IOException {
         String searchTerm = "potato";
-        String responseRaw = TestDataFactory.createRawOpenFoodFactsResponse();
+        String responseRaw = FileUtil.readFileAsString("open-food-facts-example.json");
 
         server.expect(requestTo("https://world.openfoodfacts.org/cgi/search.pl?action=process&search_terms=" + searchTerm +
                         "&nutriment_0=carbohydrates&nutriment_compare_0=gt&nutriment_value_0=0&nutriment_1=proteins&nutriment_compare_1=gt&nutriment_value_1=0" +
@@ -43,8 +45,8 @@ class OpenFoodFactsClientTest {
                 .andRespond(withSuccess(responseRaw, MediaType.APPLICATION_JSON));
 
         List<FoodProductDTO> expectedProducts = List.of(
-                TestDataFactory.createOpenFoodFactsFoodProductOne(),
-                TestDataFactory.createOpenFoodFactsFoodProductTwo()
+                TestDataFactory.createFoodProductDTOOneFromOpenFoodFacts(),
+                TestDataFactory.createFoodProductDTOTwoFromOpenFoodFacts()
         );
 
         given(mapper.toDTO(anyList()))

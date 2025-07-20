@@ -6,6 +6,7 @@ import com.nutricheck.backend.dto.MealDTO;
 import com.nutricheck.backend.dto.RecipeDTO;
 import com.nutricheck.backend.layer.controller.MealController;
 import com.nutricheck.backend.layer.service.MealService;
+import com.nutricheck.backend.util.FileUtil;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -97,7 +98,7 @@ class MealControllerTest {
                 "file",
                 "test.png",
                 MediaType.IMAGE_PNG_VALUE,
-                Base64.getDecoder().decode(TestDataFactory.createDefaultEncodedImage()));
+                Base64.getMimeDecoder().decode(FileUtil.readFileAsString("encoded-image.txt")));
 
         given(mealService.estimateMeal(image)).willReturn(mealDTO);
 

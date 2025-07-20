@@ -1,0 +1,35 @@
+
+{
+  "name": "Mashed potatoes, instant, prepared (with water and butter)",
+  "id": 349447,
+  "values": [
+    {
+      "id": 6256919,
+      "value": 2,
+      "component": {
+        "name": "Protein"
+      }
+    },
+    {
+      "id": 6256920,
+      "value": 2.8,
+      "component": {
+        "name": "Fat, total"
+      }
+    },
+    {
+      "id": 6256906,
+      "value": 11.5,
+      "component": {
+        "name": "Carbohydrates, available"
+      }
+    },
+    {
+      "id": 6256888,
+      "value": 80,
+      "component": {
+        "name": "Energy, kilocalories"
+      }
+    }
+  ]
+}

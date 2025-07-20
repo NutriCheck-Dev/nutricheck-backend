@@ -1,0 +1,25 @@
+
+{
+  "products": [
+    {
+      "_id": "5060042641000",
+      "product_name": "Lightly Sea Salted",
+      "nutriments": {
+        "energy-kcal": 476,
+        "fat": 27,
+        "carbohydrates": 49,
+        "proteins": 6.2
+      }
+    },
+    {
+      "_id": "5053990101597",
+      "product_name": "Sour Cream & Onion",
+      "nutriments": {
+        "energy-kcal": 519,
+        "fat": 30,
+        "carbohydrates": 54,
+        "proteins": 6.3
+      }
+    }
+  ]
+}

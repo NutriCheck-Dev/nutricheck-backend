@@ -16,12 +16,12 @@ import java.util.List;
  * Client implementation for interacting with the Swiss Food Composition Database (SwissFoodCD).
  */
 @Component("swiss")
-public class SwissFoodCompositionDatabaseClient implements FoodDBClient {
+public class SwissFoodCDClient implements FoodDBClient {
 
     private final RestClient restClient;
     private final SwissFoodCDMapper mapper;
 
-    public SwissFoodCompositionDatabaseClient(SwissFoodCDMapper mapper, RestClient.Builder builder) {
+    public SwissFoodCDClient(SwissFoodCDMapper mapper, RestClient.Builder builder) {
         this.mapper = mapper;
         this.restClient = builder
                 .baseUrl("https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api")
