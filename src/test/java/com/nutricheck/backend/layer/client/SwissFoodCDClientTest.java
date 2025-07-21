@@ -15,7 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.client.MockRestServiceServer;
 
-import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,7 +38,7 @@ class SwissFoodCDClientTest {
 
 
     @Test
-    void searchEnTest() throws IOException {
+    void searchEnTest() throws Exception {
         String searchTerm = "potato";
         String responseRaw = FileUtil.readFileAsString("swiss-search-response-example.json");
         String firstProductRaw = FileUtil.readFileAsString("swiss-food-product-one-example.json");
@@ -66,11 +65,11 @@ class SwissFoodCDClientTest {
                 .willReturn(expectedProducts);
 
         List<FoodProductDTO> result = client.search(searchTerm, "en");
-        assertEquals(result, expectedProducts);
+        assertEquals(expectedProducts, result);
     }
 
     @Test
-    void searchDeTest() throws IOException {
+    void searchDeTest() throws Exception {
         String searchTerm = "Kartoffel";
         String responseRaw = FileUtil.readFileAsString("swiss-search-response-de-example.json");
         String firstProductRaw = FileUtil.readFileAsString("swiss-food-product-one-de-example.json");
@@ -98,6 +97,6 @@ class SwissFoodCDClientTest {
                 .willReturn(expectedProducts);
 
         List<FoodProductDTO> result = client.search(searchTerm, "de");
-        assertEquals(result, expectedProducts);
+        assertEquals(expectedProducts, result);
     }
 }

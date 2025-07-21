@@ -8,7 +8,6 @@ import com.nutricheck.backend.util.FileUtil;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
-import java.io.IOException;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -17,7 +16,7 @@ class SwissFoodCDMapperTest {
 
 
     @Test
-    void toFoodProductDTOTest() throws IOException {
+    void toFoodProductDTOTest() throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         SwissFoodCDMapper mapper = Mappers.getMapper(SwissFoodCDMapper.class);
 

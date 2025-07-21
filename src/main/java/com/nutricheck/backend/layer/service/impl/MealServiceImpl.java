@@ -1,10 +1,8 @@
 package com.nutricheck.backend.layer.service.impl;
 
 import com.nutricheck.backend.dto.*;
-import com.nutricheck.backend.dto.external.AIMealDTO;
 import com.nutricheck.backend.layer.client.AIModelClient;
 import com.nutricheck.backend.layer.client.FoodDBClient;
-import com.nutricheck.backend.layer.model.entity.FoodProduct;
 import com.nutricheck.backend.layer.model.entity.Recipe;
 import com.nutricheck.backend.layer.model.repository.FoodProductRepository;
 import com.nutricheck.backend.layer.model.repository.RecipeRepository;
@@ -13,7 +11,6 @@ import com.nutricheck.backend.layer.service.mapper.FoodProductMapper;
 import com.nutricheck.backend.layer.service.mapper.RecipeMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,14 +21,14 @@ import java.util.*;
 @RequiredArgsConstructor
 public class MealServiceImpl implements MealService {
 
-    private static final int MAX_SEARCH_RESULTS = 100;
+    public static final int MAX_SEARCH_RESULTS = 100;
 
     private final RecipeRepository recipeRepository;
     private final FoodProductRepository foodProductRepository;
     private final RecipeMapper recipeMapper;
     private final FoodProductMapper foodProductMapper;
     @Qualifier("openFoodFacts") private final FoodDBClient openFoodFactsClient;
-    @Qualifier("swiss") private final FoodDBClient swissFoodCompositionDatabaseClient;
+    @Qualifier("swiss") private final FoodDBClient swissFoodCDClient;
     private final AIModelClient aiModelClient;
 
     @Override
@@ -49,8 +46,9 @@ public class MealServiceImpl implements MealService {
         foodProducts.addAll(internalProducts);
 
         if( foodProducts.size() < MAX_SEARCH_RESULTS) {
-            List<FoodProductDTO> swissFoodProducts = swissFoodCompositionDatabaseClient.search(name, language);
+            List<FoodProductDTO> swissFoodProducts = swissFoodCDClient.search(name, language);
             foodProducts.addAll(swissFoodProducts);
+
             List<FoodProductDTO> openFoodFacts = openFoodFactsClient.search(name, language);
             foodProducts.addAll(openFoodFacts);
         }

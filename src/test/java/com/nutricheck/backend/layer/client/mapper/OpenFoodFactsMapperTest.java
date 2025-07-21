@@ -9,7 +9,6 @@ import com.nutricheck.backend.util.FileUtil;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
-import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class OpenFoodFactsMapperTest {
 
     @Test
-    void toFoodProductDTOTest() throws IOException {
+    void toFoodProductDTOTest() throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         OpenFoodFactsMapper mapper = Mappers.getMapper(OpenFoodFactsMapper.class);
 

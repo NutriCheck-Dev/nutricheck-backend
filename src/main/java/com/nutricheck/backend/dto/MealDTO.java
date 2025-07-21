@@ -10,8 +10,7 @@ import java.util.Set;
  * Data Transfer Object (DTO) for meal information.
  * This class is used to transfer meal data over the REST API.
  */
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
