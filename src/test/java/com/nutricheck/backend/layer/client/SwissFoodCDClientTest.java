@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
@@ -65,11 +66,14 @@ class SwissFoodCDClientTest {
                 .willReturn(expectedProducts);
 
         List<FoodProductDTO> result = client.search(searchTerm, "en");
-        assertEquals(result, expectedProducts);
+        assertThat(result)
+                .usingRecursiveComparison()
+                .ignoringFields("id")
+                .isEqualTo(expectedProducts);
     }
 
     @Test
-    void seachTestDe() throws IOException {
+    void searchTestDe() throws IOException {
         String searchTerm = "Kartoffel";
         String responseRaw = FileUtil.readFileAsString("swiss-search-response-de-example.json");
         String firstProductRaw = FileUtil.readFileAsString("swiss-food-product-one-de-example.json");
@@ -98,6 +102,9 @@ class SwissFoodCDClientTest {
 
         List<FoodProductDTO> result = client.search(searchTerm, "de");
         assertEquals(result, expectedProducts);
-
+        assertThat(result)
+                .usingRecursiveComparison()
+                .ignoringFields("id")
+                .isEqualTo(expectedProducts);
     }
 }

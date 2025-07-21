@@ -55,8 +55,9 @@ class MealControllerTest {
         given(mealService.searchFoodProduct(foodProductDTO.getName(), "en"))
                 .willReturn(foodProducts);
 
-        ResultActions response = mockMvc.perform(get("/user/search/product/{name}/{language}",
-                foodProductDTO.getName(), "en"));
+        ResultActions response = mockMvc.perform(get("/user/search/product/{name}",
+                foodProductDTO.getName())
+                .param("language", "en"));
         response
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()").value(foodProducts.size()))

@@ -5,6 +5,7 @@ import com.nutricheck.backend.dto.MealDTO;
 import com.nutricheck.backend.dto.RecipeDTO;
 import com.nutricheck.backend.layer.service.MealService;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -24,8 +25,10 @@ public class MealController {
         this.mealService = mealService;
     }
 
-    @GetMapping("/search/product/{name}/{language}")
-    public ResponseEntity<List<FoodProductDTO>> searchFoodProduct(@PathVariable @NotNull String name, @PathVariable @NotNull String language) {
+    @GetMapping("/search/product/{name}")
+    public ResponseEntity<List<FoodProductDTO>> searchFoodProduct(@PathVariable @NotNull String name,
+                                                                  @RequestParam(required = false, defaultValue = "de")
+                                                                  @Pattern(regexp = "^(de|en)$", message = "Only german (de) and english (en) provided") String language) {
         List<FoodProductDTO> foodProducts = mealService.searchFoodProduct(name, language);
         return ResponseEntity.ok(foodProducts);
     }
