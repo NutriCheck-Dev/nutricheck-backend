@@ -4,7 +4,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nutricheck.backend.TestDataFactory;
 import com.nutricheck.backend.dto.FoodProductDTO;
-import com.nutricheck.backend.dto.SwissFoodCDResponseDTO;
+import com.nutricheck.backend.dto.external.SwissFoodCDResponseDTO;
+import com.nutricheck.backend.layer.client.impl.SwissFoodCDClient;
 import com.nutricheck.backend.layer.client.mapper.SwissFoodCDMapper;
 import com.nutricheck.backend.util.FileUtil;
 import org.junit.jupiter.api.Test;
@@ -45,7 +46,7 @@ class SwissFoodCDClientTest {
         String secondProductRaw = FileUtil.readFileAsString("swiss-food-product-two-example.json");
 
         server.expect(requestTo( "https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api/foods?search=" +
-                        searchTerm + "&lang=en&limit=20"))
+                        searchTerm + "&lang=en&limit=40"))
                 .andRespond(withSuccess(responseRaw, MediaType.APPLICATION_JSON));
         List<SwissFoodCDResponseDTO> response = objectMapper.readValue(responseRaw, new TypeReference<>() {});
 
@@ -61,7 +62,7 @@ class SwissFoodCDClientTest {
                 TestDataFactory.createFoodProductDTOOneFromSwissDB(),
                 TestDataFactory.createFoodProductDTOTwoFromSwissDB());
         // mapper will be tested with own unit tests
-        given(mapper.toDTO(anyList()))
+        given(mapper.toFoodProductDTO(anyList()))
                 .willReturn(expectedProducts);
 
         List<FoodProductDTO> result = client.search(searchTerm, "en");
@@ -76,7 +77,7 @@ class SwissFoodCDClientTest {
         String secondProductRaw = FileUtil.readFileAsString("swiss-food-product-two-de-example.json");
 
         server.expect(requestTo( "https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api/foods?search=" +
-                        searchTerm + "&lang=de&limit=20"))
+                        searchTerm + "&lang=de&limit=40"))
                 .andRespond(withSuccess(responseRaw, MediaType.APPLICATION_JSON));
 
         List<SwissFoodCDResponseDTO> response = objectMapper.readValue(responseRaw, new TypeReference<>() {});
@@ -93,7 +94,7 @@ class SwissFoodCDClientTest {
                 TestDataFactory.createFoodProductDTOOneFromSwissDB(),
                 TestDataFactory.createFoodProductDTOTwoFromSwissDB());
         // mapper will be tested with own unit tests
-        given(mapper.toDTO(anyList()))
+        given(mapper.toFoodProductDTO(anyList()))
                 .willReturn(expectedProducts);
 
         List<FoodProductDTO> result = client.search(searchTerm, "de");

@@ -3,6 +3,7 @@ package com.nutricheck.backend.layer.client;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nutricheck.backend.TestDataFactory;
 import com.nutricheck.backend.dto.FoodProductDTO;
+import com.nutricheck.backend.layer.client.impl.OpenFoodFactsClient;
 import com.nutricheck.backend.layer.client.mapper.OpenFoodFactsMapper;
 import com.nutricheck.backend.util.FileUtil;
 import org.junit.jupiter.api.Test;
@@ -49,7 +50,7 @@ class OpenFoodFactsClientTest {
                 TestDataFactory.createFoodProductDTOTwoFromOpenFoodFacts()
         );
 
-        given(mapper.toDTO(anyList()))
+        given(mapper.toFoodProductDTO(anyList()))
                 .willReturn(expectedProducts);
 
         List<FoodProductDTO> result = client.search(searchTerm, "en");

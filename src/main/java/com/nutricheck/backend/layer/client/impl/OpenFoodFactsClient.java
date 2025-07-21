@@ -1,8 +1,9 @@
-package com.nutricheck.backend.layer.client;
+package com.nutricheck.backend.layer.client.impl;
 
 import com.nutricheck.backend.dto.FoodProductDTO;
-import com.nutricheck.backend.dto.OpenFoodFactsFoodProductDTO;
-import com.nutricheck.backend.dto.OpenFoodFactsResponseDTO;
+import com.nutricheck.backend.dto.external.OpenFoodFactsFoodProductDTO;
+import com.nutricheck.backend.dto.external.OpenFoodFactsResponseDTO;
+import com.nutricheck.backend.layer.client.FoodDBClient;
 import com.nutricheck.backend.layer.client.mapper.OpenFoodFactsMapper;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -16,6 +17,8 @@ import java.util.List;
  */
 @Component("openFoodFacts")
 public class OpenFoodFactsClient implements FoodDBClient {
+
+    private static final String NUMBER_OF_SEARCH_PAGES = "1";
 
     private RestClient restClient;
 
@@ -32,7 +35,7 @@ public class OpenFoodFactsClient implements FoodDBClient {
     public List<FoodProductDTO> search(String request, String language) {
         OpenFoodFactsResponseDTO response = getData(request);
         List<OpenFoodFactsFoodProductDTO> foodProducts = response.getProducts();
-        return mapper.toDTO(foodProducts);
+        return mapper.toFoodProductDTO(foodProducts);
     }
 
     private OpenFoodFactsResponseDTO getData(String request) {
@@ -46,8 +49,8 @@ public class OpenFoodFactsClient implements FoodDBClient {
                         .query("nutriment_2=fat&nutriment_compare_2=gt&nutriment_value_2=0")
                         .query("nutriment_3=energy-kcal&nutriment_compare_3=gt&nutriment_value_3=0")
                         .queryParam("sort_by", "unique_scans_n")
-                        .queryParam("page", "1")
-                        .queryParam("page_size", "20")
+                        .queryParam("page", NUMBER_OF_SEARCH_PAGES)
+                        .queryParam("page_size", SwissFoodCDClient.MAX_SEARCH_RESULTS)
                         .queryParam("json", "1")
                         .build())
                 .accept(MediaType.APPLICATION_JSON)

@@ -1,11 +1,10 @@
-package com.nutricheck.backend.controller;
+package com.nutricheck.backend.layer.controller;
 
 import com.nutricheck.backend.TestDataFactory;
 import com.nutricheck.backend.dto.RecipeDTO;
 import com.nutricheck.backend.dto.ReportDTO;
 import com.nutricheck.backend.exception.RecipeNotFoundException;
 import com.nutricheck.backend.exception.ReportNotFoundException;
-import com.nutricheck.backend.layer.controller.AdminController;
 import com.nutricheck.backend.layer.service.AdminService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
