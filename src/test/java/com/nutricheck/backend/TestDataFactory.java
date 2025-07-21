@@ -82,7 +82,6 @@ public class TestDataFactory {
 
     public static FoodProductDTO createFoodProductDTOOneFromSwissDB() {
         return FoodProductDTO.builder()
-                .id("349447")
                 .name("Mashed potatoes, instant, prepared (with water and butter)")
                 .carbohydrates(11.5)
                 .fat(2.8)
@@ -93,7 +92,6 @@ public class TestDataFactory {
 
     public static FoodProductDTO createFoodProductDTOTwoFromSwissDB() {
         return FoodProductDTO.builder()
-                .id("350440")
                 .name("Mashed potatoes, prepared (with cream and butter)")
                 .carbohydrates(12.9)
                 .fat(8.4)

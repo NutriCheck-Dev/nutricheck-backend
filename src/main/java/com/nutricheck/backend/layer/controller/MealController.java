@@ -28,7 +28,9 @@ public class MealController {
     @GetMapping("/search/product/{name}")
     public ResponseEntity<List<FoodProductDTO>> searchFoodProduct(@PathVariable @NotNull String name,
                                                                   @RequestParam(required = false, defaultValue = "de")
-                                                                  @Pattern(regexp = "^(de|en)$", message = "Only german (de) and english (en) provided") String language) {
+                                                                  @Pattern(regexp = "^(de|en)$",
+                                                                          message = "Only german (de) and english (en) are allowed")
+                                                                  String language) {
         List<FoodProductDTO> foodProducts = mealService.searchFoodProduct(name, language);
         return ResponseEntity.ok(foodProducts);
     }

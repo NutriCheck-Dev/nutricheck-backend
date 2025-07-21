@@ -11,7 +11,7 @@ import org.mapstruct.factory.Mappers;
 import java.io.IOException;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class SwissFoodCDMapperTest {
 
@@ -31,6 +31,9 @@ class SwissFoodCDMapperTest {
         );
         List<FoodProductDTO> mappedProducts = mapper.toDTO(productsToMap);
 
-        assertEquals(expectedProducts, mappedProducts);
+        assertThat(mappedProducts)
+                .usingRecursiveComparison()
+                .ignoringFields("id") // ids are generated and therefore not relevant for comparison
+                .isEqualTo(expectedProducts);
     }
 }
