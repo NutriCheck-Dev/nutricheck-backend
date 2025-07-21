@@ -1,11 +1,10 @@
-package com.nutricheck.backend.controller;
+package com.nutricheck.backend.layer.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nutricheck.backend.TestDataFactory;
 import com.nutricheck.backend.dto.RecipeDTO;
 import com.nutricheck.backend.dto.ReportDTO;
 import com.nutricheck.backend.exception.RecipeNotFoundException;
-import com.nutricheck.backend.layer.controller.RecipeController;
 import com.nutricheck.backend.layer.service.RecipeService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

@@ -1,8 +1,9 @@
-package com.nutricheck.backend.layer.client;
+package com.nutricheck.backend.layer.client.impl;
 
 import com.nutricheck.backend.dto.FoodProductDTO;
-import com.nutricheck.backend.dto.SwissFoodCDFoodProductDTO;
-import com.nutricheck.backend.dto.SwissFoodCDResponseDTO;
+import com.nutricheck.backend.dto.external.SwissFoodCDFoodProductDTO;
+import com.nutricheck.backend.dto.external.SwissFoodCDResponseDTO;
+import com.nutricheck.backend.layer.client.FoodDBClient;
 import com.nutricheck.backend.layer.client.mapper.SwissFoodCDMapper;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
@@ -17,6 +18,8 @@ import java.util.List;
  */
 @Component("swiss")
 public class SwissFoodCDClient implements FoodDBClient {
+
+    static final String MAX_SEARCH_RESULTS = "40";
 
     private final RestClient restClient;
     private final SwissFoodCDMapper mapper;
@@ -35,7 +38,7 @@ public class SwissFoodCDClient implements FoodDBClient {
             SwissFoodCDFoodProductDTO foodProductDTO = getParticularFood(food.getId(), language);
             foodProducts.add(foodProductDTO);
         }
-        return mapper.toDTO(foodProducts);
+        return mapper.toFoodProductDTO(foodProducts);
     }
 
     private List<SwissFoodCDResponseDTO> getFoods(String request, String language) {
@@ -44,7 +47,7 @@ public class SwissFoodCDClient implements FoodDBClient {
                         .path("/foods")
                         .queryParam("search", request)
                         .queryParam("lang", language)
-                        .queryParam("limit", "20")
+                        .queryParam("limit", MAX_SEARCH_RESULTS)
                         .build())
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()

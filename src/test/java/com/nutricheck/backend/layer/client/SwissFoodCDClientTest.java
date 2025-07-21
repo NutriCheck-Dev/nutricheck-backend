@@ -4,7 +4,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nutricheck.backend.TestDataFactory;
 import com.nutricheck.backend.dto.FoodProductDTO;
-import com.nutricheck.backend.dto.SwissFoodCDResponseDTO;
+import com.nutricheck.backend.dto.external.SwissFoodCDResponseDTO;
+import com.nutricheck.backend.layer.client.impl.SwissFoodCDClient;
 import com.nutricheck.backend.layer.client.mapper.SwissFoodCDMapper;
 import com.nutricheck.backend.util.FileUtil;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.client.MockRestServiceServer;
 
-import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,14 +38,14 @@ class SwissFoodCDClientTest {
 
 
     @Test
-    void searchEnTest() throws IOException {
+    void searchEnTest() throws Exception {
         String searchTerm = "potato";
         String responseRaw = FileUtil.readFileAsString("swiss-search-response-example.json");
         String firstProductRaw = FileUtil.readFileAsString("swiss-food-product-one-example.json");
         String secondProductRaw = FileUtil.readFileAsString("swiss-food-product-two-example.json");
 
         server.expect(requestTo( "https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api/foods?search=" +
-                        searchTerm + "&lang=en&limit=20"))
+                        searchTerm + "&lang=en&limit=40"))
                 .andRespond(withSuccess(responseRaw, MediaType.APPLICATION_JSON));
         List<SwissFoodCDResponseDTO> response = objectMapper.readValue(responseRaw, new TypeReference<>() {});
 
@@ -61,22 +61,22 @@ class SwissFoodCDClientTest {
                 TestDataFactory.createFoodProductDTOOneFromSwissDB(),
                 TestDataFactory.createFoodProductDTOTwoFromSwissDB());
         // mapper will be tested with own unit tests
-        given(mapper.toDTO(anyList()))
+        given(mapper.toFoodProductDTO(anyList()))
                 .willReturn(expectedProducts);
 
         List<FoodProductDTO> result = client.search(searchTerm, "en");
-        assertEquals(result, expectedProducts);
+        assertEquals(expectedProducts, result);
     }
 
     @Test
-    void searchDeTest() throws IOException {
+    void searchDeTest() throws Exception {
         String searchTerm = "Kartoffel";
         String responseRaw = FileUtil.readFileAsString("swiss-search-response-de-example.json");
         String firstProductRaw = FileUtil.readFileAsString("swiss-food-product-one-de-example.json");
         String secondProductRaw = FileUtil.readFileAsString("swiss-food-product-two-de-example.json");
 
         server.expect(requestTo( "https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api/foods?search=" +
-                        searchTerm + "&lang=de&limit=20"))
+                        searchTerm + "&lang=de&limit=40"))
                 .andRespond(withSuccess(responseRaw, MediaType.APPLICATION_JSON));
 
         List<SwissFoodCDResponseDTO> response = objectMapper.readValue(responseRaw, new TypeReference<>() {});
@@ -93,10 +93,10 @@ class SwissFoodCDClientTest {
                 TestDataFactory.createFoodProductDTOOneFromSwissDB(),
                 TestDataFactory.createFoodProductDTOTwoFromSwissDB());
         // mapper will be tested with own unit tests
-        given(mapper.toDTO(anyList()))
+        given(mapper.toFoodProductDTO(anyList()))
                 .willReturn(expectedProducts);
 
         List<FoodProductDTO> result = client.search(searchTerm, "de");
-        assertEquals(result, expectedProducts);
+        assertEquals(expectedProducts, result);
     }
 }

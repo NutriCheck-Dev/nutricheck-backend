@@ -1,4 +1,4 @@
-package com.nutricheck.backend.controller;
+package com.nutricheck.backend.layer.controller;
 
 import com.nutricheck.backend.TestDataFactory;
 import com.nutricheck.backend.dto.FoodProductDTO;

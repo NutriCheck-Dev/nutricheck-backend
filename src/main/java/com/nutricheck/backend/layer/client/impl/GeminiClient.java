@@ -1,7 +1,8 @@
-package com.nutricheck.backend.layer.client;
+package com.nutricheck.backend.layer.client.impl;
 
 import com.google.genai.Client;
-import com.nutricheck.backend.dto.AIMealDTO;
+import com.nutricheck.backend.dto.MealDTO;
+import com.nutricheck.backend.layer.client.AIModelClient;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,7 +13,7 @@ public class GeminiClient implements AIModelClient {
         this.geminiClient = null;
     }
     @Override
-    public AIMealDTO estimateMeal(byte[] image) {
+    public MealDTO estimateMeal(byte[] image) {
         return null;
     }
 }

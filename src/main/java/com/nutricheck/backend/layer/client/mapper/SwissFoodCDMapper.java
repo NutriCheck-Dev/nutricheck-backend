@@ -1,23 +1,27 @@
 package com.nutricheck.backend.layer.client.mapper;
 
 import com.nutricheck.backend.dto.FoodProductDTO;
-import com.nutricheck.backend.dto.SwissFoodCDFoodProductDTO;
-import com.nutricheck.backend.dto.SwissFoodCDValueDTO;
+import com.nutricheck.backend.dto.external.SwissFoodCDFoodProductDTO;
+import com.nutricheck.backend.dto.external.SwissFoodCDValueDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
 import java.util.List;
 
+/**
+ * Mapper interface for converting SwissFoodCD data transfer objects to FoodProductDTOs.
+ * This interface uses MapStruct to automatically generate the implementation.
+ */
 @Mapper(componentModel = "spring")
 public interface SwissFoodCDMapper {
     @Mapping(source = "values", target = "fat", qualifiedByName = "mapFatFromValues")
     @Mapping(source = "values", target = "calories", qualifiedByName = "mapCaloriesFromValues")
     @Mapping(source = "values", target = "carbohydrates", qualifiedByName = "mapCarbohydratesFromValues")
     @Mapping(source = "values", target = "protein", qualifiedByName = "mapProteinFromValues")
-    FoodProductDTO toDTO(SwissFoodCDFoodProductDTO foodProduct);
+    FoodProductDTO toFoodProductDTO(SwissFoodCDFoodProductDTO foodProduct);
 
-    List<FoodProductDTO> toDTO(List<SwissFoodCDFoodProductDTO> foodProducts);
+    List<FoodProductDTO> toFoodProductDTO(List<SwissFoodCDFoodProductDTO> foodProducts);
 
     @Named("mapFatFromValues")
     default double mapFromValues(List<SwissFoodCDValueDTO> values) {

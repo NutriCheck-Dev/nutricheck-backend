@@ -1,4 +1,4 @@
-package com.nutricheck.backend.dto;
+package com.nutricheck.backend.dto.external;
 
 import lombok.*;
 
