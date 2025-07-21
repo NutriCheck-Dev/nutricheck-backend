@@ -9,7 +9,7 @@ public class GeminiClient implements AIModelClient {
     private final Client geminiClient;
 
     public GeminiClient() {
-        this.geminiClient = new Client();
+        this.geminiClient = null;
     }
     @Override
     public AIMealDTO estimateMeal(byte[] image) {

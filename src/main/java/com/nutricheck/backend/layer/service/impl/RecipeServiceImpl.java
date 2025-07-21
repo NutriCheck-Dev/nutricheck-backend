@@ -2,7 +2,6 @@ package com.nutricheck.backend.layer.service.impl;
 
 import com.nutricheck.backend.dto.RecipeDTO;
 import com.nutricheck.backend.dto.ReportDTO;
-import com.nutricheck.backend.layer.model.entity.Recipe;
 import com.nutricheck.backend.layer.model.repository.FoodProductRepository;
 import com.nutricheck.backend.layer.model.repository.RecipeRepository;
 import com.nutricheck.backend.layer.service.RecipeService;
