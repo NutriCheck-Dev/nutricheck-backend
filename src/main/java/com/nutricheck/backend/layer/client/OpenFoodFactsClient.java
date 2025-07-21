@@ -1,27 +1,57 @@
 package com.nutricheck.backend.layer.client;
 
-import com.alpermulayim.openfoodfacts_spring_boot_starter.OpenFoodFactsApi;
-import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchRequest;
-import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsPageResponse;
 import com.nutricheck.backend.dto.FoodProductDTO;
+import com.nutricheck.backend.dto.OpenFoodFactsFoodProductDTO;
+import com.nutricheck.backend.dto.OpenFoodFactsResponseDTO;
+import com.nutricheck.backend.layer.client.mapper.OpenFoodFactsMapper;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClient;
+
 import java.util.List;
 
-@Component
+/**
+ * Client implementation for interacting with the Open Food Facts API.
+ */
+@Component("openFoodFacts")
 public class OpenFoodFactsClient implements FoodDBClient {
 
-    private final OpenFoodFactsApi webClient;
+    private RestClient restClient;
 
-    public OpenFoodFactsClient(OpenFoodFactsApi webClient) {
-        this.webClient = webClient;
+    private OpenFoodFactsMapper mapper;
+
+    public OpenFoodFactsClient(OpenFoodFactsMapper mapper, RestClient.Builder builder) {
+        this.mapper = mapper;
+        this.restClient = builder
+                .baseUrl("https://world.openfoodfacts.org")
+                .defaultHeader(HttpHeaders.USER_AGENT, "NutriCheck/1.0 (uvtal@student.kit.edu)")
+                .build();
     }
-
     @Override
-    public List<FoodProductDTO> search(String request) {
-        return null;
+    public List<FoodProductDTO> search(String request, String language) {
+        OpenFoodFactsResponseDTO response = getData(request);
+        List<OpenFoodFactsFoodProductDTO> foodProducts = response.getProducts();
+        return mapper.toDTO(foodProducts);
     }
 
-    private OpenFoodFactsPageResponse search(ProductSearchRequest request) {
-        return null;
+    private OpenFoodFactsResponseDTO getData(String request) {
+        return restClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/cgi/search.pl")
+                        .queryParam("action", "process")
+                        .queryParam("search_terms", request)
+                        .query("nutriment_0=carbohydrates&nutriment_compare_0=gt&nutriment_value_0=0")
+                        .query("nutriment_1=proteins&nutriment_compare_1=gt&nutriment_value_1=0")
+                        .query("nutriment_2=fat&nutriment_compare_2=gt&nutriment_value_2=0")
+                        .query("nutriment_3=energy-kcal&nutriment_compare_3=gt&nutriment_value_3=0")
+                        .queryParam("sort_by", "unique_scans_n")
+                        .queryParam("page", "1")
+                        .queryParam("page_size", "20")
+                        .queryParam("json", "1")
+                        .build())
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .body(OpenFoodFactsResponseDTO.class);
     }
 }

@@ -1,0 +1,21 @@
+
+[
+ {
+   "id": 349447,
+   "foodName": "Mashed potatoes, instant, prepared (with water and butter)",
+   "generic": true,
+   "categoryNames": "Potatoes and other starchy tubers",
+   "amount": 0,
+   "foodid": 866,
+   "valueTypeCode": ""
+ },
+ {
+   "id": 350440,
+   "foodName": "Mashed potatoes, prepared (with cream and butter)",
+   "generic": true,
+   "categoryNames": "Potatoes and other starchy tubers",
+   "amount": 0,
+   "foodid": 1519,
+   "valueTypeCode": ""
+ }
+]
