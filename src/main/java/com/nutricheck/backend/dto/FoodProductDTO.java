@@ -5,6 +5,10 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 
+/**
+ * Data Transfer Object (DTO) for food product information.
+ * This class is used to transfer food product data over the REST API.
+ */
 @Data
 @Builder
 @NoArgsConstructor

@@ -89,6 +89,28 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+    				<artifactId>maven-surefire-plugin</artifactId>
+    				<version>${maven-surefire-plugin.version}</version>
+    			<dependencies>
+        			<dependency>
+            				<groupId>me.fabriciorby</groupId>
+            				<artifactId>maven-surefire-junit5-tree-reporter</artifactId>
+            				<version>1.4.0</version>
+        			</dependency>
+    			</dependencies>
+    			<configuration>
+        			<reportFormat>plain</reportFormat>
+        			<consoleOutputReporter>
+            				<disable>true</disable>
+        			</consoleOutputReporter>
+        			<statelessTestsetInfoReporter
+                			implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5StatelessTestsetInfoTreeReporter">
+                			<theme>UNICODE</theme>
+        			</statelessTestsetInfoReporter>
+    			</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 

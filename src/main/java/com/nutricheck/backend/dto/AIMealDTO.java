@@ -2,6 +2,11 @@ package com.nutricheck.backend.dto;
 
 import lombok.*;
 
+/**
+ * Data Transfer Object (DTO) for AI-generated meal information.
+ * This class is used to transfer meal data, including nutritional information,
+ * between different layers of the application.
+ */
 @Getter
 @Setter
 @Builder

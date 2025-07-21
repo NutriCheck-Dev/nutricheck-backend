@@ -7,6 +7,10 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
+/**
+ * Mapper interface for converting between FoodProduct entities and FoodProductDTOs.
+ * Utilizes MapStruct for automatic mapping generation.
+ */
 @Mapper(componentModel = "spring")
 public interface FoodProductMapper {
     FoodProductDTO toDTO(FoodProduct foodProduct);

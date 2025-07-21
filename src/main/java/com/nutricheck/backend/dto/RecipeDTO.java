@@ -8,6 +8,10 @@ import lombok.*;
 
 import java.util.Set;
 
+/**
+ * Data Transfer Object (DTO) for recipe information.
+ * This class is used to transfer recipe data over the REST API.
+ */
 @Getter
 @Setter
 @Builder

@@ -7,6 +7,10 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
+/**
+ * Mapper interface for converting between Recipe entities and RecipeDTOs.
+ * Utilizes MapStruct for automatic mapping generation.
+ */
 @Mapper(componentModel = "spring", uses = IngredientMapper.class)
 public interface RecipeMapper {
 

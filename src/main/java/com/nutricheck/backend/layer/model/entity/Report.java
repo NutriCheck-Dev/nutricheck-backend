@@ -6,6 +6,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
 
+/**
+ * Represents a report entity in the database.
+ * Contains details about a report, including
+ * the associated recipe ID and a description.
+ */
 @Entity
 @Getter
 @Setter

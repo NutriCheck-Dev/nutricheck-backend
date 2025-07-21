@@ -5,6 +5,10 @@ import lombok.*;
 
 import java.util.Objects;
 
+/**
+ * Entity representing an ingredient in a recipe.
+ * This class is used to map ingredient data to the database.
+ */
 @Entity
 @Getter
 @Setter
@@ -21,12 +25,13 @@ public class Ingredient {
     @JoinColumn(name = "recipe_id")
     private Recipe recipe;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @MapsId("foodProductId")
     @JoinColumn(name = "food_product_id")
     private FoodProduct foodProduct;
 
     private double quantity;
+
 
     @Override
     public boolean equals(Object o) {
