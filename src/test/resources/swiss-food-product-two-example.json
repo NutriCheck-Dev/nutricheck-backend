@@ -1,0 +1,39 @@
+{
+  "name" : "Mashed potatoes, prepared (with cream and butter)",
+  "id" : 350440,
+  "values" : [
+        {
+        "id" : 6301201,
+        "value" : 2,
+        "component" : {
+            "name" : "Protein",
+            "code" : "PROT625"
+        }
+        },
+        {
+        "id" : 6301176,
+        "value" : 8.4,
+        "component" : {
+            "name" : "Fat, total",
+            "code" : "FAT"
+        }
+        },
+        {
+        "id" : 6301175,
+        "value" : 12.9,
+        "component" : {
+            "name" : "Carbohydrates, available",
+            "code" : "CHO"
+        }
+        },
+        {
+        "id" : 6301188,
+        "value" : 139,
+        "component" : {
+            "name" : "Energy, kilocalories",
+            "code" : "ENERCC"
+        }
+        }
+    ]
+}
+

@@ -14,14 +14,16 @@ import java.util.List;
  * as well as estimating a meal based on an image.
  */
 public interface MealService {
+  
     /**
      * Searches for food products by name, first in the internal database
      * and then using the external food database.
      *
      * @param name the name of the food product to search for.
+     * @param language the language in which to perform the search.
      * @return a list of FoodProductDTO objects matching the search criteria.
      */
-    List<FoodProductDTO> searchFoodProduct(String name);
+    List<FoodProductDTO> searchFoodProduct(String name, String language);
 
     /**
      * Searches for recipes by name.

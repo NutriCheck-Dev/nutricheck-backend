@@ -1,0 +1,20 @@
+[
+  {
+    "id": 349447,
+    "foodName": "Instant-Kartoffelstock, zubereitet (mit Wasser und Butter)",
+    "generic": true,
+    "categoryNames": "Kartoffeln und andere stärkereiche Knollen",
+    "amount": 0,
+    "foodid": 866,
+    "valueTypeCode": ""
+  },
+  {
+    "id": 350495,
+    "foodName": "Kartoffelflocken mit Milchpulver und Salz (Instant-Kartoffelstock)",
+    "generic": true,
+    "categoryNames": "Kartoffeln und andere stärkereiche Knollen",
+    "amount": 0,
+    "foodid": 860,
+    "valueTypeCode": ""
+  }
+]
