@@ -31,6 +31,18 @@ public class FoodProduct {
     @OneToMany(mappedBy = "foodProduct", fetch = FetchType.LAZY)
     private Set<Ingredient> references = new HashSet<>();
 
+    /**
+     * Helper method to a reference to this food product.
+     * This method is used to maintain the relationship between food products and ingredients.
+     *
+     * Is needed as getter returns an unmodifiable set.
+     *
+     * @param ingredient the ingredient that references this food product
+     */
+    public void addReference(Ingredient ingredient) {
+        references.add(ingredient);
+    }
+  
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
