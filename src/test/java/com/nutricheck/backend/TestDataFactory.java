@@ -18,19 +18,7 @@ public class TestDataFactory {
                 .fat(5)
                 .ingredients(Set.of(
                         createDefaultIngredientDTO(),
-                        IngredientDTO.builder()
-                                .recipeId("testRecipeId")
-                                .foodProductId("testFoodProductId2")
-                                .foodProduct(FoodProductDTO.builder()
-                                        .id("testFoodProductId2")
-                                        .name("Test Food Product 2")
-                                        .calories(100)
-                                        .carbohydrates(25)
-                                        .protein(5)
-                                        .fat(3)
-                                        .build())
-                                .quantity(200)
-                                .build())
+                        createDefaultIngredientDTO2())
                 )
                 .build();
     }
@@ -42,6 +30,16 @@ public class TestDataFactory {
                 .quantity(100)
                 .build();
     }
+
+    public static IngredientDTO createDefaultIngredientDTO2() {
+        return IngredientDTO.builder()
+                .recipeId("testRecipeId")
+                .foodProductId("testFoodProductId2")
+                .foodProduct(createDefaultFoodProductDTO2())
+                .quantity(200)
+                .build();
+    }
+
     public static ReportDTO createDefaultReportDTO() {
         return ReportDTO.builder()
                 .id("testReportId")
@@ -64,6 +62,16 @@ public class TestDataFactory {
                 .build();
     }
 
+    public static FoodProductDTO createDefaultFoodProductDTO2() {
+        return FoodProductDTO.builder()
+                .id("testFoodProductId2")
+                .name("Test Food Product 2")
+                .calories(100)
+                .carbohydrates(25)
+                .protein(5)
+                .fat(3)
+                .build();
+    }
 
     public static MealDTO createDefaultMealDTO() {
         return MealDTO.builder()
@@ -79,6 +87,7 @@ public class TestDataFactory {
                 )
                 .build();
     }
+
     public static Report createDefaultReport() {
         return Report.builder()
                 .description("This is a test report")
@@ -122,18 +131,48 @@ public class TestDataFactory {
         recipe.setIngredients(Set.of(ingredient));
         return recipe;
     }
-    public static String createDefaultEncodedImage() {
-        return "iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAADMElEQVR4nOzVwQnAIBQFQYXff81RUkQCOyDj1YOPnbXWPmeTRef+/3O/OyB" +
-                "jzh3CD95BfqICMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CM" +
-                "K0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0C" +
-                "MK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0C" +
-                "MK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0C" +
-                "MK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CM" +
-                "K0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0C" +
-                "MK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0" +
-                "CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CM" +
-                "K0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CM" +
-                "K0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMK0CMO0TAAD//2Anhf4QtqobAAAAAElFTkSuQmCC";
+  
+  public static FoodProductDTO createFoodProductDTOOneFromSwissDB() {
+        return FoodProductDTO.builder()
+                .name("Mashed potatoes, instant, prepared (with water and butter)")
+                .carbohydrates(11.5)
+                .fat(2.8)
+                .calories(80)
+                .protein(2)
+                .build();
+    }
+
+    public static FoodProductDTO createFoodProductDTOTwoFromSwissDB() {
+        return FoodProductDTO.builder()
+                .name("Mashed potatoes, prepared (with cream and butter)")
+                .carbohydrates(12.9)
+                .fat(8.4)
+                .calories(139)
+                .protein(2)
+                .build();
+    }
+
+
+    public static FoodProductDTO createFoodProductDTOOneFromOpenFoodFacts() {
+        return FoodProductDTO.builder()
+                .id("5060042641000")
+                .name("Lightly Sea Salted")
+                .calories(476)
+                .carbohydrates(49)
+                .protein(6.2)
+                .fat(27)
+                .build();
+    }
+
+    public static FoodProductDTO createFoodProductDTOTwoFromOpenFoodFacts() {
+        return FoodProductDTO.builder()
+                .id("5053990101597")
+                .name("Sour Cream & Onion")
+                .calories(519)
+                .carbohydrates(54)
+                .protein(6.3)
+                .fat(30)
+                .build();
     }
 
 }

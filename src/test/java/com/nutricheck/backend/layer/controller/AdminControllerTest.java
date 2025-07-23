@@ -1,11 +1,10 @@
-package com.nutricheck.backend.controller;
+package com.nutricheck.backend.layer.controller;
 
 import com.nutricheck.backend.TestDataFactory;
 import com.nutricheck.backend.dto.RecipeDTO;
 import com.nutricheck.backend.dto.ReportDTO;
 import com.nutricheck.backend.exception.RecipeNotFoundException;
 import com.nutricheck.backend.exception.ReportNotFoundException;
-import com.nutricheck.backend.layer.controller.AdminController;
 import com.nutricheck.backend.layer.service.AdminService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +69,7 @@ class AdminControllerTest {
     void deleteReportTest() throws Exception {
         given(adminService.deleteReport(reportDTO.getId())).willReturn(reportDTO);
 
-        ResultActions response = mockMvc.perform(delete("/admin/reports/delete/{reportId}", reportDTO.getId()));
+        ResultActions response = mockMvc.perform(delete("/admin/reports/{reportId}", reportDTO.getId()));
 
         response
                 .andExpect(status().isOk())
@@ -85,7 +84,7 @@ class AdminControllerTest {
     void deleteAllReportsTest() throws Exception {
         List<ReportDTO> reports = List.of(reportDTO, reportDTO);
         given(adminService.deleteAllReports()).willReturn(reports);
-        ResultActions response = mockMvc.perform(delete("/admin/reports/delete/all"));
+        ResultActions response = mockMvc.perform(delete("/admin/reports"));
 
         response
                 .andExpect(status().isOk())
@@ -108,7 +107,7 @@ class AdminControllerTest {
     void deleteRecipeTest() throws Exception {
         given(adminService.deleteRecipe(recipeDTO.getId())).willReturn(recipeDTO);
 
-        ResultActions response = mockMvc.perform(delete("/admin/recipe/delete/{recipeId}", recipeDTO.getId()));
+        ResultActions response = mockMvc.perform(delete("/admin/recipes/{recipeId}", recipeDTO.getId()));
 
         response
                 .andExpect(status().isOk())
@@ -127,7 +126,7 @@ class AdminControllerTest {
     void deleteMissingReportTest() throws Exception {
         given(adminService.deleteReport("missingReportId")).willThrow(ReportNotFoundException.class);
 
-        mockMvc.perform(delete("/admin/reports/delete/{reportId}", "missingReportId"))
+        mockMvc.perform(delete("/admin/reports/{reportId}", "missingReportId"))
                 .andExpect(status().isNotFound());
     }
 
@@ -135,7 +134,7 @@ class AdminControllerTest {
     void deleteMissingRecipeTest() throws Exception {
         given(adminService.deleteRecipe("missingRecipeId")).willThrow(RecipeNotFoundException.class);
 
-        mockMvc.perform(delete("/admin/recipe/delete/{recipeId}", "missingRecipeId"))
+        mockMvc.perform(delete("/admin/recipes/{recipeId}", "missingRecipeId"))
                 .andExpect(status().isNotFound());
     }
 }

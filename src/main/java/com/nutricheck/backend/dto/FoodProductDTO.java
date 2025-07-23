@@ -11,6 +11,7 @@ import lombok.*;
  */
 @Getter
 @Setter
+@EqualsAndHashCode(exclude = {"id"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

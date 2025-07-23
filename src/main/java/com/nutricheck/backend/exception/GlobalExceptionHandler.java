@@ -1,12 +1,14 @@
 package com.nutricheck.backend.exception;
 
-import org.hibernate.exception.ConstraintViolationException;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.io.IOException;
 
 
 /**
@@ -72,5 +74,18 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleReportNotFoundException(ReportNotFoundException ex) {
         ErrorResponse errorResponse = ErrorResponse.create(ex, HttpStatus.NOT_FOUND, ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
+    /**
+     * Handles IOException, whiccan occur when handling the image file of a meal.
+     *
+     * @param ex the exception that was thrown
+     * @return a ResponseEntity containing an ErrorResponse with details about the error
+     */
+    @ExceptionHandler(value = IOException.class)
+    public ResponseEntity<ErrorResponse> handleIOException(IOException ex) {
+        ErrorResponse errorResponse = ErrorResponse.create(ex, HttpStatus.INTERNAL_SERVER_ERROR,
+                ex.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }
 }

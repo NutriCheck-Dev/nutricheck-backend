@@ -1,11 +1,10 @@
-package com.nutricheck.backend.controller;
+package com.nutricheck.backend.layer.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nutricheck.backend.TestDataFactory;
 import com.nutricheck.backend.dto.RecipeDTO;
 import com.nutricheck.backend.dto.ReportDTO;
 import com.nutricheck.backend.exception.RecipeNotFoundException;
-import com.nutricheck.backend.layer.controller.RecipeController;
 import com.nutricheck.backend.layer.service.RecipeService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -50,12 +49,12 @@ class RecipeControllerTest {
     void uploadRecipeTest() throws Exception {
         given(recipeService.uploadRecipe(any(RecipeDTO.class))).willReturn(recipeDTO);
 
-        ResultActions response = mockMvc.perform(post("/user/recipe/upload")
+        ResultActions response = mockMvc.perform(post("/user/recipes")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(recipeDTO)));
 
         response
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(recipeDTO.getId()))
                 .andExpect(jsonPath("$.name").value(recipeDTO.getName()))
                 .andExpect(jsonPath("$.instructions").value(recipeDTO.getInstructions()))
@@ -71,7 +70,7 @@ class RecipeControllerTest {
     void reportRecipeTest() throws Exception {
         given(recipeService.reportRecipe(any(ReportDTO.class))).willReturn(reportDTO);
 
-        ResultActions response = mockMvc.perform(post("/user/recipe/report")
+        ResultActions response = mockMvc.perform(post("/user/recipes/report")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(reportDTO)));
 
@@ -88,7 +87,7 @@ class RecipeControllerTest {
     void downloadRecipeTest() throws Exception {
         given(recipeService.downloadRecipe(recipeDTO.getId())).willReturn(recipeDTO);
 
-        ResultActions response = mockMvc.perform(get("/user/recipe/download/{recipeId}", recipeDTO.getId()));
+        ResultActions response = mockMvc.perform(get("/user/recipes/{recipeId}", recipeDTO.getId()));
 
         response
                 .andExpect(status().isOk())
@@ -107,7 +106,7 @@ class RecipeControllerTest {
     void downloadMissingRecipeTest() throws Exception {
         given(recipeService.downloadRecipe("missingRecipeId")).willThrow(RecipeNotFoundException.class);
 
-        mockMvc.perform(get("/user/recipe/download/{recipeId}", "missingRecipeId"))
+        mockMvc.perform(get("/user/recipes/{recipeId}", "missingRecipeId"))
                 .andExpect(status().isNotFound());
     }
 }

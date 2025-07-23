@@ -5,12 +5,14 @@ import com.nutricheck.backend.dto.MealDTO;
 import com.nutricheck.backend.dto.RecipeDTO;
 import com.nutricheck.backend.layer.service.MealService;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -34,9 +36,13 @@ public class MealController {
      * @param name the name of the food product to search for.
      * @return a list of FoodProductDTO objects matching the search criteria.
      */
-    @GetMapping("/search/product/{name}")
-    public ResponseEntity<List<FoodProductDTO>> searchFoodProduct(@PathVariable @NotNull String name) {
-        List<FoodProductDTO> foodProducts = mealService.searchFoodProduct(name);
+    @GetMapping("/search/products/{name}")
+    public ResponseEntity<List<FoodProductDTO>> searchFoodProduct(@PathVariable @NotNull String name,
+                                                                  @RequestParam(required = false, defaultValue = "de")
+                                                                  @Pattern(regexp = "^(de|en)$",
+                                                                          message = "Only german (de) and english (en) are allowed")
+                                                                  String language) {
+        List<FoodProductDTO> foodProducts = mealService.searchFoodProduct(name, language);
         return ResponseEntity.ok(foodProducts);
     }
 
@@ -46,7 +52,7 @@ public class MealController {
      * @param name the name of the recipe to search for.
      * @return a list of RecipeDTO objects matching the search criteria.
      */
-    @GetMapping("/search/recipe/{name}")
+    @GetMapping("/search/recipes/{name}")
     public ResponseEntity<List<RecipeDTO>> searchRecipe(@PathVariable @NotNull String name) {
         List<RecipeDTO> recipes = mealService.searchRecipe(name);
         return ResponseEntity.ok(recipes);
@@ -58,8 +64,8 @@ public class MealController {
      * @param file the image file containing the meal to be estimated.
      * @return the estimated MealDTO object.
      */
-    @PostMapping(value = "/meal/estimate")
-    public ResponseEntity<MealDTO> estimateMeal(@RequestParam("file") MultipartFile file) {
+    @PostMapping(value = "/meal")
+    public ResponseEntity<MealDTO> estimateMeal(@RequestParam("file") MultipartFile file) throws IOException {
         // for performance reasons validate image here
         if(file.isEmpty() || !file.getContentType().equals(MediaType.IMAGE_PNG_VALUE))
             return ResponseEntity.badRequest().build();

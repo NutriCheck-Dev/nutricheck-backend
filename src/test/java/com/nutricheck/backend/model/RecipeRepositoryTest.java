@@ -56,7 +56,7 @@ class RecipeRepositoryTest {
     void findRecipeByNameAndInstructionsTest() {
         Assertions.assertThat(recipeRepository.findByNameAndInstructions(recipe.getName(), recipe.getInstructions()))
                 .as("Check if recipe can be found by name and instructions")
-                .isPresent();
+                .anyMatch(r -> r.getId().equals(recipe.getId()));
     }
 
     @Test

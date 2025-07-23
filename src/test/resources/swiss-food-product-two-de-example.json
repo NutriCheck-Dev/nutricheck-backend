@@ -1,0 +1,38 @@
+{
+  "name": "Kartoffelflocken mit Milchpulver und Salz (Instant-Kartoffelstock)",
+  "id": 350495,
+  "values": [
+    {
+      "id": 6303740,
+      "value":11.3,
+      "component": {
+        "name": "Protein",
+        "code": "PROT625"
+      }
+    },
+    {
+      "id": 6303730,
+      "value": 5.3,
+      "component": {
+        "name": "Fett, total",
+        "code": "FAT"
+      }
+    },
+    {
+      "id": 6303733,
+      "value": 65.5,
+      "component": {
+        "name": "Kohlenhydrate, verfügbar",
+        "code": "CHO"
+      }
+    },
+    {
+      "id": 6303769,
+      "value": 365,
+      "component": {
+        "name": "Energie, Kalorien",
+        "code": "ENERCC"
+    }
+    }
+  ]
+}

@@ -43,7 +43,7 @@ public class AdminController {
      * @param reportId the ID of the report to be deleted.
      * @return the deleted ReportDTO object.
      */
-    @DeleteMapping("/reports/delete/{reportId}")
+    @DeleteMapping("/reports/{reportId}")
     public ResponseEntity<ReportDTO> deleteReport(@PathVariable @NotBlank String reportId) {
         ReportDTO deletedReport = adminService.deleteReport(reportId);
         return ResponseEntity.ok(deletedReport);
@@ -54,7 +54,7 @@ public class AdminController {
      *
      * @return a list of ReportDTO objects representing the deleted reports.
      */
-    @DeleteMapping("/reports/delete/all")
+    @DeleteMapping("/reports")
     public ResponseEntity<List<ReportDTO>> deleteAllReports() {
         List<ReportDTO> deletedReports = adminService.deleteAllReports();
         return ResponseEntity.ok(deletedReports);
@@ -66,7 +66,7 @@ public class AdminController {
      * @param recipeId the ID of the recipe to be deleted.
      * @return the deleted RecipeDTO object.
      */
-    @DeleteMapping("/recipe/delete/{recipeId}")
+    @DeleteMapping("/recipes/{recipeId}")
     public ResponseEntity<RecipeDTO> deleteRecipe(@PathVariable @NotBlank String recipeId) {
         RecipeDTO deletedRecipe = adminService.deleteRecipe(recipeId);
         return ResponseEntity.ok(deletedRecipe);
