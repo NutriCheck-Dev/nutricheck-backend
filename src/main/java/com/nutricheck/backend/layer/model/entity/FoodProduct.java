@@ -41,6 +41,7 @@ public class FoodProduct {
      */
     public void addReference(Ingredient ingredient) {
         references.add(ingredient);
+    }
   
     @Override
     public boolean equals(Object o) {
