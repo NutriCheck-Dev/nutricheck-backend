@@ -39,11 +39,11 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public ReportDTO reportRecipe(ReportDTO reportDTO) {
-        Report report = reportMapper.toEntity(reportDTO);
-        Optional<Recipe> recipeToReport = recipeRepository.findById(report.getRecipeId());
+        Optional<Recipe> recipeToReport = recipeRepository.findById(reportDTO.getRecipeId());
         if (recipeToReport.isEmpty()) {
-            throw new RecipeNotFoundException("Recipe with ID " + report.getRecipeId() + " cannot be found");
+            throw new RecipeNotFoundException("Recipe with ID " + reportDTO.getRecipeId() + " cannot be found"); // TODO: constant
         }
+        Report report = reportMapper.toEntity(reportDTO);
         Report managedReport = reportRepository.save(report);
         return reportMapper.toDTO(managedReport);
     }
@@ -52,7 +52,7 @@ public class RecipeServiceImpl implements RecipeService {
     public RecipeDTO downloadRecipe(String recipeId) {
         Optional<Recipe> recipe = recipeRepository.findById(recipeId);
         if (recipe.isEmpty()) {
-            throw new RecipeNotFoundException("Recipe with ID " + recipeId + " cannot be found");
+            throw new RecipeNotFoundException("Recipe with ID " + recipeId + " cannot be found"); // TODO: constant
         }
         return recipeMapper.toDTO(recipe.get());
     }

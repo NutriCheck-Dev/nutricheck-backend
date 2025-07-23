@@ -3,6 +3,7 @@ package com.nutricheck.backend.layer.service;
 import com.nutricheck.backend.TestDataFactory;
 import com.nutricheck.backend.dto.RecipeDTO;
 import com.nutricheck.backend.dto.ReportDTO;
+import com.nutricheck.backend.exception.RecipeNotFoundException;
 import com.nutricheck.backend.layer.model.entity.Recipe;
 import com.nutricheck.backend.layer.model.entity.Report;
 import com.nutricheck.backend.layer.model.repository.FoodProductRepository;
@@ -60,6 +61,17 @@ class RecipeServiceTest {
     }
 
     @Test
+    void reportMissingRecipeTest() {
+        ReportDTO reportDTO = TestDataFactory.createDefaultReportDTO();
+        given(recipeRepository.findById(reportDTO.getRecipeId()))
+                .willReturn(Optional.empty());
+
+        assertThrows(RecipeNotFoundException.class, () -> {
+            recipeService.reportRecipe(reportDTO);
+        });
+    }
+
+    @Test
     void downloadRecipeTest() {
         String recipeId = "testRecipeId";
 
@@ -71,5 +83,15 @@ class RecipeServiceTest {
 
         RecipeDTO actualRecipeDTO = recipeService.downloadRecipe(recipeId);
         assertEquals(expectedRecipeDTO, actualRecipeDTO);
+    }
+
+    @Test
+    void downloadMissingRecipeTest() {
+        String recipeId = "missingRecipeId";
+        given(recipeRepository.findById(recipeId)).willReturn(Optional.empty());
+
+        assertThrows(RecipeNotFoundException.class, () -> {
+            recipeService.downloadRecipe(recipeId);
+        });
     }
 }
