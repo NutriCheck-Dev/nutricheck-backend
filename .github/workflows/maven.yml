@@ -28,6 +28,8 @@ jobs:
               "username": "${{ github.actor }}",
               "password": "${{ secrets.GH_PAT }}"
             }]
+      - name: Ensure test resources
+        run: cp .github/ci/application-test.properties src/test/resources/application-test.properties
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
