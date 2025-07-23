@@ -2,6 +2,7 @@ package com.nutricheck.backend.layer.service.impl;
 
 import com.nutricheck.backend.dto.RecipeDTO;
 import com.nutricheck.backend.dto.ReportDTO;
+import com.nutricheck.backend.exception.RecipeNotFoundException;
 import com.nutricheck.backend.exception.ReportNotFoundException;
 import com.nutricheck.backend.layer.model.entity.Recipe;
 import com.nutricheck.backend.layer.model.entity.Report;
@@ -20,6 +21,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
 
+    private static final String NOT_FOUND_MESSAGE = "%s with id %s cannot be found.";
+
     private final ReportRepository reportRepository;
     private final RecipeRepository recipeRepository;
     private final ReportMapper reportMapper;
@@ -27,14 +30,15 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<ReportDTO> getAllReports() {
-        return List.of();
+        List<Report> allReports = reportRepository.findAll();
+        return reportMapper.toDTO(allReports);
     }
 
     @Override
     public ReportDTO deleteReport(String reportId) {
         Optional<Report> reportToDelete = reportRepository.findById(reportId);
         if(reportToDelete.isEmpty()) {
-            throw new ReportNotFoundException("Report with id " + reportId + "cannot be found.");
+            throw new ReportNotFoundException(String.format(NOT_FOUND_MESSAGE, "Report", reportId));
         }
         reportRepository.deleteById(reportId);
         return reportMapper.toDTO(reportToDelete.get());
@@ -43,9 +47,6 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<ReportDTO> deleteAllReports() {
         List<Report> allReports = reportRepository.findAll();
-        if(allReports.isEmpty()) {
-            return List.of();
-        }
         reportRepository.deleteAll();
         return reportMapper.toDTO(allReports);
     }
@@ -53,7 +54,7 @@ public class AdminServiceImpl implements AdminService {
     public RecipeDTO deleteRecipe(String recipeId) {
         Optional<Recipe> recipeToDelete = recipeRepository.findById(recipeId);
         if(recipeToDelete.isEmpty()) {
-            throw new ReportNotFoundException("Recipe with id " + recipeId + " cannot be found.");
+            throw new RecipeNotFoundException(String.format(NOT_FOUND_MESSAGE, "Recipe", recipeId));
         }
         recipeRepository.deleteById(recipeId);
         return recipeMapper.toDTO(recipeToDelete.get());

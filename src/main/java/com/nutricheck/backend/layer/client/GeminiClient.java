@@ -19,11 +19,11 @@ public class GeminiClient implements AIModelClient {
     }
     @Override
     public AIMealDTO estimateMeal(byte[] image) {
-        GenerateContentConfig config = GenerateContentConfig.builder()
-                .candidateCount(1)
-                .responseMimeType("application/json")
-                .responseSchema(null) // TODO: Set Json schema for AIMealDTO
-                .build();
+//        GenerateContentConfig config = GenerateContentConfig.builder()
+//                .candidateCount(1)
+//                .responseMimeType("application/json")
+//                .responseSchema(null) // TODO: Set Json schema for AIMealDTO
+//                .build();
         return null;
     }
 }
