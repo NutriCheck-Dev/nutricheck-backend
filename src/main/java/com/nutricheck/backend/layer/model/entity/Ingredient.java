@@ -32,7 +32,6 @@ public class Ingredient {
 
     private double quantity;
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

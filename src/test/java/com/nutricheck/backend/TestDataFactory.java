@@ -18,19 +18,7 @@ public class TestDataFactory {
                 .fat(5)
                 .ingredients(Set.of(
                         createDefaultIngredientDTO(),
-                        IngredientDTO.builder()
-                                .recipeId("testRecipeId")
-                                .foodProductId("testFoodProductId2")
-                                .foodProduct(FoodProductDTO.builder()
-                                        .id("testFoodProductId2")
-                                        .name("Test Food Product 2")
-                                        .calories(100)
-                                        .carbohydrates(25)
-                                        .protein(5)
-                                        .fat(3)
-                                        .build())
-                                .quantity(200)
-                                .build())
+                        createDefaultIngredientDTO2())
                 )
                 .build();
     }
@@ -42,6 +30,16 @@ public class TestDataFactory {
                 .quantity(100)
                 .build();
     }
+
+    public static IngredientDTO createDefaultIngredientDTO2() {
+        return IngredientDTO.builder()
+                .recipeId("testRecipeId")
+                .foodProductId("testFoodProductId2")
+                .foodProduct(createDefaultFoodProductDTO2())
+                .quantity(200)
+                .build();
+    }
+
     public static ReportDTO createDefaultReportDTO() {
         return ReportDTO.builder()
                 .id("testReportId")
@@ -64,6 +62,16 @@ public class TestDataFactory {
                 .build();
     }
 
+    public static FoodProductDTO createDefaultFoodProductDTO2() {
+        return FoodProductDTO.builder()
+                .id("testFoodProductId2")
+                .name("Test Food Product 2")
+                .calories(100)
+                .carbohydrates(25)
+                .protein(5)
+                .fat(3)
+                .build();
+    }
 
     public static MealDTO createDefaultMealDTO() {
         return MealDTO.builder()

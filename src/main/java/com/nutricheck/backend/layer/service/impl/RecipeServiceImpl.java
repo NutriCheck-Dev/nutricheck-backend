@@ -1,14 +1,19 @@
 package com.nutricheck.backend.layer.service.impl;
 
+import com.nutricheck.backend.dto.IngredientDTO;
 import com.nutricheck.backend.dto.RecipeDTO;
 import com.nutricheck.backend.dto.ReportDTO;
+import com.nutricheck.backend.exception.DuplicateRecipeException;
 import com.nutricheck.backend.exception.RecipeNotFoundException;
+import com.nutricheck.backend.layer.model.entity.FoodProduct;
+import com.nutricheck.backend.layer.model.entity.Ingredient;
 import com.nutricheck.backend.layer.model.entity.Recipe;
 import com.nutricheck.backend.layer.model.entity.Report;
 import com.nutricheck.backend.layer.model.repository.FoodProductRepository;
 import com.nutricheck.backend.layer.model.repository.RecipeRepository;
 import com.nutricheck.backend.layer.model.repository.ReportRepository;
 import com.nutricheck.backend.layer.service.RecipeService;
+import com.nutricheck.backend.layer.service.mapper.FoodProductMapper;
 import com.nutricheck.backend.layer.service.mapper.IngredientMapper;
 import com.nutricheck.backend.layer.service.mapper.RecipeMapper;
 import com.nutricheck.backend.layer.service.mapper.ReportMapper;
@@ -16,7 +21,10 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -28,13 +36,47 @@ public class RecipeServiceImpl implements RecipeService {
     private final RecipeMapper recipeMapper;
     private final IngredientMapper ingredientMapper;
     private final ReportMapper reportMapper;
+    private final FoodProductMapper foodProductMapper;
 
     @Override
     @Transactional
     public RecipeDTO uploadRecipe(RecipeDTO recipeDTO) {
-        // Contains logic to create a new recipe for complex business logic needed as foodProducts need to be looked up in
-        // db and potentially created if they do not exist.
-        return null;
+        List<Recipe> existingRecipes = recipeRepository.findByNameAndInstructions(recipeDTO.getName(), recipeDTO.getInstructions());
+        if(isDuplicateRecipe(recipeDTO, recipeMapper.toDTO(existingRecipes))) {
+            throw new DuplicateRecipeException(
+                    String.format("Recipe with name '%s', instructions '%s' and the given ingredients already exists.",
+                            recipeDTO.getName(), recipeDTO.getInstructions()));
+        }
+
+        Recipe recipe = recipeMapper.toEntity(recipeDTO);
+        Set<Ingredient> ingredients = new HashSet<>();
+        for(IngredientDTO ingredientDTO : recipeDTO.getIngredients()) {
+            Ingredient ingredient = ingredientMapper.toEntity(ingredientDTO);
+            ingredient.setRecipe(recipe);
+            // either use the existing food product or create a new one if it is missing
+            FoodProduct newFoodProduct = foodProductMapper.toEntity(ingredientDTO.getFoodProduct());
+            FoodProduct foodProduct = findExistingFoodProduct(newFoodProduct)
+                    .orElse(newFoodProduct);
+            foodProduct.addReference(ingredient);
+            ingredient.setFoodProduct(foodProduct);
+            ingredients.add(ingredient);
+        }
+        recipe.setIngredients(ingredients);
+
+        Recipe managedRecipe = recipeRepository.save(recipe); // cascading causes ingredients and food products to be saved
+        return recipeMapper.toDTO(managedRecipe);
+    }
+
+    private boolean isDuplicateRecipe(RecipeDTO newRecipe, List<RecipeDTO> existingRecipes) {
+        return existingRecipes.stream()
+                .anyMatch(existingRecipe -> existingRecipe.equals(newRecipe));
+    }
+
+    private Optional<FoodProduct> findExistingFoodProduct(FoodProduct newFoodProduct) {
+        List<FoodProduct> allFoodProducts = foodProductRepository.findAll();
+        return allFoodProducts.stream()
+                .filter(fp -> fp.equals(newFoodProduct))
+                .findFirst();
     }
 
     @Override
