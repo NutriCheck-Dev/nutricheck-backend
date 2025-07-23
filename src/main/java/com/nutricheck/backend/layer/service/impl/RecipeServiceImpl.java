@@ -41,7 +41,8 @@ public class RecipeServiceImpl implements RecipeService {
     public ReportDTO reportRecipe(ReportDTO reportDTO) {
         Optional<Recipe> recipeToReport = recipeRepository.findById(reportDTO.getRecipeId());
         if (recipeToReport.isEmpty()) {
-            throw new RecipeNotFoundException("Recipe with ID " + reportDTO.getRecipeId() + " cannot be found"); // TODO: constant
+            throw new RecipeNotFoundException(String.format(AdminServiceImpl.NOT_FOUND_MESSAGE,
+                    "Recipe", reportDTO.getRecipeId()));
         }
         Report report = reportMapper.toEntity(reportDTO);
         Report managedReport = reportRepository.save(report);
@@ -52,7 +53,8 @@ public class RecipeServiceImpl implements RecipeService {
     public RecipeDTO downloadRecipe(String recipeId) {
         Optional<Recipe> recipe = recipeRepository.findById(recipeId);
         if (recipe.isEmpty()) {
-            throw new RecipeNotFoundException("Recipe with ID " + recipeId + " cannot be found"); // TODO: constant
+            throw new RecipeNotFoundException(String.format(AdminServiceImpl.NOT_FOUND_MESSAGE,
+                    "Recipe", recipeId));
         }
         return recipeMapper.toDTO(recipe.get());
     }
