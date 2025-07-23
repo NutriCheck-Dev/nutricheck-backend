@@ -36,7 +36,7 @@ public class MealController {
      * @param name the name of the food product to search for.
      * @return a list of FoodProductDTO objects matching the search criteria.
      */
-    @GetMapping("/search/product/{name}")
+    @GetMapping("/search/products/{name}")
     public ResponseEntity<List<FoodProductDTO>> searchFoodProduct(@PathVariable @NotNull String name,
                                                                   @RequestParam(required = false, defaultValue = "de")
                                                                   @Pattern(regexp = "^(de|en)$",
@@ -52,7 +52,7 @@ public class MealController {
      * @param name the name of the recipe to search for.
      * @return a list of RecipeDTO objects matching the search criteria.
      */
-    @GetMapping("/search/recipe/{name}")
+    @GetMapping("/search/recipes/{name}")
     public ResponseEntity<List<RecipeDTO>> searchRecipe(@PathVariable @NotNull String name) {
         List<RecipeDTO> recipes = mealService.searchRecipe(name);
         return ResponseEntity.ok(recipes);
@@ -64,7 +64,7 @@ public class MealController {
      * @param file the image file containing the meal to be estimated.
      * @return the estimated MealDTO object.
      */
-    @PostMapping(value = "/meal/estimate")
+    @PostMapping(value = "/meal")
     public ResponseEntity<MealDTO> estimateMeal(@RequestParam("file") MultipartFile file) throws IOException {
         // for performance reasons validate image here
         if(file.isEmpty() || !file.getContentType().equals(MediaType.IMAGE_PNG_VALUE))

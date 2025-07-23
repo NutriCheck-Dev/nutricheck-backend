@@ -37,8 +37,9 @@ public class Ingredient {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ingredient that = (Ingredient) o;
-        return Objects.equals(this.id.getFoodProductId(), that.getId().getFoodProductId()) &&
-                this.quantity == that.getQuantity();
+        return Objects.equals(this.id.getRecipeId(), that.getId().getRecipeId()) &&
+                this.getFoodProduct().equals(that.getFoodProduct()) &&
+                Objects.equals(this.quantity, that.getQuantity());
     }
     @Override
     public int hashCode() {
