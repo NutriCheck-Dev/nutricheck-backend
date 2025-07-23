@@ -4,7 +4,7 @@ import com.nutricheck.backend.TestDataFactory;
 import com.nutricheck.backend.dto.FoodProductDTO;
 import com.nutricheck.backend.dto.MealDTO;
 import com.nutricheck.backend.dto.RecipeDTO;
-import com.nutricheck.backend.layer.controller.MealController;
+import com.nutricheck.backend.exception.GlobalExceptionHandler;
 import com.nutricheck.backend.layer.service.MealService;
 import com.nutricheck.backend.util.FileUtil;
 import org.junit.jupiter.api.BeforeAll;
@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.util.List;
 import java.util.Base64;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
@@ -29,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 
-@WebMvcTest(controllers = MealController.class, excludeAutoConfiguration = SecurityAutoConfiguration.class)
+@WebMvcTest(controllers = {MealController.class, GlobalExceptionHandler.class}, excludeAutoConfiguration = SecurityAutoConfiguration.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class MealControllerTest {
     @Autowired
@@ -55,7 +56,7 @@ class MealControllerTest {
         given(mealService.searchFoodProduct(foodProductDTO.getName(), "en"))
                 .willReturn(foodProducts);
 
-        ResultActions response = mockMvc.perform(get("/user/search/product/{name}",
+        ResultActions response = mockMvc.perform(get("/user/search/products/{name}",
                 foodProductDTO.getName())
                 .param("language", "en"));
         response
@@ -69,14 +70,22 @@ class MealControllerTest {
                 .andExpect(jsonPath("$[0].fat").value(foodProductDTO.getFat()))
                 .andExpect(jsonPath(("$[1].id")).value(foodProductDTO.getId()))
                 .andExpect(jsonPath("$[1].name").value(foodProductDTO.getName()));
-
     }
+
+    @Test
+    void searchFoodProductWithInvalidLanguageTest() throws Exception {
+        mockMvc.perform(get("/user/search/products/{name}", foodProductDTO.getName())
+                        .param("language", "fr"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.body.detail", containsString("searchFoodProduct.language: Only german (de) and english (en) are allowed")));
+    }
+
     @Test
     void searchRecipeTest() throws Exception {
         List<RecipeDTO> recipes = List.of(recipeDTO, recipeDTO);
         given(mealService.searchRecipe(recipeDTO.getName()))
                 .willReturn(recipes);
-        ResultActions response = mockMvc.perform(get("/user/search/recipe/{name}",
+        ResultActions response = mockMvc.perform(get("/user/search/recipes/{name}",
                 recipeDTO.getName()));
 
         response
@@ -103,7 +112,7 @@ class MealControllerTest {
 
         given(mealService.estimateMeal(image)).willReturn(mealDTO);
 
-        ResultActions response = mockMvc.perform(multipart("/user/meal/estimate")
+        ResultActions response = mockMvc.perform(multipart("/user/meal")
                 .file(image)
                 .contentType(MediaType.MULTIPART_FORM_DATA));
 
@@ -124,7 +133,7 @@ class MealControllerTest {
                 MediaType.TEXT_PLAIN_VALUE,
                 "This is not an image".getBytes());
 
-        ResultActions response = mockMvc.perform(multipart("/user/meal/estimate")
+        ResultActions response = mockMvc.perform(multipart("/user/meal")
                 .file(invalidImage)
                 .contentType(MediaType.MULTIPART_FORM_DATA));
 
