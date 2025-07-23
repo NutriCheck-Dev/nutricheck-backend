@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -29,5 +30,23 @@ public class FoodProduct {
     @Builder.Default
     @OneToMany(mappedBy = "foodProduct", fetch = FetchType.LAZY)
     private Set<Ingredient> references = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FoodProduct that = (FoodProduct) o;
+        // id might be different for the same swiss food product as they are generated in the client
+        return Objects.equals(name, that.getName()) &&
+                Objects.equals(calories, that.getCalories()) &&
+                Objects.equals(carbohydrates, that.getCarbohydrates()) &&
+                Objects.equals(protein, that.getProtein()) &&
+                Objects.equals(fat, that.getFat());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, calories, carbohydrates, protein, fat);
+    }
 
 }
