@@ -1,0 +1,279 @@
+{
+  "name": "Instant-Kartoffelstock, zubereitet (mit Wasser und Butter)",
+  "id": 349447,
+  "ncf": 6.25,
+  "facf": null,
+  "isgeneric": true,
+  "isrecipe": true,
+  "synonyms": [],
+  "categories": [
+    {
+      "name": "Kartoffeln und andere stärkereiche Knollen",
+      "id": 6730
+    }
+  ],
+  "values": [
+    {
+      "id": 6256888,
+      "value": 80,
+      "rawValue": 80.2249945565,
+      "references": [],
+      "component": {
+        "name": "Energie, Kalorien",
+        "id": 1777,
+        "code": "ENERCC",
+        "group": 1,
+        "unit": 4,
+        "sortorder": 1,
+        "componentsets": [
+          1,
+          2,
+          3
+        ]
+      },
+      "unit": {
+        "name": "kilokalorien (umgangssprachlich: Kalorien)",
+        "id": 4,
+        "code": "kcal"
+      },
+      "minimum": null,
+      "maximum": null,
+      "n": 0,
+      "contrMethodTypes": null,
+      "valueTypeCode": "BE",
+      "contributingvalues": null,
+      "contributingvaluetypes": null,
+      "methodIndicatorCode": "MI0712",
+      "containformula": true,
+      "isborrowed": false,
+      "isrescaled": false,
+      "isfixed": false,
+      "methodtypecode": "S"
+    },
+    {
+      "id": 6256887,
+      "value": 337,
+      "rawValue": 337.1024110345,
+      "references": [],
+      "component": {
+        "name": "Energie, Kilojoule",
+        "id": 86,
+        "code": "ENERCJ",
+        "group": 1,
+        "unit": 6,
+        "sortorder": 2,
+        "componentsets": [
+          1,
+          2,
+          3
+        ]
+      },
+      "unit": {
+        "name": "kilojoule (umgangssprachlich: Joule)",
+        "id": 6,
+        "code": "kJ"
+      },
+      "minimum": null,
+      "maximum": null,
+      "n": 0,
+      "contrMethodTypes": null,
+      "valueTypeCode": "BE",
+      "contributingvalues": null,
+      "contributingvaluetypes": null,
+      "methodIndicatorCode": "MI0711",
+      "containformula": true,
+      "isborrowed": false,
+      "isrescaled": false,
+      "isfixed": false,
+      "methodtypecode": "S"
+    },
+    {
+      "id": 6256920,
+      "value": 2.8,
+      "rawValue": 2.7526547835,
+      "references": [],
+      "component": {
+        "name": "Fett, total",
+        "id": 282,
+        "code": "FAT",
+        "group": 2,
+        "unit": 3,
+        "sortorder": null,
+        "componentsets": [
+          1,
+          2,
+          3
+        ]
+      },
+      "unit": {
+        "name": "gramm",
+        "id": 3,
+        "code": "g"
+      },
+      "minimum": null,
+      "maximum": null,
+      "n": 0,
+      "contrMethodTypes": null,
+      "valueTypeCode": "BE",
+      "contributingvalues": null,
+      "contributingvaluetypes": null,
+      "methodIndicatorCode": "MI0002",
+      "containformula": false,
+      "isborrowed": false,
+      "isrescaled": false,
+      "isfixed": false,
+      "methodtypecode": "RN"
+    },
+    {
+      "id": 6256919,
+      "value": 2,
+      "rawValue": 1.98867156,
+      "references": [],
+      "component": {
+        "name": "Protein",
+        "id": 15478,
+        "code": "PROT625",
+        "group": 2,
+        "unit": 3,
+        "sortorder": 5,
+        "componentsets": [
+          1,
+          2,
+          3
+        ]
+      },
+      "unit": {
+        "name": "gramm",
+        "id": 3,
+        "code": "g"
+      },
+      "minimum": null,
+      "maximum": null,
+      "n": 0,
+      "contrMethodTypes": null,
+      "valueTypeCode": "BE",
+      "contributingvalues": null,
+      "contributingvaluetypes": null,
+      "methodIndicatorCode": "MI0002",
+      "containformula": false,
+      "isborrowed": false,
+      "isrescaled": false,
+      "isfixed": false,
+      "methodtypecode": "RN"
+    },
+    {
+      "id": 6256917,
+      "value": 67,
+      "rawValue": 66.5552245,
+      "references": [],
+      "component": {
+        "name": "Phosphor (P)",
+        "id": 385,
+        "code": "P",
+        "group": 7,
+        "unit": 8,
+        "sortorder": 6,
+        "componentsets": [
+          1,
+          2
+        ]
+      },
+      "unit": {
+        "name": "milligramm",
+        "id": 8,
+        "code": "mg"
+      },
+      "minimum": null,
+      "maximum": null,
+      "n": 0,
+      "contrMethodTypes": null,
+      "valueTypeCode": "BE",
+      "contributingvalues": null,
+      "contributingvaluetypes": null,
+      "methodIndicatorCode": "MI0002",
+      "containformula": false,
+      "isborrowed": false,
+      "isrescaled": false,
+      "isfixed": false,
+      "methodtypecode": "RN"
+    },
+    {
+      "id": 6256916,
+      "value": 1.8,
+      "rawValue": 1.80636333,
+      "references": [],
+      "component": {
+        "name": "Zucker",
+        "id": 451,
+        "code": "SUGAR",
+        "group": 4,
+        "unit": 3,
+        "sortorder": 1,
+        "componentsets": [
+          1,
+          2,
+          3
+        ]
+      },
+      "unit": {
+        "name": "gramm",
+        "id": 3,
+        "code": "g"
+      },
+      "minimum": null,
+      "maximum": null,
+      "n": 0,
+      "contrMethodTypes": null,
+      "valueTypeCode": "BE",
+      "contributingvalues": null,
+      "contributingvaluetypes": null,
+      "methodIndicatorCode": "MI0002",
+      "containformula": false,
+      "isborrowed": false,
+      "isrescaled": false,
+      "isfixed": false,
+      "methodtypecode": "RN"
+    },
+    {
+      "id": 6256906,
+      "value": 11.5,
+      "rawValue": 11.461106465,
+      "references": [],
+      "component": {
+        "name": "Kohlenhydrate, verfügbar",
+        "id": 55,
+        "code": "CHO",
+        "group": 2,
+        "unit": 3,
+        "sortorder": null,
+        "componentsets": [
+          1,
+          2,
+          3
+        ]
+      },
+      "unit": {
+        "name": "gramm",
+        "id": 3,
+        "code": "g"
+      },
+      "minimum": null,
+      "maximum": null,
+      "n": 0,
+      "contrMethodTypes": null,
+      "valueTypeCode": "BE",
+      "contributingvalues": null,
+      "contributingvaluetypes": null,
+      "methodIndicatorCode": "MI0002",
+      "containformula": false,
+      "isborrowed": false,
+      "isrescaled": false,
+      "isfixed": false,
+      "methodtypecode": "RN"
+    }
+  ],
+  "matrixunitcode": "W",
+  "specificgravity": null,
+  "yieldfactor": 1,
+  "foodid": 866
+}

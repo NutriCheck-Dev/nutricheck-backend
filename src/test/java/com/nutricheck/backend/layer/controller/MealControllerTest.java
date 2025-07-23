@@ -1,4 +1,4 @@
-package com.nutricheck.backend.controller;
+package com.nutricheck.backend.layer.controller;
 
 import com.nutricheck.backend.TestDataFactory;
 import com.nutricheck.backend.dto.FoodProductDTO;
@@ -6,6 +6,7 @@ import com.nutricheck.backend.dto.MealDTO;
 import com.nutricheck.backend.dto.RecipeDTO;
 import com.nutricheck.backend.layer.controller.MealController;
 import com.nutricheck.backend.layer.service.MealService;
+import com.nutricheck.backend.util.FileUtil;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -51,11 +52,12 @@ class MealControllerTest {
     @Test
     void searchFoodProductTest() throws Exception {
         List<FoodProductDTO> foodProducts = List.of(foodProductDTO, foodProductDTO);
-        given(mealService.searchFoodProduct(foodProductDTO.getName()))
+        given(mealService.searchFoodProduct(foodProductDTO.getName(), "en"))
                 .willReturn(foodProducts);
 
         ResultActions response = mockMvc.perform(get("/user/search/product/{name}",
-                foodProductDTO.getName()));
+                foodProductDTO.getName())
+                .param("language", "en"));
         response
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()").value(foodProducts.size()))
@@ -97,7 +99,7 @@ class MealControllerTest {
                 "file",
                 "test.png",
                 MediaType.IMAGE_PNG_VALUE,
-                Base64.getDecoder().decode(TestDataFactory.createDefaultEncodedImage()));
+                Base64.getMimeDecoder().decode(FileUtil.readFileAsString("encoded-image.txt")));
 
         given(mealService.estimateMeal(image)).willReturn(mealDTO);
 

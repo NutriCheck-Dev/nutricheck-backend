@@ -9,8 +9,7 @@ import lombok.*;
  * Data Transfer Object (DTO) for ingredients of a <code>RecipeDTO</code>.
  * This class is used to transfer ingredient data over the REST API.
  */
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
