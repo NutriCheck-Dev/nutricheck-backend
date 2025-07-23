@@ -12,9 +12,9 @@ import com.nutricheck.backend.layer.service.impl.RecipeServiceImpl;
 import com.nutricheck.backend.layer.service.mapper.IngredientMapper;
 import com.nutricheck.backend.layer.service.mapper.RecipeMapper;
 import com.nutricheck.backend.layer.service.mapper.ReportMapper;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -38,14 +38,8 @@ class RecipeServiceTest {
     private IngredientMapper ingredientMapper;
     @Mock
     private ReportMapper reportMapper;
-
+    @InjectMocks
     private RecipeServiceImpl recipeService;
-
-    @BeforeEach
-    void setUp() {
-        recipeService = new RecipeServiceImpl(recipeRepository, foodProductRepository, reportRepository,
-                recipeMapper, ingredientMapper, reportMapper);
-    }
 
     @Test
     void uploadRecipeTest() {}
@@ -54,9 +48,12 @@ class RecipeServiceTest {
     void reportRecipeTest() {
         Report report = TestDataFactory.createDefaultReport();
         ReportDTO expectedReportDTO = TestDataFactory.createDefaultReportDTO();
+
         given(reportMapper.toEntity(expectedReportDTO)).willReturn(report);
         given(recipeRepository.findById(report.getRecipeId()))
                 .willReturn(Optional.of(TestDataFactory.createDefaultRecipe()));
+        given(reportRepository.save(report)).willReturn(report);
+        given(reportMapper.toDTO(report)).willReturn(expectedReportDTO);
 
         ReportDTO actualReport = recipeService.reportRecipe(expectedReportDTO);
         assertEquals(expectedReportDTO, actualReport);
@@ -65,6 +62,7 @@ class RecipeServiceTest {
     @Test
     void downloadRecipeTest() {
         String recipeId = "testRecipeId";
+
         RecipeDTO expectedRecipeDTO = TestDataFactory.createDefaultRecipeDTO();
         given(recipeRepository.findById(recipeId))
                 .willReturn(Optional.of(TestDataFactory.createDefaultRecipe()));

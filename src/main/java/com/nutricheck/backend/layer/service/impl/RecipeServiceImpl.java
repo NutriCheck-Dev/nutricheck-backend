@@ -44,8 +44,8 @@ public class RecipeServiceImpl implements RecipeService {
         if (recipeToReport.isEmpty()) {
             throw new RecipeNotFoundException("Recipe with ID " + report.getRecipeId() + " cannot be found");
         }
-        reportRepository.save(report);
-        return reportDTO;
+        Report managedReport = reportRepository.save(report);
+        return reportMapper.toDTO(managedReport);
     }
 
     @Override
