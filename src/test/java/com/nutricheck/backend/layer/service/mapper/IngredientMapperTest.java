@@ -5,16 +5,18 @@ import com.nutricheck.backend.dto.IngredientDTO;
 import com.nutricheck.backend.layer.model.entity.Ingredient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class IngredientMapperTest {
-
-    private IngredientMapper mapper;
+    @InjectMocks
+    private IngredientMapperImpl mapper;
     @Mock
     private FoodProductMapper foodProductMapper;
     private Ingredient ingredient;
@@ -23,8 +25,6 @@ class IngredientMapperTest {
 
     @BeforeEach
     void setUp() {
-         mapper = new IngredientMapperImpl(foodProductMapper);
-
         this.ingredientDTO = TestDataFactory.createDefaultIngredientDTO();
         this.ingredient = TestDataFactory.createDefaultIngredient();
     }
