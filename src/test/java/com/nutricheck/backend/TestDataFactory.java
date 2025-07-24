@@ -131,8 +131,8 @@ public class TestDataFactory {
         recipe.setIngredients(Set.of(ingredient));
         return recipe;
     }
-  
-  public static FoodProductDTO createFoodProductDTOOneFromSwissDB() {
+
+    public static FoodProductDTO createFoodProductDTOOneFromSwissDB() {
         return FoodProductDTO.builder()
                 .name("Mashed potatoes, instant, prepared (with water and butter)")
                 .carbohydrates(11.5)
@@ -175,4 +175,36 @@ public class TestDataFactory {
                 .build();
     }
 
+    public static Ingredient createDefaultIngredient() {
+        return Ingredient.builder()
+                .id(IngredientID.builder()
+                        .recipeId("testRecipeId")
+                        .foodProductId("testFoodProductId")
+                        .build())
+                .quantity(100)
+                .foodProduct(createDefaultFoodProduct())
+                .build();
+    }
+
+    public static Ingredient createDefaultIngredient2() {
+        return Ingredient.builder()
+                .id(IngredientID.builder()
+                        .recipeId("testRecipeId")
+                        .foodProductId("testFoodProductId2")
+                        .build())
+                .quantity(200)
+                .foodProduct(createDefaultFoodProduct2())
+                .build();
+    }
+
+    private static FoodProduct createDefaultFoodProduct2() {
+        return FoodProduct.builder()
+                .id("testFoodProductId2")
+                .name("Test Food Product 2")
+                .calories(100)
+                .carbohydrates(25)
+                .protein(5)
+                .fat(3)
+                .build();
+    }
 }
