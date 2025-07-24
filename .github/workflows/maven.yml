@@ -16,7 +16,7 @@ jobs:
       - name: Start Mysql
         run: |
           sudo /etc/init.d/mysql start
-          mysql -e "CREATE DATABASE IF NOT EXISTS nutri_check;" -u root
+          mysql -e "CREATE DATABASE IF NOT EXISTS nutri_check;" -u root -p${{ secrets.MYSQL_ROOT_PASSWORD }}
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
