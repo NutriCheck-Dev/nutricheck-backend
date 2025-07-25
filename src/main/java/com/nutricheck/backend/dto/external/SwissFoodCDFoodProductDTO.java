@@ -1,11 +1,10 @@
 package com.nutricheck.backend.dto.external;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import lombok.*;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Represents a food product from the <code>/webresources/BLV-api/food/{DBID}</code> endpoint
@@ -19,8 +18,8 @@ import java.util.List;
 @AllArgsConstructor
 public class SwissFoodCDFoodProductDTO {
     @JsonIgnore
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    @Builder.Default
+    private String id = UUID.randomUUID().toString();
     private String name;
     private List<SwissFoodCDValueDTO> values;
 }
