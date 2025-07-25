@@ -10,41 +10,63 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
 class IngredientMapperTest {
-    @InjectMocks
-    private IngredientMapperImpl mapper;
     @Mock
     private FoodProductMapper foodProductMapper;
-    private Ingredient ingredient;
-    private IngredientDTO ingredientDTO;
+    @InjectMocks
+    private IngredientMapperImpl mapper;
+    private Set<Ingredient> ingredients;
+    private Set<IngredientDTO> ingredientDTOs;
+    private Ingredient firstIngredient;
+    private IngredientDTO firstIngredientDTO;
 
 
     @BeforeEach
-    void setUp() {
-        this.ingredientDTO = TestDataFactory.createDefaultIngredientDTO();
-        this.ingredient = TestDataFactory.createDefaultIngredient();
+    void setup() {
+        this.ingredientDTOs = Set.of(TestDataFactory.createDefaultIngredientDTO(),
+                                      TestDataFactory.createDefaultIngredientDTO2());
+        this.ingredients = Set.of(TestDataFactory.createDefaultIngredient(),
+                                  TestDataFactory.createDefaultIngredient2());
+        this.firstIngredient = ingredients.iterator().next();
+        this.firstIngredientDTO = ingredientDTOs.iterator().next();
     }
 
     @Test
     void toIngredientDTOTest() {
-        given(foodProductMapper.toDTO(ingredient.getFoodProduct()))
-                .willReturn(ingredientDTO.getFoodProduct());
 
-        IngredientDTO mappedIngredientDTO = mapper.toDTO(ingredient);
-        assertEquals(ingredientDTO, mappedIngredientDTO);
+        given(foodProductMapper.toDTO(firstIngredient.getFoodProduct()))
+                .willReturn(firstIngredientDTO.getFoodProduct());
+
+        IngredientDTO mappedIngredientDTO = mapper.toDTO(firstIngredient);
+        assertEquals(firstIngredientDTO, mappedIngredientDTO);
     }
 
     @Test
     void toIngredientTest() {
-        Ingredient mappedIngredient = mapper.toEntity(ingredientDTO);
+        Ingredient mappedIngredient = mapper.toEntity(firstIngredientDTO);
 
-        assertEquals(mappedIngredient.getId().getRecipeId(), ingredient.getId().getRecipeId());
-        assertEquals(mappedIngredient.getId().getFoodProductId(), ingredient.getId().getFoodProductId());
-        assertEquals(mappedIngredient.getQuantity(), ingredient.getQuantity());
+        assertEquals(firstIngredient.getId(), mappedIngredient.getId());
+        assertEquals(firstIngredient.getQuantity(), mappedIngredient.getQuantity());
+        assertNull(mappedIngredient.getRecipe());
+        assertNull(mappedIngredient.getFoodProduct());
+    }
+
+    @Test
+    void toDTOSetTest() {
+        given(foodProductMapper.toDTO(firstIngredient.getFoodProduct()))
+                .willReturn(firstIngredientDTO.getFoodProduct());
+        given(foodProductMapper.toDTO(new ArrayList<>(ingredients).get(1).getFoodProduct()))
+                .willReturn(new ArrayList<>(ingredientDTOs).get(1).getFoodProduct());
+
+        Set<IngredientDTO> mappedIngredientDTOs = mapper.toDTO(ingredients);
+        assertEquals(ingredientDTOs, mappedIngredientDTOs);
     }
 
 }

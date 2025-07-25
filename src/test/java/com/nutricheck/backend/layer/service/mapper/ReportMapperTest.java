@@ -26,11 +26,14 @@ class ReportMapperTest {
     void toReportDTOTest() {
         ReportDTO mappedReportDTO = mapper.toDTO(report);
         assertEquals(reportDTO.getRecipeId(), mappedReportDTO.getRecipeId());
+        assertEquals(reportDTO.getDescription(), mappedReportDTO.getDescription());
     }
 
     @Test
     void toReportTest() {
         Report mappedReport = mapper.toEntity(reportDTO);
         assertEquals(report.getId(), mappedReport.getId());
+        assertEquals(report.getRecipeId(), mappedReport.getRecipeId());
+        assertEquals(report.getDescription(), mappedReport.getDescription());
     }
 }

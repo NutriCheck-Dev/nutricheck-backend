@@ -40,6 +40,7 @@ public class Recipe {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Recipe recipe = (Recipe) o;
+        // nutrition values are not considered in equality check because they are calculated from ingredients
         return Objects.equals(name, recipe.getName()) &&
                 Objects.equals(instructions, recipe.getInstructions()) &&
                 Objects.equals(servings, recipe.getServings()) &&

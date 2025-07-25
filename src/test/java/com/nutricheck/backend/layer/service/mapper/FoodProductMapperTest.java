@@ -19,12 +19,12 @@ class FoodProductMapperTest {
 
 
     @BeforeEach
-    void setUp() {
+    void setup() {
         this.mapper = Mappers.getMapper(FoodProductMapper.class);
         this.foodProducts = List.of(TestDataFactory.createDefaultFoodProduct(),
-                TestDataFactory.createDefaultFoodProduct());
+                TestDataFactory.createDefaultFoodProduct2());
         this.foodProductDTOs = List.of(TestDataFactory.createDefaultFoodProductDTO(),
-                TestDataFactory.createDefaultFoodProductDTO());
+                TestDataFactory.createDefaultFoodProductDTO2());
     }
 
     @Test
@@ -38,8 +38,6 @@ class FoodProductMapperTest {
     void toFoodProductTest() {
         List<FoodProduct> mappedProducts = mapper.toEntity(foodProductDTOs);
 
-        for (int i = 0; i < mappedProducts.size(); i++) {
-            assertEquals(foodProducts.get(i).getId(), mappedProducts.get(i).getId());
-        }
+        assertEquals(foodProducts, mappedProducts);
     }
 }
