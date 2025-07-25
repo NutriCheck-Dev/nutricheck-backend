@@ -64,4 +64,5 @@ class FoodProductRepositoryTest {
                 .as("Check if food product table still contains deleted food product")
                 .isEmpty();
     }
+
 }

@@ -11,8 +11,7 @@ import java.io.Serializable;
  * based on the recipe ID and food product ID.
  */
 @Embeddable
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
