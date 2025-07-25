@@ -2,6 +2,7 @@ package com.nutricheck.backend.model;
 
 import com.nutricheck.backend.TestDataFactory;
 import com.nutricheck.backend.layer.model.entity.Recipe;
+import com.nutricheck.backend.layer.model.repository.FoodProductRepository;
 import com.nutricheck.backend.layer.model.repository.RecipeRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import java.util.List;
 class RecipeRepositoryTest {
     @Autowired
     private RecipeRepository recipeRepository;
+    @Autowired
+    private FoodProductRepository foodProductRepository;
 
     private Recipe recipe;
 
@@ -64,6 +67,8 @@ class RecipeRepositoryTest {
     @Rollback(false)
     void deleteRecipeByIdTest() {
         recipeRepository.deleteById(recipe.getId());
+        // clean up food products associated with the recipe
+        foodProductRepository.deleteAll();
         Assertions.assertThat(recipeRepository.findById(recipe.getId()))
                 .as("Check if recipe table still contains deleted recipe")
                 .isEmpty();
