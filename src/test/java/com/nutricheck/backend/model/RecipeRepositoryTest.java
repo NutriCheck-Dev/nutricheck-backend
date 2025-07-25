@@ -67,7 +67,8 @@ class RecipeRepositoryTest {
     @Rollback(false)
     void deleteRecipeByIdTest() {
         recipeRepository.deleteById(recipe.getId());
-        // clean up food products associated with the recipe
+        // food products need to be deleted manually
+        // to prevent errors in FoodProductRepositoryTest and isolate test classes
         foodProductRepository.deleteAll();
         Assertions.assertThat(recipeRepository.findById(recipe.getId()))
                 .as("Check if recipe table still contains deleted recipe")
