@@ -26,8 +26,6 @@ class FoodProductRepositoryTest {
     @Order(1)
     @Rollback(false)
     void saveFoodProductTest() {
-        // Clean up the repository before all tests
-        foodProductRepository.deleteAll();
         FoodProduct tempFoodProduct = TestDataFactory.createDefaultFoodProduct();
         foodProduct = foodProductRepository.save(tempFoodProduct);
         Assertions.assertThat(foodProductRepository.findById(foodProduct.getId()))
