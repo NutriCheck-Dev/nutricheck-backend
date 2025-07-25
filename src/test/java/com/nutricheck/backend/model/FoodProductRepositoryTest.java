@@ -26,6 +26,8 @@ class FoodProductRepositoryTest {
     @Order(1)
     @Rollback(false)
     void saveFoodProductTest() {
+        // Clean up the repository before all tests
+        foodProductRepository.deleteAll();
         FoodProduct tempFoodProduct = TestDataFactory.createDefaultFoodProduct();
         foodProduct = foodProductRepository.save(tempFoodProduct);
         Assertions.assertThat(foodProductRepository.findById(foodProduct.getId()))
@@ -56,6 +58,7 @@ class FoodProductRepositoryTest {
 
     @Test
     @Order(4)
+    @Rollback(false)
     void deleteFoodProductByIdTest() {
         foodProductRepository.deleteById(foodProduct.getId());
         Optional<FoodProduct> deletedFoodProduct = foodProductRepository.findById(foodProduct.getId());
@@ -64,9 +67,4 @@ class FoodProductRepositoryTest {
                 .isEmpty();
     }
 
-    @AfterAll
-    void tearDown() {
-        // Clean up the repository after all tests
-        foodProductRepository.deleteAll();
-    }
 }
