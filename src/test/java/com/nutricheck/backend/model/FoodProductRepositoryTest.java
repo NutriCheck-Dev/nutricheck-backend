@@ -56,12 +56,17 @@ class FoodProductRepositoryTest {
 
     @Test
     @Order(4)
-    @Rollback(false)
     void deleteFoodProductByIdTest() {
         foodProductRepository.deleteById(foodProduct.getId());
         Optional<FoodProduct> deletedFoodProduct = foodProductRepository.findById(foodProduct.getId());
         Assertions.assertThat(deletedFoodProduct)
                 .as("Check if food product table still contains deleted food product")
                 .isEmpty();
+    }
+
+    @AfterAll
+    void tearDown() {
+        // Clean up the repository after all tests
+        foodProductRepository.deleteAll();
     }
 }
