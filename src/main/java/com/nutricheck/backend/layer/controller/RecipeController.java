@@ -4,7 +4,6 @@ import com.nutricheck.backend.dto.RecipeDTO;
 import com.nutricheck.backend.dto.ReportDTO;
 import com.nutricheck.backend.layer.service.RecipeService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -48,16 +47,4 @@ public class RecipeController {
         return ResponseEntity.ok(reportedRecipe);
     }
 
-
-    /**
-     * This endpoint allows users to download a specified recipe.
-     *
-     * @param recipeId the ID of the recipe to be downloaded.
-     * @return the RecipeDTO object.
-     */
-    @GetMapping("/{recipeId}")
-    public ResponseEntity<RecipeDTO> downloadRecipe(@PathVariable @NotBlank String recipeId) {
-        RecipeDTO recipe = recipeService.downloadRecipe(recipeId);
-        return ResponseEntity.ok(recipe);
-    }
 }

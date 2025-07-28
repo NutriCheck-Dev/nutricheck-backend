@@ -110,28 +110,4 @@ class RecipeServiceTest {
             recipeService.reportRecipe(reportDTO);
         });
     }
-
-    @Test
-    void downloadRecipeTest() {
-        String recipeId = "testRecipeId";
-        Recipe recipe = TestDataFactory.createDefaultRecipe();
-        RecipeDTO expectedRecipeDTO = TestDataFactory.createDefaultRecipeDTO();
-
-        given(recipeRepository.findById(recipeId))
-                .willReturn(Optional.of(recipe));
-        given(recipeMapper.toDTO(recipe)).willReturn(expectedRecipeDTO);
-
-        RecipeDTO actualRecipeDTO = recipeService.downloadRecipe(recipeId);
-        assertEquals(expectedRecipeDTO, actualRecipeDTO);
-    }
-
-    @Test
-    void downloadMissingRecipeTest() {
-        String recipeId = "missingRecipeId";
-        given(recipeRepository.findById(recipeId)).willReturn(Optional.empty());
-
-        assertThrows(RecipeNotFoundException.class, () -> {
-            recipeService.downloadRecipe(recipeId);
-        });
-    }
 }

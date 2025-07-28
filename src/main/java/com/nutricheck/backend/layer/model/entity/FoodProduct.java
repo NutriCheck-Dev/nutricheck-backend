@@ -2,6 +2,7 @@ package com.nutricheck.backend.layer.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -14,18 +15,13 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FoodProduct {
+public class FoodProduct extends Nutriment {
     @Id
     private String id;
     private String name;
-
-    private double calories;
-    private double carbohydrates;
-    private double protein;
-    private double fat;
 
     @Builder.Default
     @OneToMany(mappedBy = "foodProduct", fetch = FetchType.LAZY)
@@ -50,15 +46,15 @@ public class FoodProduct {
         FoodProduct that = (FoodProduct) o;
         // id might be different for the same swiss food product as they are generated in the client
         return Objects.equals(name, that.getName()) &&
-                Objects.equals(calories, that.getCalories()) &&
-                Objects.equals(carbohydrates, that.getCarbohydrates()) &&
-                Objects.equals(protein, that.getProtein()) &&
-                Objects.equals(fat, that.getFat());
+                Objects.equals(getCalories(), that.getCalories()) &&
+                Objects.equals(getCarbohydrates(), that.getCarbohydrates()) &&
+                Objects.equals(getProtein(), that.getProtein()) &&
+                Objects.equals(getFat(), that.getFat());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, calories, carbohydrates, protein, fat);
+        return Objects.hash(name, getCalories(), getCarbohydrates(), getProtein(), getFat());
     }
 
 }

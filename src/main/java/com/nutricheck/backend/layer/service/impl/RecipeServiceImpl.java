@@ -91,14 +91,4 @@ public class RecipeServiceImpl implements RecipeService {
         return reportMapper.toDTO(managedReport);
     }
 
-    @Override
-    public RecipeDTO downloadRecipe(String recipeId) {
-        Optional<Recipe> recipe = recipeRepository.findById(recipeId);
-        if (recipe.isEmpty()) {
-            throw new RecipeNotFoundException(String.format(AdminServiceImpl.NOT_FOUND_MESSAGE,
-                    "Recipe", recipeId));
-        }
-        return recipeMapper.toDTO(recipe.get());
-    }
-
 }

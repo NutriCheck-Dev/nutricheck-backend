@@ -2,6 +2,7 @@ package com.nutricheck.backend.layer.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -14,10 +15,10 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Recipe {
+public class Recipe extends Nutriment {
 
     @Id
     private String id;
@@ -25,11 +26,6 @@ public class Recipe {
     private String name;
     private String instructions;
     private int servings;
-
-    private double calories;
-    private double carbohydrates;
-    private double protein;
-    private double fat;
 
     @Builder.Default
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
