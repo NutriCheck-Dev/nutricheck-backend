@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class IngredientMapperTest {
@@ -40,9 +40,8 @@ class IngredientMapperTest {
 
     @Test
     void toIngredientDTOTest() {
-
-        given(foodProductMapper.toDTO(firstIngredient.getFoodProduct()))
-                .willReturn(firstIngredientDTO.getFoodProduct());
+        when(foodProductMapper.toDTO(firstIngredient.getFoodProduct()))
+                .thenReturn(firstIngredientDTO.getFoodProduct());
 
         IngredientDTO mappedIngredientDTO = mapper.toDTO(firstIngredient);
         assertEquals(firstIngredientDTO, mappedIngredientDTO);
@@ -60,10 +59,10 @@ class IngredientMapperTest {
 
     @Test
     void toDTOSetTest() {
-        given(foodProductMapper.toDTO(firstIngredient.getFoodProduct()))
-                .willReturn(firstIngredientDTO.getFoodProduct());
-        given(foodProductMapper.toDTO(new ArrayList<>(ingredients).get(1).getFoodProduct()))
-                .willReturn(new ArrayList<>(ingredientDTOs).get(1).getFoodProduct());
+        when(foodProductMapper.toDTO(firstIngredient.getFoodProduct()))
+                .thenReturn(firstIngredientDTO.getFoodProduct());
+        when(foodProductMapper.toDTO(new ArrayList<>(ingredients).get(1).getFoodProduct()))
+                .thenReturn(new ArrayList<>(ingredientDTOs).get(1).getFoodProduct());
 
         Set<IngredientDTO> mappedIngredientDTOs = mapper.toDTO(ingredients);
         assertEquals(ingredientDTOs, mappedIngredientDTOs);

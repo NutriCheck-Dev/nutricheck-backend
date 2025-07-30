@@ -83,8 +83,8 @@ class RecipeControllerTest {
     }
 
     void reportMissingRecipeTest() throws Exception {
-        given(recipeService.reportRecipe(any(ReportDTO.class)))
-                .willThrow(RecipeNotFoundException.class);
+        when(recipeService.reportRecipe(any(ReportDTO.class)))
+                .thenThrow(RecipeNotFoundException.class);
 
         mockMvc.perform(post("/user/recipes/report")
                 .contentType(MediaType.APPLICATION_JSON)

@@ -13,8 +13,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.mockito.BDDMockito.given;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class RecipeMapperTest {
@@ -37,8 +37,8 @@ class RecipeMapperTest {
 
     @Test
     void toRecipeDTOTest() {
-        given(ingredientMapper.toDTO(recipes.get(0).getIngredients()))
-                .willReturn(recipeDTOs.get(0).getIngredients());
+        when(ingredientMapper.toDTO(recipes.get(0).getIngredients()))
+                .thenReturn(recipeDTOs.get(0).getIngredients());
 
         RecipeDTO mappedRecipeDTO = mapper.toDTO(recipes.get(0));
         assertEquals(mappedRecipeDTO, recipeDTOs.get(0));
@@ -56,10 +56,10 @@ class RecipeMapperTest {
 
     @Test
     void toRecipeDTOListTest() {
-        given(ingredientMapper.toDTO(recipes.get(0).getIngredients()))
-                .willReturn(recipeDTOs.get(0).getIngredients());
-        given(ingredientMapper.toDTO(recipes.get(1).getIngredients()))
-                .willReturn(recipeDTOs.get(1).getIngredients());
+        when(ingredientMapper.toDTO(recipes.get(0).getIngredients()))
+                .thenReturn(recipeDTOs.get(0).getIngredients());
+        when(ingredientMapper.toDTO(recipes.get(1).getIngredients()))
+                .thenReturn(recipeDTOs.get(1).getIngredients());
 
         List<RecipeDTO> mappedRecipeDTOs = mapper.toDTO(recipes);
         assertEquals(mappedRecipeDTOs, recipeDTOs);
