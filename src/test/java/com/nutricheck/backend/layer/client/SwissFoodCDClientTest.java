@@ -7,14 +7,16 @@ import com.nutricheck.backend.dto.FoodProductDTO;
 import com.nutricheck.backend.dto.external.SwissFoodCDResponseDTO;
 import com.nutricheck.backend.layer.client.impl.SwissFoodCDClient;
 import com.nutricheck.backend.layer.client.mapper.SwissFoodCDMapper;
-import com.nutricheck.backend.util.FileUtil;
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.client.MockRestServiceServer;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,9 +42,12 @@ class SwissFoodCDClientTest {
     @Test
     void searchEnTest() throws Exception {
         String searchTerm = "potato";
-        String responseRaw = FileUtil.readFileAsString("swiss-search-response-example.json");
-        String firstProductRaw = FileUtil.readFileAsString("swiss-food-product-one-example.json");
-        String secondProductRaw = FileUtil.readFileAsString("swiss-food-product-two-example.json");
+        ClassPathResource resource1 = new ClassPathResource("swiss-search-response-example.json");
+        ClassPathResource resource2 = new ClassPathResource("swiss-food-product-one-example.json");
+        ClassPathResource resource3 = new ClassPathResource("swiss-food-product-two-example.json");
+        String responseRaw = FileUtils.readFileToString(resource1.getFile(), StandardCharsets.UTF_8);
+        String firstProductRaw = FileUtils.readFileToString(resource2.getFile(), StandardCharsets.UTF_8);
+        String secondProductRaw = FileUtils.readFileToString(resource3.getFile(), StandardCharsets.UTF_8);
 
         server.expect(requestTo( "https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api/foods?search=" +
                         searchTerm + "&lang=en&limit=40"))
@@ -71,9 +76,13 @@ class SwissFoodCDClientTest {
     @Test
     void searchDeTest() throws Exception {
         String searchTerm = "Kartoffel";
-        String responseRaw = FileUtil.readFileAsString("swiss-search-response-de-example.json");
-        String firstProductRaw = FileUtil.readFileAsString("swiss-food-product-one-de-example.json");
-        String secondProductRaw = FileUtil.readFileAsString("swiss-food-product-two-de-example.json");
+        ClassPathResource resource1 = new ClassPathResource("swiss-search-response-de-example.json");
+        ClassPathResource resource2 = new ClassPathResource("swiss-food-product-one-de-example.json");
+        ClassPathResource resource3 = new ClassPathResource("swiss-food-product-two-de-example.json");
+        String responseRaw = FileUtils.readFileToString(resource1.getFile(), StandardCharsets.UTF_8);
+        String firstProductRaw = FileUtils.readFileToString(resource2.getFile(), StandardCharsets.UTF_8);
+        String secondProductRaw = FileUtils.readFileToString(resource3.getFile(), StandardCharsets.UTF_8);
+
 
         server.expect(requestTo( "https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api/foods?search=" +
                         searchTerm + "&lang=de&limit=40"))

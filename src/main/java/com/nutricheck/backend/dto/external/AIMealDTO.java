@@ -7,8 +7,7 @@ import lombok.*;
  * This class is used to transfer meal data, including nutritional information,
  * between different layers of the application.
  */
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

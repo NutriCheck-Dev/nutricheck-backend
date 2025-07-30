@@ -5,14 +5,16 @@ import com.nutricheck.backend.TestDataFactory;
 import com.nutricheck.backend.dto.FoodProductDTO;
 import com.nutricheck.backend.layer.client.impl.OpenFoodFactsClient;
 import com.nutricheck.backend.layer.client.mapper.OpenFoodFactsMapper;
-import com.nutricheck.backend.util.FileUtil;
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.client.MockRestServiceServer;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -36,7 +38,8 @@ class OpenFoodFactsClientTest {
     @Test
     void searchTest() throws Exception {
         String searchTerm = "potato";
-        String responseRaw = FileUtil.readFileAsString("open-food-facts-example.json");
+        ClassPathResource resource = new ClassPathResource("open-food-facts-example.json");
+        String responseRaw = FileUtils.readFileToString(resource.getFile(), StandardCharsets.UTF_8);
 
         server.expect(requestTo("https://world.openfoodfacts.org/cgi/search.pl?action=process&search_terms=" + searchTerm +
                         "&nutriment_0=carbohydrates&nutriment_compare_0=gt&nutriment_value_0=0&nutriment_1=proteins&nutriment_compare_1=gt&nutriment_value_1=0" +

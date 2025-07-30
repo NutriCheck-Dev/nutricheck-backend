@@ -12,13 +12,14 @@ import com.nutricheck.backend.layer.model.repository.RecipeRepository;
 import com.nutricheck.backend.layer.service.impl.MealServiceImpl;
 import com.nutricheck.backend.layer.service.mapper.FoodProductMapper;
 import com.nutricheck.backend.layer.service.mapper.RecipeMapper;
-import com.nutricheck.backend.util.FileUtil;
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 
@@ -139,11 +140,13 @@ class MealServiceTest {
 
     @Test
     void estimateMealTest() throws Exception {
+        ClassPathResource resource = new ClassPathResource("spaghetti.png");
         MockMultipartFile image = new MockMultipartFile(
                 "file",
-                "test.png",
+                "spaghetti.png",
                 MediaType.IMAGE_PNG_VALUE,
-                Base64.getMimeDecoder().decode(FileUtil.readFileAsString("encoded-image.txt")));
+                FileUtils.readFileToByteArray(resource.getFile()));
+
         given(aiModelClient.estimateMeal(image.getBytes()))
                 .willReturn(TestDataFactory.createDefaultMealDTO());
 

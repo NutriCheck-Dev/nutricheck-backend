@@ -5,10 +5,12 @@ import com.nutricheck.backend.TestDataFactory;
 import com.nutricheck.backend.dto.FoodProductDTO;
 import com.nutricheck.backend.dto.external.OpenFoodFactsFoodProductDTO;
 import com.nutricheck.backend.dto.external.OpenFoodFactsResponseDTO;
-import com.nutricheck.backend.util.FileUtil;
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
+import org.springframework.core.io.ClassPathResource;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,8 +26,9 @@ class OpenFoodFactsMapperTest {
                 TestDataFactory.createFoodProductDTOOneFromOpenFoodFacts(),
                 TestDataFactory.createFoodProductDTOTwoFromOpenFoodFacts()
         );
+        ClassPathResource resource = new ClassPathResource("open-food-facts-example.json");
         List<OpenFoodFactsFoodProductDTO> productsToMap = objectMapper.readValue(
-                FileUtil.readFileAsString("open-food-facts-example.json"),
+                FileUtils.readFileToString(resource.getFile(), StandardCharsets.UTF_8),
                 OpenFoodFactsResponseDTO.class).getProducts();
 
         List<FoodProductDTO> mappedProducts = mapper.toFoodProductDTO(productsToMap);
