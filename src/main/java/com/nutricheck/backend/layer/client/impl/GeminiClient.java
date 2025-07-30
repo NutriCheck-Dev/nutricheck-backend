@@ -46,7 +46,6 @@ public class GeminiClient implements AIModelClient {
                 .build();
         GenerateContentResponse response = apiClient
                 .models.generateContent("gemini-2.5-flash", content, config);
-        System.out.println("Response from Gemini API: " + response.text());
         AIMealDTO aiEstimatedMeal = objectMapper.readValue(response.text(), AIMealDTO.class);
         return aiMealMapper.toMealDTO(aiEstimatedMeal);
     }

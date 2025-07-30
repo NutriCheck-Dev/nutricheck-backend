@@ -21,7 +21,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
@@ -66,8 +66,8 @@ class SwissFoodCDClientTest {
                 TestDataFactory.createFoodProductDTOOneFromSwissDB(),
                 TestDataFactory.createFoodProductDTOTwoFromSwissDB());
         // mapper will be tested with own unit tests
-        given(mapper.toFoodProductDTO(anyList()))
-                .willReturn(expectedProducts);
+        when(mapper.toFoodProductDTO(anyList()))
+                .thenReturn(expectedProducts);
 
         List<FoodProductDTO> result = client.search(searchTerm, "en");
         assertEquals(expectedProducts, result);
@@ -102,8 +102,8 @@ class SwissFoodCDClientTest {
                 TestDataFactory.createFoodProductDTOOneFromSwissDB(),
                 TestDataFactory.createFoodProductDTOTwoFromSwissDB());
         // mapper will be tested with own unit tests
-        given(mapper.toFoodProductDTO(anyList()))
-                .willReturn(expectedProducts);
+        when(mapper.toFoodProductDTO(anyList()))
+                .thenReturn(expectedProducts);
 
         List<FoodProductDTO> result = client.search(searchTerm, "de");
         assertEquals(expectedProducts, result);

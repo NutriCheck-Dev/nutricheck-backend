@@ -19,7 +19,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
@@ -40,6 +40,10 @@ class OpenFoodFactsClientTest {
         String searchTerm = "potato";
         ClassPathResource resource = new ClassPathResource("open-food-facts-example.json");
         String responseRaw = FileUtils.readFileToString(resource.getFile(), StandardCharsets.UTF_8);
+        List<FoodProductDTO> expectedProducts = List.of(
+                TestDataFactory.createFoodProductDTOOneFromOpenFoodFacts(),
+                TestDataFactory.createFoodProductDTOTwoFromOpenFoodFacts()
+        );
 
         server.expect(requestTo("https://world.openfoodfacts.org/cgi/search.pl?action=process&search_terms=" + searchTerm +
                         "&nutriment_0=carbohydrates&nutriment_compare_0=gt&nutriment_value_0=0&nutriment_1=proteins&nutriment_compare_1=gt&nutriment_value_1=0" +
@@ -47,13 +51,8 @@ class OpenFoodFactsClientTest {
                         "&sort_by=unique_scans_n&page=1&page_size=40&json=1"))
                 .andRespond(withSuccess(responseRaw, MediaType.APPLICATION_JSON));
 
-        List<FoodProductDTO> expectedProducts = List.of(
-                TestDataFactory.createFoodProductDTOOneFromOpenFoodFacts(),
-                TestDataFactory.createFoodProductDTOTwoFromOpenFoodFacts()
-        );
-
-        given(mapper.toFoodProductDTO(anyList()))
-                .willReturn(expectedProducts);
+        when(mapper.toFoodProductDTO(anyList()))
+                .thenReturn(expectedProducts);
 
         List<FoodProductDTO> result = client.search(searchTerm, "en");
         assertEquals(expectedProducts, result);

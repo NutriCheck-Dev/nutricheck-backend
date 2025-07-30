@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
 
-import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -42,9 +42,12 @@ class AdminControllerTest {
 
     @Test
     void getAllReportsTest() throws Exception {
-        // Precondition the service to return a list of reports
+        // Given (expected data)
         List<ReportDTO> reports = List.of(reportDTO, reportDTO);
-        given(adminService.getAllReports()).willReturn(reports);
+
+        // When (mocking the service call)
+        when(adminService.getAllReports()).thenReturn(reports);
+
         // Perform the GET request and verify the response
         ResultActions response = mockMvc.perform(get("/admin/reports"));
 
@@ -67,7 +70,7 @@ class AdminControllerTest {
 
     @Test
     void deleteReportTest() throws Exception {
-        given(adminService.deleteReport(reportDTO.getId())).willReturn(reportDTO);
+        when(adminService.deleteReport(reportDTO.getId())).thenReturn(reportDTO);
 
         ResultActions response = mockMvc.perform(delete("/admin/reports/delete/{reportId}", reportDTO.getId()));
 
@@ -83,9 +86,10 @@ class AdminControllerTest {
     @Test
     void deleteAllReportsTest() throws Exception {
         List<ReportDTO> reports = List.of(reportDTO, reportDTO);
-        given(adminService.deleteAllReports()).willReturn(reports);
-        ResultActions response = mockMvc.perform(delete("/admin/reports/delete/all"));
 
+        when(adminService.deleteAllReports()).thenReturn(reports);
+
+        ResultActions response = mockMvc.perform(delete("/admin/reports/delete/all"));
         response
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()").value(reports.size()))
@@ -105,7 +109,7 @@ class AdminControllerTest {
 
     @Test
     void deleteRecipeTest() throws Exception {
-        given(adminService.deleteRecipe(recipeDTO.getId())).willReturn(recipeDTO);
+        when(adminService.deleteRecipe(recipeDTO.getId())).thenReturn(recipeDTO);
 
         ResultActions response = mockMvc.perform(delete("/admin/recipe/delete/{recipeId}", recipeDTO.getId()));
 
@@ -124,7 +128,7 @@ class AdminControllerTest {
 
     @Test
     void deleteMissingReportTest() throws Exception {
-        given(adminService.deleteReport("missingReportId")).willThrow(ReportNotFoundException.class);
+        when(adminService.deleteReport("missingReportId")).thenThrow(ReportNotFoundException.class);
 
         mockMvc.perform(delete("/admin/reports/delete/{reportId}", "missingReportId"))
                 .andExpect(status().isNotFound());
@@ -132,7 +136,7 @@ class AdminControllerTest {
 
     @Test
     void deleteMissingRecipeTest() throws Exception {
-        given(adminService.deleteRecipe("missingRecipeId")).willThrow(RecipeNotFoundException.class);
+        when(adminService.deleteRecipe("missingRecipeId")).thenThrow(RecipeNotFoundException.class);
 
         mockMvc.perform(delete("/admin/recipe/delete/{recipeId}", "missingRecipeId"))
                 .andExpect(status().isNotFound());

@@ -29,7 +29,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class MealServiceTest {
@@ -75,21 +75,22 @@ class MealServiceTest {
 
     @Test
     void searchFoodProductTest() {
-        given(foodProductRepository.findByNameContainingIgnoreCase(foodProductName))
-                .willReturn(List.of());
-        given(foodProductMapper.toDTO(anyList())).willReturn(List.of());
         List<FoodProductDTO> expectedSwissProducts = List.of(
                 TestDataFactory.createFoodProductDTOOneFromSwissDB(),
                 TestDataFactory.createFoodProductDTOTwoFromSwissDB()
         );
-        given(swissFoodCDClient.search(foodProductName, language))
-                .willReturn(expectedSwissProducts);
         List<FoodProductDTO> expectedOpenProducts = List.of(
                 TestDataFactory.createFoodProductDTOOneFromOpenFoodFacts(),
                 TestDataFactory.createFoodProductDTOTwoFromOpenFoodFacts()
         );
-        given(openFoodFactsClient.search(foodProductName, language))
-                .willReturn(expectedOpenProducts);
+
+        when(foodProductRepository.findByNameContainingIgnoreCase(foodProductName))
+                .thenReturn(List.of());
+        when(foodProductMapper.toDTO(anyList())).thenReturn(List.of());
+        when(swissFoodCDClient.search(foodProductName, language))
+                .thenReturn(expectedSwissProducts);
+        when(openFoodFactsClient.search(foodProductName, language))
+                .thenReturn(expectedOpenProducts);
 
 
         Comparator<FoodProductDTO> nameLengthComparator = (product1, product2) ->
@@ -113,13 +114,13 @@ class MealServiceTest {
             internalProduct.setId(String.valueOf(i));
             internalProducts.add(internalProduct);
         }
-        given(foodProductRepository.findByNameContainingIgnoreCase(foodProductName))
-                .willReturn(internalProducts);
-
         List<FoodProductDTO> expectedProducts = Mappers.getMapper(FoodProductMapper.class)
                 .toDTO(internalProducts);
-        given(foodProductMapper.toDTO(anyList()))
-                .willReturn(expectedProducts);
+
+        when(foodProductRepository.findByNameContainingIgnoreCase(foodProductName))
+                .thenReturn(internalProducts);
+        when(foodProductMapper.toDTO(anyList()))
+                .thenReturn(expectedProducts);
 
         List<FoodProductDTO> actualProducts = mealService.searchFoodProduct(foodProductName, language);
         assertEquals(actualProducts, expectedProducts);
@@ -128,11 +129,12 @@ class MealServiceTest {
 
     @Test
     void searchRecipeTest() {
-        given(recipeRepository.findByNameContainingIgnoreCase(recipeName))
-                .willReturn(List.of(TestDataFactory.createDefaultRecipe()));
         List<RecipeDTO> expectedRecipes = List.of(TestDataFactory.createDefaultRecipeDTO());
-        given(recipeMapper.toDTO(anyList()))
-                .willReturn(expectedRecipes);
+
+        when(recipeRepository.findByNameContainingIgnoreCase(recipeName))
+                .thenReturn(List.of(TestDataFactory.createDefaultRecipe()));
+        when(recipeMapper.toDTO(anyList()))
+                .thenReturn(expectedRecipes);
 
         List<RecipeDTO> actualRecipes = mealService.searchRecipe(recipeName);
         assertEquals(actualRecipes, expectedRecipes);
@@ -147,8 +149,8 @@ class MealServiceTest {
                 MediaType.IMAGE_PNG_VALUE,
                 FileUtils.readFileToByteArray(resource.getFile()));
 
-        given(aiModelClient.estimateMeal(image.getBytes()))
-                .willReturn(TestDataFactory.createDefaultMealDTO());
+        when(aiModelClient.estimateMeal(image.getBytes()))
+                .thenReturn(TestDataFactory.createDefaultMealDTO());
 
         MealDTO actualMeal = mealService.estimateMeal(image);
         assertEquals(actualMeal, TestDataFactory.createDefaultMealDTO());

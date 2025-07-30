@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -47,7 +47,7 @@ class RecipeControllerTest {
 
     @Test
     void uploadRecipeTest() throws Exception {
-        given(recipeService.uploadRecipe(any(RecipeDTO.class))).willReturn(recipeDTO);
+        when(recipeService.uploadRecipe(any(RecipeDTO.class))).thenReturn(recipeDTO);
 
         ResultActions response = mockMvc.perform(post("/user/recipe/upload")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -68,7 +68,7 @@ class RecipeControllerTest {
 
     @Test
     void reportRecipeTest() throws Exception {
-        given(recipeService.reportRecipe(any(ReportDTO.class))).willReturn(reportDTO);
+        when(recipeService.reportRecipe(any(ReportDTO.class))).thenReturn(reportDTO);
 
         ResultActions response = mockMvc.perform(post("/user/recipe/report")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -85,7 +85,7 @@ class RecipeControllerTest {
 
     @Test
     void downloadRecipeTest() throws Exception {
-        given(recipeService.downloadRecipe(recipeDTO.getId())).willReturn(recipeDTO);
+        when(recipeService.downloadRecipe(recipeDTO.getId())).thenReturn(recipeDTO);
 
         ResultActions response = mockMvc.perform(get("/user/recipe/download/{recipeId}", recipeDTO.getId()));
 
@@ -104,7 +104,7 @@ class RecipeControllerTest {
 
     @Test
     void downloadMissingRecipeTest() throws Exception {
-        given(recipeService.downloadRecipe("missingRecipeId")).willThrow(RecipeNotFoundException.class);
+        when(recipeService.downloadRecipe("missingRecipeId")).thenThrow(RecipeNotFoundException.class);
 
         mockMvc.perform(get("/user/recipe/download/{recipeId}", "missingRecipeId"))
                 .andExpect(status().isNotFound());

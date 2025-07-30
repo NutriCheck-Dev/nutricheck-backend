@@ -21,7 +21,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
 
-import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -51,8 +51,9 @@ class MealControllerTest {
     @Test
     void searchFoodProductTest() throws Exception {
         List<FoodProductDTO> foodProducts = List.of(foodProductDTO, foodProductDTO);
-        given(mealService.searchFoodProduct(foodProductDTO.getName(), "en"))
-                .willReturn(foodProducts);
+
+        when(mealService.searchFoodProduct(foodProductDTO.getName(), "en"))
+                .thenReturn(foodProducts);
 
         ResultActions response = mockMvc.perform(get("/user/search/product/{name}",
                 foodProductDTO.getName())
@@ -73,8 +74,9 @@ class MealControllerTest {
     @Test
     void searchRecipeTest() throws Exception {
         List<RecipeDTO> recipes = List.of(recipeDTO, recipeDTO);
-        given(mealService.searchRecipe(recipeDTO.getName()))
-                .willReturn(recipes);
+
+        when(mealService.searchRecipe(recipeDTO.getName()))
+                .thenReturn(recipes);
         ResultActions response = mockMvc.perform(get("/user/search/recipe/{name}",
                 recipeDTO.getName()));
 
@@ -101,7 +103,7 @@ class MealControllerTest {
                 MediaType.IMAGE_PNG_VALUE,
                 FileUtils.readFileToByteArray(resource.getFile()));
 
-        given(mealService.estimateMeal(image)).willReturn(mealDTO);
+        when(mealService.estimateMeal(image)).thenReturn(mealDTO);
 
         ResultActions response = mockMvc.perform(multipart("/user/meal/estimate")
                 .file(image)
