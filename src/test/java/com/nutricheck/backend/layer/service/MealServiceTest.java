@@ -12,13 +12,14 @@ import com.nutricheck.backend.layer.model.repository.RecipeRepository;
 import com.nutricheck.backend.layer.service.impl.MealServiceImpl;
 import com.nutricheck.backend.layer.service.mapper.FoodProductMapper;
 import com.nutricheck.backend.layer.service.mapper.RecipeMapper;
-import com.nutricheck.backend.util.FileUtil;
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 
@@ -28,7 +29,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class MealServiceTest {
@@ -74,21 +75,22 @@ class MealServiceTest {
 
     @Test
     void searchFoodProductTest() {
-        given(foodProductRepository.findByNameContainingIgnoreCase(foodProductName))
-                .willReturn(List.of());
-        given(foodProductMapper.toDTO(anyList())).willReturn(List.of());
         List<FoodProductDTO> expectedSwissProducts = List.of(
                 TestDataFactory.createFoodProductDTOOneFromSwissDB(),
                 TestDataFactory.createFoodProductDTOTwoFromSwissDB()
         );
-        given(swissFoodCDClient.search(foodProductName, language))
-                .willReturn(expectedSwissProducts);
         List<FoodProductDTO> expectedOpenProducts = List.of(
                 TestDataFactory.createFoodProductDTOOneFromOpenFoodFacts(),
                 TestDataFactory.createFoodProductDTOTwoFromOpenFoodFacts()
         );
-        given(openFoodFactsClient.search(foodProductName, language))
-                .willReturn(expectedOpenProducts);
+
+        when(foodProductRepository.findByNameContainingIgnoreCase(foodProductName))
+                .thenReturn(List.of());
+        when(foodProductMapper.toDTO(anyList())).thenReturn(List.of());
+        when(swissFoodCDClient.search(foodProductName, language))
+                .thenReturn(expectedSwissProducts);
+        when(openFoodFactsClient.search(foodProductName, language))
+                .thenReturn(expectedOpenProducts);
 
 
         Comparator<FoodProductDTO> nameLengthComparator = (product1, product2) ->
@@ -112,13 +114,13 @@ class MealServiceTest {
             internalProduct.setName(foodProductName + i);
             internalProducts.add(internalProduct);
         }
-        given(foodProductRepository.findByNameContainingIgnoreCase(foodProductName))
-                .willReturn(internalProducts);
-
         List<FoodProductDTO> expectedProducts = Mappers.getMapper(FoodProductMapper.class)
                 .toDTO(internalProducts);
-        given(foodProductMapper.toDTO(anyList()))
-                .willReturn(expectedProducts);
+
+        when(foodProductRepository.findByNameContainingIgnoreCase(foodProductName))
+                .thenReturn(internalProducts);
+        when(foodProductMapper.toDTO(anyList()))
+                .thenReturn(expectedProducts);
 
         List<FoodProductDTO> actualProducts = mealService.searchFoodProduct(foodProductName, language);
         assertEquals(actualProducts, expectedProducts);
@@ -127,11 +129,12 @@ class MealServiceTest {
 
     @Test
     void searchRecipeTest() {
-        given(recipeRepository.findByNameContainingIgnoreCase(recipeName))
-                .willReturn(List.of(TestDataFactory.createDefaultRecipe()));
         List<RecipeDTO> expectedRecipes = List.of(TestDataFactory.createDefaultRecipeDTO());
-        given(recipeMapper.toDTO(anyList()))
-                .willReturn(expectedRecipes);
+
+        when(recipeRepository.findByNameContainingIgnoreCase(recipeName))
+                .thenReturn(List.of(TestDataFactory.createDefaultRecipe()));
+        when(recipeMapper.toDTO(anyList()))
+                .thenReturn(expectedRecipes);
 
         List<RecipeDTO> actualRecipes = mealService.searchRecipe(recipeName);
         assertEquals(actualRecipes, expectedRecipes);
@@ -139,13 +142,15 @@ class MealServiceTest {
 
     @Test
     void estimateMealTest() throws Exception {
+        ClassPathResource resource = new ClassPathResource("spaghetti.png");
         MockMultipartFile image = new MockMultipartFile(
                 "file",
-                "test.png",
+                "spaghetti.png",
                 MediaType.IMAGE_PNG_VALUE,
-                Base64.getMimeDecoder().decode(FileUtil.readFileAsString("encoded-image.txt")));
-        given(aiModelClient.estimateMeal(image.getBytes()))
-                .willReturn(TestDataFactory.createDefaultMealDTO());
+                FileUtils.readFileToByteArray(resource.getFile()));
+
+        when(aiModelClient.estimateMeal(image.getBytes()))
+                .thenReturn(TestDataFactory.createDefaultMealDTO());
 
         MealDTO actualMeal = mealService.estimateMeal(image);
         assertEquals(actualMeal, TestDataFactory.createDefaultMealDTO());

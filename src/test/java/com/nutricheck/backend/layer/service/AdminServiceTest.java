@@ -24,8 +24,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.BDDMockito.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class AdminServiceTest {
@@ -61,10 +61,10 @@ class AdminServiceTest {
                 TestDataFactory.createDefaultReport()
         );
 
-        given(reportRepository.findAll())
-                .willReturn(allExpectedReports);
-        given(reportMapper.toDTO(allExpectedReports))
-                .willReturn(allExpectedReportDTOs);
+        when(reportRepository.findAll())
+                .thenReturn(allExpectedReports);
+        when(reportMapper.toDTO(allExpectedReports))
+                .thenReturn(allExpectedReportDTOs);
 
         List<ReportDTO> actualReportDTOs = adminService.getAllReports();
         assertEquals(allExpectedReportDTOs, actualReportDTOs);
@@ -76,10 +76,10 @@ class AdminServiceTest {
         ReportDTO expectedReportDTO = TestDataFactory.createDefaultReportDTO();
         Report expectedReport = TestDataFactory.createDefaultReport();
 
-        given(reportRepository.findById(reportId))
-                .willReturn(Optional.of(expectedReport));
-        given(reportMapper.toDTO(expectedReport))
-                .willReturn(expectedReportDTO);
+        when(reportRepository.findById(reportId))
+                .thenReturn(Optional.of(expectedReport));
+        when(reportMapper.toDTO(expectedReport))
+                .thenReturn(expectedReportDTO);
 
         ReportDTO actualReportDTO = adminService.deleteReport(reportId);
         assertEquals(expectedReportDTO, actualReportDTO);
@@ -87,8 +87,8 @@ class AdminServiceTest {
 
     @Test
     void deleteMissingReportTest() {
-        given(reportRepository.findById(reportId))
-                .willReturn(Optional.empty());
+        when(reportRepository.findById(reportId))
+                .thenReturn(Optional.empty());
 
         assertThrows(ReportNotFoundException.class, () -> {
             adminService.deleteReport(reportId);
@@ -106,10 +106,10 @@ class AdminServiceTest {
                 TestDataFactory.createDefaultReport()
         );
 
-        given(reportRepository.findAll())
-                .willReturn(allExpectedReports);
-        given(reportMapper.toDTO(allExpectedReports))
-                .willReturn(allExpectedReportDTOs);
+        when(reportRepository.findAll())
+                .thenReturn(allExpectedReports);
+        when(reportMapper.toDTO(allExpectedReports))
+                .thenReturn(allExpectedReportDTOs);
 
         List<ReportDTO> actualReportDTOs = adminService.deleteAllReports();
         assertEquals(allExpectedReportDTOs, actualReportDTOs);
@@ -120,10 +120,10 @@ class AdminServiceTest {
         RecipeDTO expectedRecipeDTO = TestDataFactory.createDefaultRecipeDTO();
         Recipe expectedRecipe = TestDataFactory.createDefaultRecipe();
 
-        given(recipeRepository.findById(recipeId))
-                .willReturn(Optional.of(expectedRecipe));
-        given(recipeMapper.toDTO(expectedRecipe))
-                .willReturn(expectedRecipeDTO);
+        when(recipeRepository.findById(recipeId))
+                .thenReturn(Optional.of(expectedRecipe));
+        when(recipeMapper.toDTO(expectedRecipe))
+                .thenReturn(expectedRecipeDTO);
 
         RecipeDTO actualRecipeDTO = adminService.deleteRecipe(recipeId);
         assertEquals(expectedRecipeDTO, actualRecipeDTO);
@@ -131,8 +131,8 @@ class AdminServiceTest {
 
     @Test
     void deleteMissingRecipeTest() {
-        given(recipeRepository.findById(recipeId))
-                .willReturn(Optional.empty());
+        when(recipeRepository.findById(recipeId))
+                .thenReturn(Optional.empty());
 
         assertThrows(RecipeNotFoundException.class, () -> {
             adminService.deleteRecipe(recipeId);

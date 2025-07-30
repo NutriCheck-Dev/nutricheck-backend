@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -46,7 +46,7 @@ class RecipeControllerTest {
 
     @Test
     void uploadRecipeTest() throws Exception {
-        given(recipeService.uploadRecipe(any(RecipeDTO.class))).willReturn(recipeDTO);
+        when(recipeService.uploadRecipe(any(RecipeDTO.class))).thenReturn(recipeDTO);
 
         ResultActions response = mockMvc.perform(post("/user/recipes")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -67,7 +67,7 @@ class RecipeControllerTest {
 
     @Test
     void reportRecipeTest() throws Exception {
-        given(recipeService.reportRecipe(any(ReportDTO.class))).willReturn(reportDTO);
+        when(recipeService.reportRecipe(any(ReportDTO.class))).thenReturn(reportDTO);
 
         ResultActions response = mockMvc.perform(post("/user/recipes/report")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -82,10 +82,9 @@ class RecipeControllerTest {
                 .andExpect(jsonPath("$.recipeInstructions").value(reportDTO.getRecipeInstructions()));
     }
 
-    @Test
     void reportMissingRecipeTest() throws Exception {
-        given(recipeService.reportRecipe(any(ReportDTO.class)))
-                .willThrow(RecipeNotFoundException.class);
+        when(recipeService.reportRecipe(any(ReportDTO.class)))
+                .thenThrow(RecipeNotFoundException.class);
 
         mockMvc.perform(post("/user/recipes/report")
                 .contentType(MediaType.APPLICATION_JSON)

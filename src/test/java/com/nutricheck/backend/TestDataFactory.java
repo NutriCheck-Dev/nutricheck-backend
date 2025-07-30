@@ -1,6 +1,7 @@
 package com.nutricheck.backend;
 
 import com.nutricheck.backend.dto.*;
+import com.nutricheck.backend.dto.external.AIMealDTO;
 import com.nutricheck.backend.layer.model.entity.*;
 
 import java.util.Set;
@@ -75,16 +76,25 @@ public class TestDataFactory {
 
     public static MealDTO createDefaultMealDTO() {
         return MealDTO.builder()
-                .calories(500)
-                .carbohydrates(100)
-                .protein(30)
-                .fat(20)
+                .calories(100)
+                .carbohydrates(25)
+                .protein(5)
+                .fat(2)
                 .items(Set.of(MealItemDTO.builder()
                                 .foodProductId("testFoodProductId")
                                 .foodProduct(createDefaultFoodProductDTO())
                                 .build()
                         )
                 )
+                .build();
+    }
+    public static AIMealDTO createDefaultAIMealDTO() {
+        return AIMealDTO.builder()
+                .name("Test AI Meal")
+                .calories(100)
+                .carbohydrates(25)
+                .protein(5)
+                .fat(2)
                 .build();
     }
 
@@ -198,6 +208,28 @@ public class TestDataFactory {
                 .carbohydrates(54)
                 .protein(6.3)
                 .fat(30)
+                .build();
+    }
+
+    public static MealDTO createMealDTOFromGemini() {
+        return MealDTO.builder()
+                .calories(780)
+                .carbohydrates(91)
+                .protein(53)
+                .fat(23)
+                .items(Set.of(MealItemDTO.builder()
+                                .foodProductId("testFoodProductId")
+                                .foodProduct(FoodProductDTO.builder()
+                                        .id("testFoodProductId")
+                                        .name("Spaghetti Bolognese")
+                                        .calories(780)
+                                        .carbohydrates(91)
+                                        .protein(53)
+                                        .fat(23)
+                                        .build())
+                                .build()
+                        )
+                )
                 .build();
     }
 

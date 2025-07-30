@@ -6,13 +6,14 @@ import com.nutricheck.backend.dto.MealDTO;
 import com.nutricheck.backend.dto.RecipeDTO;
 import com.nutricheck.backend.exception.GlobalExceptionHandler;
 import com.nutricheck.backend.layer.service.MealService;
-import com.nutricheck.backend.util.FileUtil;
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -20,10 +21,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
-import java.util.Base64;
 
+import static org.mockito.Mockito.when;
 import static org.hamcrest.Matchers.containsString;
-import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -53,8 +53,9 @@ class MealControllerTest {
     @Test
     void searchFoodProductTest() throws Exception {
         List<FoodProductDTO> foodProducts = List.of(foodProductDTO, foodProductDTO);
-        given(mealService.searchFoodProduct(foodProductDTO.getName(), "en"))
-                .willReturn(foodProducts);
+
+        when(mealService.searchFoodProduct(foodProductDTO.getName(), "en"))
+                .thenReturn(foodProducts);
 
         ResultActions response = mockMvc.perform(get("/user/search/products/{name}",
                 foodProductDTO.getName())
@@ -83,8 +84,9 @@ class MealControllerTest {
     @Test
     void searchRecipeTest() throws Exception {
         List<RecipeDTO> recipes = List.of(recipeDTO, recipeDTO);
-        given(mealService.searchRecipe(recipeDTO.getName()))
-                .willReturn(recipes);
+
+        when(mealService.searchRecipe(recipeDTO.getName()))
+                .thenReturn(recipes);
         ResultActions response = mockMvc.perform(get("/user/search/recipes/{name}",
                 recipeDTO.getName()));
 
@@ -104,13 +106,14 @@ class MealControllerTest {
     }
     @Test
     void estimateMealTest() throws Exception {
+        ClassPathResource resource = new ClassPathResource("spaghetti.png");
         MockMultipartFile image = new MockMultipartFile(
                 "file",
-                "test.png",
+                "spaghetti.png",
                 MediaType.IMAGE_PNG_VALUE,
-                Base64.getMimeDecoder().decode(FileUtil.readFileAsString("encoded-image.txt")));
+                FileUtils.readFileToByteArray(resource.getFile()));
 
-        given(mealService.estimateMeal(image)).willReturn(mealDTO);
+        when(mealService.estimateMeal(image)).thenReturn(mealDTO);
 
         ResultActions response = mockMvc.perform(multipart("/user/meal")
                 .file(image)
