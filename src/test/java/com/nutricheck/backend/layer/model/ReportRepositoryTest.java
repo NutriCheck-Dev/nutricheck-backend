@@ -1,4 +1,4 @@
-package com.nutricheck.backend.model;
+package com.nutricheck.backend.layer.model;
 
 import com.nutricheck.backend.TestDataFactory;
 import com.nutricheck.backend.layer.model.entity.Report;
