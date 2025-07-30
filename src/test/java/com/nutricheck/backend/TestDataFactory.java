@@ -19,19 +19,7 @@ public class TestDataFactory {
                 .fat(5)
                 .ingredients(Set.of(
                         createDefaultIngredientDTO(),
-                        IngredientDTO.builder()
-                                .recipeId("testRecipeId")
-                                .foodProductId("testFoodProductId2")
-                                .foodProduct(FoodProductDTO.builder()
-                                        .id("testFoodProductId2")
-                                        .name("Test Food Product 2")
-                                        .calories(100)
-                                        .carbohydrates(25)
-                                        .protein(5)
-                                        .fat(3)
-                                        .build())
-                                .quantity(200)
-                                .build())
+                        createDefaultIngredientDTO2())
                 )
                 .build();
     }
@@ -43,6 +31,16 @@ public class TestDataFactory {
                 .quantity(100)
                 .build();
     }
+
+    public static IngredientDTO createDefaultIngredientDTO2() {
+        return IngredientDTO.builder()
+                .recipeId("testRecipeId")
+                .foodProductId("testFoodProductId2")
+                .foodProduct(createDefaultFoodProductDTO2())
+                .quantity(200)
+                .build();
+    }
+
     public static ReportDTO createDefaultReportDTO() {
         return ReportDTO.builder()
                 .id("testReportId")
@@ -65,6 +63,16 @@ public class TestDataFactory {
                 .build();
     }
 
+    public static FoodProductDTO createDefaultFoodProductDTO2() {
+        return FoodProductDTO.builder()
+                .id("testFoodProductId2")
+                .name("Test Food Product 2")
+                .calories(100)
+                .carbohydrates(25)
+                .protein(5)
+                .fat(3)
+                .build();
+    }
 
     public static MealDTO createDefaultMealDTO() {
         return MealDTO.builder()
@@ -107,34 +115,60 @@ public class TestDataFactory {
                 .fat(2)
                 .build();
     }
+    public static FoodProduct createDefaultFoodProduct2() {
+        return FoodProduct.builder()
+                .id("testFoodProductId2")
+                .name("Test Food Product 2")
+                .calories(100)
+                .carbohydrates(25)
+                .protein(5)
+                .fat(3)
+                .build();
+    }
+    public static Ingredient createDefaultIngredient() {
+        return Ingredient.builder()
+                .id(IngredientID.builder()
+                        .recipeId("testRecipeId")
+                        .foodProductId("testFoodProductId")
+                        .build())
+                .quantity(100)
+                .foodProduct(createDefaultFoodProduct())
+                .build();
+    }
+
+    public static Ingredient createDefaultIngredient2() {
+        return Ingredient.builder()
+                .id(IngredientID.builder()
+                        .recipeId("testRecipeId")
+                        .foodProductId("testFoodProductId2")
+                        .build())
+                .quantity(200)
+                .foodProduct(createDefaultFoodProduct2())
+                .build();
+    }
 
     public static Recipe createDefaultRecipe() {
-        Recipe recipe = Recipe.builder()
+        Recipe recipe =Recipe.builder()
                 .id("testRecipeId")
                 .name("Test Recipe")
                 .instructions("This is a test recipe")
+                .ingredients(Set.of(
+                        createDefaultIngredient(),
+                        createDefaultIngredient2())
+                )
                 .servings(1)
                 .calories(200)
                 .carbohydrates(50)
                 .protein(10)
                 .fat(5)
                 .build();
-        FoodProduct foodProduct = createDefaultFoodProduct();
-        IngredientID ingredientID = IngredientID.builder()
-                .recipeId(recipe.getId())
-                .foodProductId(foodProduct.getId())
-                .build();
-        Ingredient ingredient = Ingredient.builder()
-                .id(ingredientID)
-                .recipe(recipe)
-                .foodProduct(foodProduct)
-                .quantity(100)
-                .build();
-        recipe.setIngredients(Set.of(ingredient));
+        for (Ingredient ingredient : recipe.getIngredients()) {
+            ingredient.setRecipe(recipe);
+        }
         return recipe;
     }
-  
-  public static FoodProductDTO createFoodProductDTOOneFromSwissDB() {
+
+    public static FoodProductDTO createFoodProductDTOOneFromSwissDB() {
         return FoodProductDTO.builder()
                 .name("Mashed potatoes, instant, prepared (with water and butter)")
                 .carbohydrates(11.5)

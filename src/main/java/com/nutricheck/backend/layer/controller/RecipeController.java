@@ -4,7 +4,7 @@ import com.nutricheck.backend.dto.RecipeDTO;
 import com.nutricheck.backend.dto.ReportDTO;
 import com.nutricheck.backend.layer.service.RecipeService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * Provides endpoints for uploading, reporting, and downloading recipes.
  */
 @RestController
-@RequestMapping("/user/recipe")
+@RequestMapping("/user/recipes")
 @Validated
 public class RecipeController {
 
@@ -29,10 +29,10 @@ public class RecipeController {
      * @param recipeDTO the recipe data transfer object containing the recipe details.
      * @return the uploaded RecipeDTO object.
      */
-    @PostMapping("/upload")
+    @PostMapping
     public ResponseEntity<RecipeDTO> uploadRecipe(@RequestBody @Valid RecipeDTO recipeDTO) {
         RecipeDTO uploadedRecipe = recipeService.uploadRecipe(recipeDTO);
-        return ResponseEntity.ok(uploadedRecipe);
+        return ResponseEntity.status(HttpStatus.CREATED).body(uploadedRecipe);
     }
 
     /**
@@ -47,16 +47,4 @@ public class RecipeController {
         return ResponseEntity.ok(reportedRecipe);
     }
 
-
-    /**
-     * This endpoint allows users to download a specified recipe.
-     *
-     * @param recipeId the ID of the recipe to be downloaded.
-     * @return the RecipeDTO object.
-     */
-    @GetMapping("/download/{recipeId}")
-    public ResponseEntity<RecipeDTO> downloadRecipe(@PathVariable @NotBlank String recipeId) {
-        RecipeDTO recipe = recipeService.downloadRecipe(recipeId);
-        return ResponseEntity.ok(recipe);
-    }
 }

@@ -21,7 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
 
-    private static final String NOT_FOUND_MESSAGE = "%s with id %s cannot be found.";
+    static final String NOT_FOUND_MESSAGE = "%s with id %s cannot be found.";
 
     private final ReportRepository reportRepository;
     private final RecipeRepository recipeRepository;

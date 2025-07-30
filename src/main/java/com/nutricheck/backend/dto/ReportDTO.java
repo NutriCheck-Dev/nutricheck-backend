@@ -8,8 +8,7 @@ import lombok.*;
  * Data Transfer Object (DTO) for report information.
  * This class is used to transfer report data over the REST API.
  */
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

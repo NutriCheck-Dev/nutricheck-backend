@@ -2,6 +2,7 @@ package com.nutricheck.backend.model;
 
 import com.nutricheck.backend.TestDataFactory;
 import com.nutricheck.backend.layer.model.entity.Recipe;
+import com.nutricheck.backend.layer.model.repository.FoodProductRepository;
 import com.nutricheck.backend.layer.model.repository.RecipeRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import java.util.List;
 class RecipeRepositoryTest {
     @Autowired
     private RecipeRepository recipeRepository;
+    @Autowired
+    private FoodProductRepository foodProductRepository;
 
     private Recipe recipe;
 
@@ -56,7 +59,7 @@ class RecipeRepositoryTest {
     void findRecipeByNameAndInstructionsTest() {
         Assertions.assertThat(recipeRepository.findByNameAndInstructions(recipe.getName(), recipe.getInstructions()))
                 .as("Check if recipe can be found by name and instructions")
-                .isPresent();
+                .anyMatch(r -> r.getId().equals(recipe.getId()));
     }
 
     @Test
@@ -64,6 +67,9 @@ class RecipeRepositoryTest {
     @Rollback(false)
     void deleteRecipeByIdTest() {
         recipeRepository.deleteById(recipe.getId());
+        // food products need to be deleted manually
+        // to prevent errors in FoodProductRepositoryTest and isolate test classes
+        foodProductRepository.deleteAll();
         Assertions.assertThat(recipeRepository.findById(recipe.getId()))
                 .as("Check if recipe table still contains deleted recipe")
                 .isEmpty();

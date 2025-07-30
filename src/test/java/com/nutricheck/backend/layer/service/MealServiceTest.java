@@ -111,7 +111,7 @@ class MealServiceTest {
         List<FoodProduct> internalProducts = new ArrayList<>();
         for(int i = 0; i < MealServiceImpl.MAX_SEARCH_RESULTS; i++) {
             FoodProduct internalProduct = TestDataFactory.createDefaultFoodProduct();
-            internalProduct.setId(String.valueOf(i));
+            internalProduct.setName(foodProductName + i);
             internalProducts.add(internalProduct);
         }
         List<FoodProductDTO> expectedProducts = Mappers.getMapper(FoodProductMapper.class)

@@ -72,7 +72,7 @@ class AdminControllerTest {
     void deleteReportTest() throws Exception {
         when(adminService.deleteReport(reportDTO.getId())).thenReturn(reportDTO);
 
-        ResultActions response = mockMvc.perform(delete("/admin/reports/delete/{reportId}", reportDTO.getId()));
+        ResultActions response = mockMvc.perform(delete("/admin/reports/{reportId}", reportDTO.getId()));
 
         response
                 .andExpect(status().isOk())
@@ -89,7 +89,7 @@ class AdminControllerTest {
 
         when(adminService.deleteAllReports()).thenReturn(reports);
 
-        ResultActions response = mockMvc.perform(delete("/admin/reports/delete/all"));
+        ResultActions response = mockMvc.perform(delete("/admin/reports"));
         response
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()").value(reports.size()))
@@ -111,7 +111,7 @@ class AdminControllerTest {
     void deleteRecipeTest() throws Exception {
         when(adminService.deleteRecipe(recipeDTO.getId())).thenReturn(recipeDTO);
 
-        ResultActions response = mockMvc.perform(delete("/admin/recipe/delete/{recipeId}", recipeDTO.getId()));
+        ResultActions response = mockMvc.perform(delete("/admin/recipes/{recipeId}", recipeDTO.getId()));
 
         response
                 .andExpect(status().isOk())
@@ -130,7 +130,7 @@ class AdminControllerTest {
     void deleteMissingReportTest() throws Exception {
         when(adminService.deleteReport("missingReportId")).thenThrow(ReportNotFoundException.class);
 
-        mockMvc.perform(delete("/admin/reports/delete/{reportId}", "missingReportId"))
+        mockMvc.perform(delete("/admin/reports/{reportId}", "missingReportId"))
                 .andExpect(status().isNotFound());
     }
 
@@ -138,7 +138,7 @@ class AdminControllerTest {
     void deleteMissingRecipeTest() throws Exception {
         when(adminService.deleteRecipe("missingRecipeId")).thenThrow(RecipeNotFoundException.class);
 
-        mockMvc.perform(delete("/admin/recipe/delete/{recipeId}", "missingRecipeId"))
+        mockMvc.perform(delete("/admin/recipes/{recipeId}", "missingRecipeId"))
                 .andExpect(status().isNotFound());
     }
 }

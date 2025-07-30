@@ -26,11 +26,4 @@ public interface RecipeService {
      */
     ReportDTO reportRecipe(ReportDTO reportDTO);
 
-    /**
-     * Retrieves a recipe by its ID.
-     *
-     * @param recipeId the ID of the recipe to be downloaded.
-     * @return the RecipeDTO object containing the recipe details.
-     */
-    RecipeDTO downloadRecipe(String recipeId);
 }
