@@ -5,6 +5,7 @@ import com.nutricheck.backend.dto.external.OpenFoodFactsFoodProductDTO;
 import com.nutricheck.backend.dto.external.OpenFoodFactsResponseDTO;
 import com.nutricheck.backend.layer.client.FoodDBClient;
 import com.nutricheck.backend.layer.client.mapper.OpenFoodFactsMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -36,15 +37,13 @@ public class OpenFoodFactsClient implements FoodDBClient {
         OpenFoodFactsResponseDTO response = getData(request);
         List<OpenFoodFactsFoodProductDTO> foodProducts = response.getProducts();
         List<FoodProductDTO> mappedProducts = mapper.toFoodProductDTO(foodProducts);
-        for (int i = 0; i < mappedProducts.size(); i++) {
-            // Set the name based on the requested language
-            FoodProductDTO currentProduct = mappedProducts.get(i);
-            if ("de".equals(language) && foodProducts.get(i).getGermanName() != null) {
-                currentProduct.setName(foodProducts.get(i).getGermanName());
-            } else if ("en".equals(language) && foodProducts.get(i).getEnglishName() != null) {
-                currentProduct.setName(foodProducts.get(i).getEnglishName());
+        for (int i = mappedProducts.size() - 1; i >= 0; i--) {
+            OpenFoodFactsFoodProductDTO foodProductToMap = foodProducts.get(i);
+            String nameToSet = getNameByLanguage(foodProductToMap, language);
+            if (nameToSet != null) {
+                mappedProducts.get(i).setName(nameToSet);
             } else {
-                currentProduct.setName(foodProducts.get(i).getName());
+                mappedProducts.remove(i);
             }
         }
         return mappedProducts;
@@ -68,5 +67,22 @@ public class OpenFoodFactsClient implements FoodDBClient {
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .body(OpenFoodFactsResponseDTO.class);
+    }
+
+    private String getNameByLanguage(OpenFoodFactsFoodProductDTO product, String language) {
+        String languageSpecificName = switch (language) {
+            case "de" -> product.getGermanName();
+            case "en" -> product.getEnglishName();
+            default -> null;
+        };
+        // Prefer language-specific name, fall back to general name
+        // StringUtils handles null values gracefully
+        if (StringUtils.isNotEmpty(languageSpecificName)) {
+            return languageSpecificName;
+        } else if (StringUtils.isNotEmpty(product.getName())) {
+            return product.getName();
+        } else {
+            return null; // This will trigger removal
+        }
     }
 }
