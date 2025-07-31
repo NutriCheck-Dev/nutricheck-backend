@@ -47,18 +47,18 @@ public class MealServiceImpl implements MealService {
 
         if( foodProducts.size() < MAX_SEARCH_RESULTS) {
             List<FoodProductDTO> swissFoodProducts = swissFoodCDClient.search(name, language);
-            foodProducts.addAll(swissFoodProducts);
+            foodProducts.addAll(sortFoodProductsByNameLength(swissFoodProducts));
 
             List<FoodProductDTO> openFoodFacts = openFoodFactsClient.search(name, language);
-
-            foodProducts.addAll(openFoodFacts);
+            foodProducts.addAll(sortFoodProductsByNameLength(openFoodFacts));
         }
-        // TODO: Does sorting by name length improve the user experience?
-        List<FoodProductDTO> sortedFoodProducts = new ArrayList<>(foodProducts);
-        Comparator<FoodProductDTO> nameLengthComparator = (product1, product2) ->
-                Integer.compare(product1.getName().length(), product2.getName().length());
-        Collections.sort(sortedFoodProducts, nameLengthComparator);
-        return sortedFoodProducts;
+        return new ArrayList<>(foodProducts);
+    }
+
+    private List<FoodProductDTO> sortFoodProductsByNameLength(List<FoodProductDTO> foodProducts) {
+        return foodProducts.stream()
+                .sorted(Comparator.comparingInt(product -> product.getName().length()))
+                .toList();
     }
 
     @Override

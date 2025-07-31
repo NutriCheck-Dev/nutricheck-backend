@@ -24,7 +24,6 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -75,14 +74,24 @@ class MealServiceTest {
 
     @Test
     void searchFoodProductTest() {
+        Comparator<FoodProductDTO> nameLengthComparator = (product1, product2) ->
+                Integer.compare(product1.getName().length(), product2.getName().length());
         List<FoodProductDTO> expectedSwissProducts = List.of(
                 TestDataFactory.createFoodProductDTOOneFromSwissDB(),
-                TestDataFactory.createFoodProductDTOTwoFromSwissDB()
-        );
+                TestDataFactory.createFoodProductDTOTwoFromSwissDB())
+                .stream()
+                .sorted(nameLengthComparator)
+                .toList();
         List<FoodProductDTO> expectedOpenProducts = List.of(
                 TestDataFactory.createFoodProductDTOOneFromOpenFoodFacts(),
-                TestDataFactory.createFoodProductDTOTwoFromOpenFoodFacts()
-        );
+                TestDataFactory.createFoodProductDTOTwoFromOpenFoodFacts())
+                .stream()
+                .sorted(nameLengthComparator)
+                .toList();
+        List<FoodProductDTO> expectedProducts = Stream.concat(
+                expectedSwissProducts.stream(),
+                expectedOpenProducts.stream()
+        ).toList();
 
         when(foodProductRepository.findByNameContainingIgnoreCase(foodProductName))
                 .thenReturn(List.of());
@@ -91,15 +100,6 @@ class MealServiceTest {
                 .thenReturn(expectedSwissProducts);
         when(openFoodFactsClient.search(foodProductName, language))
                 .thenReturn(expectedOpenProducts);
-
-
-        Comparator<FoodProductDTO> nameLengthComparator = (product1, product2) ->
-                Integer.compare(product1.getName().length(), product2.getName().length());
-        List<FoodProductDTO> expectedProducts = Stream.concat(
-                expectedSwissProducts.stream(),
-                expectedOpenProducts.stream()
-        ).collect(Collectors.toList());
-        Collections.sort(expectedProducts, nameLengthComparator);
 
         List<FoodProductDTO> actualProducts = mealService.searchFoodProduct(foodProductName, language);
         assertEquals(expectedProducts, actualProducts);
