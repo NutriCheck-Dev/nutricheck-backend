@@ -8,7 +8,7 @@ import com.nutricheck.backend.dto.MealDTO;
 import com.nutricheck.backend.dto.external.AIMealDTO;
 import com.nutricheck.backend.layer.client.AIModelClient;
 import com.nutricheck.backend.layer.client.mapper.AIMealMapper;
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
@@ -51,8 +51,10 @@ public class GeminiClient implements AIModelClient {
     }
 
     private String createRequestPrompt() throws IOException {
-        return FileUtils.readFileToString(
-                new ClassPathResource("gemini-prompt.txt").getFile(),
+        ClassPathResource resource = new ClassPathResource("gemini-prompt.txt");
+        // use input stream instead of file to avoid issues with classpath resources after packaging
+        return IOUtils.toString(
+                resource.getInputStream(),
                 StandardCharsets.UTF_8
         );
                 
