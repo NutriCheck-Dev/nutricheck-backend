@@ -35,7 +35,19 @@ public class OpenFoodFactsClient implements FoodDBClient {
     public List<FoodProductDTO> search(String request, String language) {
         OpenFoodFactsResponseDTO response = getData(request);
         List<OpenFoodFactsFoodProductDTO> foodProducts = response.getProducts();
-        return mapper.toFoodProductDTO(foodProducts);
+        List<FoodProductDTO> mappedProducts = mapper.toFoodProductDTO(foodProducts);
+        for (int i = 0; i < mappedProducts.size(); i++) {
+            // Set the name based on the requested language
+            FoodProductDTO currentProduct = mappedProducts.get(i);
+            if ("de".equals(language) && foodProducts.get(i).getGermanName() != null) {
+                currentProduct.setName(foodProducts.get(i).getGermanName());
+            } else if ("en".equals(language) && foodProducts.get(i).getEnglishName() != null) {
+                currentProduct.setName(foodProducts.get(i).getEnglishName());
+            } else {
+                currentProduct.setName(foodProducts.get(i).getName());
+            }
+        }
+        return mappedProducts;
     }
 
     private OpenFoodFactsResponseDTO getData(String request) {

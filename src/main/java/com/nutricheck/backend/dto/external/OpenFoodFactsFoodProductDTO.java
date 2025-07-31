@@ -17,5 +17,9 @@ public class OpenFoodFactsFoodProductDTO {
     private String id;
     @JsonProperty("product_name")
     private String name;
+    @JsonProperty("product_name_de")
+    private String germanName;
+    @JsonProperty("product_name_en")
+    private String englishName;
     private OpenFoodFactsNutrimentsDTO nutriments;
 }

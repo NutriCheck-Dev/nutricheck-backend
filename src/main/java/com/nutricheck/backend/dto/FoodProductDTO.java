@@ -9,6 +9,7 @@ import lombok.*;
  * Data Transfer Object (DTO) for food product information.
  * This class is used to transfer food product data over the REST API.
  */
+@ToString
 @Getter
 @Setter
 @EqualsAndHashCode(exclude = {"id"})

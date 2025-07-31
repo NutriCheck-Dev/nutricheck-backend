@@ -13,7 +13,7 @@ import org.springframework.core.io.ClassPathResource;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class OpenFoodFactsMapperTest {
 
@@ -33,6 +33,8 @@ class OpenFoodFactsMapperTest {
 
         List<FoodProductDTO> mappedProducts = mapper.toFoodProductDTO(productsToMap);
 
-        assertEquals(expectedProducts, mappedProducts);
+        assertThat(mappedProducts)
+                .usingRecursiveFieldByFieldElementComparatorIgnoringFields("name") // will be set after mapping
+                .containsExactlyElementsOf(expectedProducts);
     }
 }

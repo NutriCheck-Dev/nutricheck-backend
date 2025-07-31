@@ -13,6 +13,7 @@ import java.util.List;
  */
 @Mapper(componentModel = "spring")
 public interface OpenFoodFactsMapper {
+    @Mapping(target = "name", ignore = true) // will be set manually in client
     @Mapping(source = "nutriments.fat", target = "fat")
     @Mapping(source = "nutriments.energyKcal", target = "calories")
     @Mapping(source = "nutriments.carbohydrates", target = "carbohydrates")

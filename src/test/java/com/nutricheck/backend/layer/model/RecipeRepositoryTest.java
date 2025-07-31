@@ -12,6 +12,8 @@ import org.assertj.core.api.Assertions;
 
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 @DataJpaTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -29,7 +31,7 @@ class RecipeRepositoryTest {
     void saveRecipeTest() {
         Recipe tempRecipe = TestDataFactory.createDefaultRecipe();
         recipe = recipeRepository.save(tempRecipe);
-        Assertions.assertThat(recipeRepository.findById(recipe.getId()))
+        assertThat(recipeRepository.findById(recipe.getId()))
                 .as("Check if recipe table contains the saved recipe")
                 .isPresent();
     }

@@ -50,6 +50,7 @@ public class MealServiceImpl implements MealService {
             foodProducts.addAll(swissFoodProducts);
 
             List<FoodProductDTO> openFoodFacts = openFoodFactsClient.search(name, language);
+
             foodProducts.addAll(openFoodFacts);
         }
         // TODO: Does sorting by name length improve the user experience?
