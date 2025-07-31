@@ -27,7 +27,7 @@ public interface SwissFoodCDMapper {
     default double mapFromValues(List<SwissFoodCDValueDTO> values) {
         for (SwissFoodCDValueDTO value : values) {
             if (value.getComponent().getCode().equals("FAT")) {
-                return value.getValue();
+                return value.getValue() != null ? value.getValue() : 0;
             }
         }
         return 0;
@@ -37,7 +37,7 @@ public interface SwissFoodCDMapper {
     default double mapCaloriesFromValues(List<SwissFoodCDValueDTO> values) {
         for (SwissFoodCDValueDTO value : values) {
             if (value.getComponent().getCode().equals("ENERCC")) {
-                return value.getValue();
+                return value.getValue() != null ? value.getValue() : 0;
             }
         }
         return 0;
@@ -47,7 +47,7 @@ public interface SwissFoodCDMapper {
     default double mapCarbohydratesFromValues(List<SwissFoodCDValueDTO> values) {
         for (SwissFoodCDValueDTO value : values) {
             if (value.getComponent().getCode().equals("CHO")) {
-                return value.getValue();
+                return value.getValue() != null ? value.getValue() : 0;
             }
         }
         return 0;
@@ -57,7 +57,7 @@ public interface SwissFoodCDMapper {
     default double mapProteinFromValues(List<SwissFoodCDValueDTO> values) {
         for (SwissFoodCDValueDTO value : values) {
             if (value.getComponent().getCode().equals("PROT625")) {
-                return value.getValue();
+                return value.getValue() != null ? value.getValue() : 0;
             }
         }
         return 0;
