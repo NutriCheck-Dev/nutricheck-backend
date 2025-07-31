@@ -44,7 +44,7 @@ public class RecipeController {
     @PostMapping("/report")
     public ResponseEntity<ReportDTO> reportRecipe(@RequestBody @Valid ReportDTO reportDTO) {
         ReportDTO reportedRecipe = recipeService.reportRecipe(reportDTO);
-        return ResponseEntity.ok(reportedRecipe);
+        return ResponseEntity.status(HttpStatus.CREATED).body(reportedRecipe);
     }
 
 }

@@ -74,7 +74,7 @@ class RecipeControllerTest {
                 .content(objectMapper.writeValueAsString(reportDTO)));
 
         response
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(reportDTO.getId()))
                 .andExpect(jsonPath("$.description").value(reportDTO.getDescription()))
                 .andExpect(jsonPath("$.recipeId").value(reportDTO.getRecipeId()))

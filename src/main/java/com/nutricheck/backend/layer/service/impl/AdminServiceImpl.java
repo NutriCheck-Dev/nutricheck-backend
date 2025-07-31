@@ -31,7 +31,15 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<ReportDTO> getAllReports() {
         List<Report> allReports = reportRepository.findAll();
-        return reportMapper.toDTO(allReports);
+        List<ReportDTO> mappedReports = reportMapper.toDTO(allReports);
+        for(ReportDTO report : mappedReports) {
+            Optional<Recipe> recipe = recipeRepository.findById(report.getRecipeId());
+            if(recipe.isPresent()) {
+                report.setRecipeName(recipe.get().getName());
+                report.setRecipeInstructions(recipe.get().getInstructions());
+            }
+        }
+        return mappedReports;
     }
 
     @Override
