@@ -49,7 +49,14 @@ public class AdminServiceImpl implements AdminService {
             throw new ReportNotFoundException(String.format(NOT_FOUND_MESSAGE, "Report", reportId));
         }
         reportRepository.deleteById(reportId);
-        return reportMapper.toDTO(reportToDelete.get());
+
+        ReportDTO mappedReport = reportMapper.toDTO(reportToDelete.get());
+        Optional<Recipe> reportedRecipe = recipeRepository.findById(mappedReport.getRecipeId());
+        if(reportedRecipe.isPresent()) {
+            mappedReport.setRecipeId(reportedRecipe.get().getId());
+            mappedReport.setRecipeName(reportedRecipe.get().getName());
+        }
+        return mappedReport;
     }
 
     @Override
