@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,7 +36,12 @@ public class OpenFoodFactsClient implements FoodDBClient {
     @Override
     public List<FoodProductDTO> search(String request, String language) {
         OpenFoodFactsResponseDTO response = getData(request);
-        List<OpenFoodFactsFoodProductDTO> foodProducts = response.getProducts();
+        List<OpenFoodFactsFoodProductDTO> foodProducts;
+        if (response == null || response.getProducts() == null) {
+            foodProducts = new ArrayList<>();
+        }else {
+            foodProducts= response.getProducts();
+        }
         List<FoodProductDTO> mappedProducts = mapper.toFoodProductDTO(foodProducts);
         for (int i = mappedProducts.size() - 1; i >= 0; i--) {
             OpenFoodFactsFoodProductDTO foodProductToMap = foodProducts.get(i);

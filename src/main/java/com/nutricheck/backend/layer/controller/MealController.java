@@ -67,7 +67,8 @@ public class MealController {
     @PostMapping(value = "/meal")
     public ResponseEntity<MealDTO> estimateMeal(@RequestParam("file") MultipartFile file) throws IOException {
         // for performance reasons validate image here
-        if(file.isEmpty() || !file.getContentType().equals(MediaType.IMAGE_PNG_VALUE))
+        String contentType = file.getContentType();
+        if(file.isEmpty() || contentType == null || !contentType.equals(MediaType.IMAGE_PNG_VALUE))
             return ResponseEntity.badRequest().build();
 
         MealDTO meal = mealService.estimateMeal(file);
