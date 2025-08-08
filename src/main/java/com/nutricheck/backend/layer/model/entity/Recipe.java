@@ -24,6 +24,8 @@ public class Recipe extends Nutriment {
     private String id;
 
     private String name;
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String instructions;
     private int servings;
 
