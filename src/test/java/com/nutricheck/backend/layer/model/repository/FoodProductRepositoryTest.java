@@ -1,8 +1,7 @@
-package com.nutricheck.backend.layer.model;
+package com.nutricheck.backend.layer.model.repository;
 
 import com.nutricheck.backend.TestDataFactory;
 import com.nutricheck.backend.layer.model.entity.FoodProduct;
-import com.nutricheck.backend.layer.model.repository.FoodProductRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
