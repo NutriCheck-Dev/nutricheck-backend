@@ -12,8 +12,7 @@ import lombok.*;
  * the associated recipe ID and a description.
  */
 @Entity
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
