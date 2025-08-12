@@ -20,6 +20,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
@@ -142,5 +143,27 @@ class MealControllerTest {
 
         response
                 .andExpect(status().isBadRequest());
+    }
+
+
+    /*
+     * Assumes a JSON parsing error occurs during deserialzation of the response from the
+     * AI model. Verifies that GlobalExceptionHandler handles the error.
+     */
+    @Test
+    void estimateMealWithIOExceptionTest() throws Exception {
+        ClassPathResource resource = new ClassPathResource("spaghetti.png");
+        MockMultipartFile image = new MockMultipartFile(
+                "file",
+                "spaghetti.png",
+                MediaType.IMAGE_PNG_VALUE,
+                FileUtils.readFileToByteArray(resource.getFile()));
+
+        when(mealService.estimateMeal(image)).thenThrow(IOException.class);
+
+        mockMvc.perform(multipart("/user/meal")
+                        .file(image)
+                        .contentType(MediaType.MULTIPART_FORM_DATA))
+                .andExpect(status().isInternalServerError());
     }
 }

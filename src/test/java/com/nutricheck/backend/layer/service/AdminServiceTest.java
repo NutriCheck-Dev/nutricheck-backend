@@ -72,6 +72,47 @@ class AdminServiceTest {
     }
 
     @Test
+    void getAllReportsEmptyTest() {
+        when(reportRepository.findAll())
+                .thenReturn(List.of());
+        when(reportMapper.toDTO(List.of()))
+                .thenReturn(List.of());
+
+        List<ReportDTO> actualReportDTOs = adminService.getAllReports();
+        assertEquals(List.of(), actualReportDTOs);
+    }
+
+    @Test
+    void getAllReportsWithRecipeInfoTest() {
+        Recipe expectedRecipe = TestDataFactory.createDefaultRecipe();
+        ReportDTO firstReportDTO = TestDataFactory.createDefaultReportDTO();
+        firstReportDTO.setRecipeName(expectedRecipe.getName());
+        firstReportDTO.setRecipeInstructions(expectedRecipe.getInstructions());
+        ReportDTO secondReportDTO = TestDataFactory.createDefaultReportDTO();
+        secondReportDTO.setRecipeName(expectedRecipe.getName());
+        secondReportDTO.setRecipeInstructions(expectedRecipe.getInstructions());
+
+        List<ReportDTO> allExpectedReportDTOs = List.of(
+                firstReportDTO,
+                secondReportDTO
+        );
+        List<Report> allExpectedReports = List.of(
+                TestDataFactory.createDefaultReport(),
+                TestDataFactory.createDefaultReport()
+        );
+
+        when(reportRepository.findAll())
+                .thenReturn(allExpectedReports);
+        when(reportMapper.toDTO(allExpectedReports))
+                .thenReturn(allExpectedReportDTOs);
+        when(recipeRepository.findById(recipeId))
+                .thenReturn(Optional.of(expectedRecipe));
+
+        List<ReportDTO> actualReportDTOs = adminService.getAllReports();
+        assertEquals(allExpectedReportDTOs, actualReportDTOs);
+    }
+
+    @Test
     void deleteReportTest() {
         ReportDTO expectedReportDTO = TestDataFactory.createDefaultReportDTO();
         Report expectedReport = TestDataFactory.createDefaultReport();
@@ -84,6 +125,24 @@ class AdminServiceTest {
         ReportDTO actualReportDTO = adminService.deleteReport(reportId);
         assertEquals(expectedReportDTO, actualReportDTO);
     }
+
+    @Test
+    void deleteReportWithRecipeInfoTest() {
+        Recipe expectedRecipe = TestDataFactory.createDefaultRecipe();
+        ReportDTO expectedReportDTO = TestDataFactory.createDefaultReportDTO();
+        expectedReportDTO.setRecipeName(expectedRecipe.getName());
+        expectedReportDTO.setRecipeInstructions(expectedRecipe.getInstructions());
+        Report expectedReport = TestDataFactory.createDefaultReport();
+
+        when(reportRepository.findById(reportId)).thenReturn(Optional.of(expectedReport));
+        when(reportMapper.toDTO(expectedReport)).thenReturn(expectedReportDTO);
+        when(recipeRepository.findById(expectedReport.getRecipeId()))
+                .thenReturn(Optional.of(expectedRecipe));
+
+        ReportDTO actualReportDTO = adminService.deleteReport(reportId);
+        assertEquals(expectedReportDTO, actualReportDTO);
+    }
+
 
     @Test
     void deleteMissingReportTest() {

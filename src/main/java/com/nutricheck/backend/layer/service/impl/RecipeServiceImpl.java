@@ -57,13 +57,11 @@ public class RecipeServiceImpl implements RecipeService {
             FoodProduct newFoodProduct = foodProductMapper.toEntity(ingredientDTO.getFoodProduct());
             FoodProduct foodProduct = findExistingFoodProduct(newFoodProduct)
                     .orElse(newFoodProduct);
-            foodProduct.addReference(ingredient);
             ingredient.setFoodProduct(foodProduct);
             ingredients.add(ingredient);
         }
         recipe.setIngredients(ingredients);
-
-        Recipe managedRecipe = recipeRepository.save(recipe); // cascading causes ingredients and food products to be saved
+        Recipe managedRecipe = recipeRepository.save(recipe); // cascading causes ingredients and (new) food products to be saved
         return recipeMapper.toDTO(managedRecipe);
     }
 
@@ -73,10 +71,13 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     private Optional<FoodProduct> findExistingFoodProduct(FoodProduct newFoodProduct) {
-        List<FoodProduct> allFoodProducts = foodProductRepository.findAll();
-        return allFoodProducts.stream()
-                .filter(fp -> fp.equals(newFoodProduct))
-                .findFirst();
+        return foodProductRepository.findByNameAndCaloriesAndCarbohydratesAndProteinAndFat(
+                newFoodProduct.getName(),
+                newFoodProduct.getCalories(),
+                newFoodProduct.getCarbohydrates(),
+                newFoodProduct.getProtein(),
+                newFoodProduct.getFat()
+        );
     }
 
     @Override
