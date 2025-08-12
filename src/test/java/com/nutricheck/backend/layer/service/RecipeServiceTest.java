@@ -64,7 +64,9 @@ class RecipeServiceTest {
         when(recipeMapper.toEntity(expectedRecipeDTO)).thenReturn(recipe);
         when(ingredientMapper.toEntity(any(IngredientDTO.class))).thenReturn(recipeIngredient);
         when(foodProductMapper.toEntity(any(FoodProductDTO.class))).thenReturn(TestDataFactory.createDefaultFoodProduct());
-        when(foodProductRepository.findAll()).thenReturn(List.of());
+        when(foodProductRepository.findByNameAndCaloriesAndCarbohydratesAndProteinAndFat(
+                any(String.class), any(Double.class), any(Double.class), any(Double.class), any(Double.class)
+        )).thenReturn(Optional.empty());
         when(recipeRepository.save(recipe)).thenReturn(recipe);
         when(recipeMapper.toDTO(recipe)).thenReturn(expectedRecipeDTO);
 

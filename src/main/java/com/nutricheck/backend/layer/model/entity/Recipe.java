@@ -5,7 +5,6 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -38,14 +37,10 @@ public class Recipe extends Nutriment {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Recipe recipe = (Recipe) o;
-        // nutrition values are not considered in equality check because they are calculated from ingredients
-        return Objects.equals(name, recipe.getName()) &&
-                Objects.equals(instructions, recipe.getInstructions()) &&
-                Objects.equals(servings, recipe.getServings()) &&
-                Objects.equals(ingredients, recipe.getIngredients());
+        return id != null && id.equals(recipe.id);
     }
     @Override
     public int hashCode() {
-        return Objects.hash(name, instructions, servings, ingredients);
+        return getClass().hashCode();
     }
 }

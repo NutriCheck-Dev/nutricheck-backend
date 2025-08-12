@@ -3,7 +3,6 @@ package com.nutricheck.backend.layer.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Objects;
 
 /**
  * Entity representing an ingredient in a recipe.
@@ -25,6 +24,11 @@ public class Ingredient {
     @JoinColumn(name = "recipe_id")
     private Recipe recipe;
 
+    /*
+     * only cascade persist (needed when creating a recipe with a new product) and merge
+     * (needed as our food products have ids already set and Spring Data JPA save method
+     *  will try to merge them even if they are transient)
+     */
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @MapsId("foodProductId")
     @JoinColumn(name = "food_product_id")
@@ -37,12 +41,11 @@ public class Ingredient {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ingredient that = (Ingredient) o;
-        return Objects.equals(this.id.getRecipeId(), that.getId().getRecipeId()) &&
-                this.getFoodProduct().equals(that.getFoodProduct()) &&
-                Objects.equals(this.quantity, that.getQuantity());
+        // check for null id to avoid comparing transient entities
+        return id != null && id.equals(that.id);
     }
     @Override
     public int hashCode() {
-        return Objects.hash(id.getFoodProductId(), quantity);
+        return getClass().hashCode();
     }
 }

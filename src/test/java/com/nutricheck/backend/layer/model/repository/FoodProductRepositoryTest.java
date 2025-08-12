@@ -1,16 +1,17 @@
-package com.nutricheck.backend.layer.model;
+package com.nutricheck.backend.layer.model.repository;
 
 import com.nutricheck.backend.TestDataFactory;
 import com.nutricheck.backend.layer.model.entity.FoodProduct;
-import com.nutricheck.backend.layer.model.repository.FoodProductRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
-import org.assertj.core.api.Assertions;
 
 import java.util.List;
 import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @DataJpaTest
@@ -28,7 +29,7 @@ class FoodProductRepositoryTest {
     void saveFoodProductTest() {
         FoodProduct tempFoodProduct = TestDataFactory.createDefaultFoodProduct();
         foodProduct = foodProductRepository.save(tempFoodProduct);
-        Assertions.assertThat(foodProductRepository.findById(foodProduct.getId()))
+        assertThat(foodProductRepository.findById(foodProduct.getId()))
                 .as("Check if food product table contains the saved food product")
                 .isPresent();
     }
@@ -37,30 +38,47 @@ class FoodProductRepositoryTest {
     @Order(2)
     void findFoodProductByIdTest() {
         Optional<FoodProduct> foundFoodProduct = foodProductRepository.findById(foodProduct.getId());
-        Assertions.assertThat(foundFoodProduct)
+        assertThat(foundFoodProduct)
                 .as("Check if food product can be found by id")
                 .isPresent();
+        // Verify that the found food product matches the one we saved
+        assertEquals(foodProduct, foundFoodProduct.get());
     }
 
     @Test
     @Order(3)
     void findFoodProductByNameTest() {
         List<FoodProduct> foodProducts = foodProductRepository.findByNameContainingIgnoreCase(foodProduct.getName());
-        Assertions.assertThat(foodProducts)
+        assertThat(foodProducts)
                 .as("Check if food product can be found by name")
                 .hasSize(1);
-        Assertions.assertThat(foodProducts.get(0).getId())
-                .as("Check that the saved food product is the one we expect")
-                .isEqualTo(foodProduct.getId());
+        // Verify that the found food product matches the one we saved
+        assertEquals(foodProducts.get(0), foodProduct);
     }
 
     @Test
     @Order(4)
+    void findFoodProductByAllPropertiesExceptIDTest() {
+        Optional<FoodProduct> foundFoodProduct = foodProductRepository.findByNameAndCaloriesAndCarbohydratesAndProteinAndFat(
+                foodProduct.getName(),
+                foodProduct.getCalories(),
+                foodProduct.getCarbohydrates(),
+                foodProduct.getProtein(),
+                foodProduct.getFat()
+        );
+        assertThat(foundFoodProduct)
+                .as("Check if food product can be found by all properties except id")
+                .isPresent();
+        assertEquals(foodProduct, foundFoodProduct.get());
+    }
+
+    @Test
+    @Order(5)
     @Rollback(false)
     void deleteFoodProductByIdTest() {
         foodProductRepository.deleteById(foodProduct.getId());
         Optional<FoodProduct> deletedFoodProduct = foodProductRepository.findById(foodProduct.getId());
-        Assertions.assertThat(deletedFoodProduct)
+        assertThat(deletedFoodProduct)
                 .as("Check if food product table still contains deleted food product")
                 .isEmpty();
     }

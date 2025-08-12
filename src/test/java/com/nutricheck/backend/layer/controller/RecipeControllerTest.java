@@ -4,11 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nutricheck.backend.TestDataFactory;
 import com.nutricheck.backend.dto.RecipeDTO;
 import com.nutricheck.backend.dto.ReportDTO;
+import com.nutricheck.backend.exception.DuplicateRecipeException;
+import com.nutricheck.backend.exception.GlobalExceptionHandler;
 import com.nutricheck.backend.exception.RecipeNotFoundException;
 import com.nutricheck.backend.layer.service.RecipeService;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.springframework.http.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -23,8 +23,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-@WebMvcTest(controllers = RecipeController.class, excludeAutoConfiguration = SecurityAutoConfiguration.class)
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@WebMvcTest(controllers = {RecipeController.class, GlobalExceptionHandler.class}, excludeAutoConfiguration = SecurityAutoConfiguration.class)
 class RecipeControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -37,7 +36,7 @@ class RecipeControllerTest {
 
     private ObjectMapper objectMapper;
 
-    @BeforeAll
+    @BeforeEach
     void setup() {
         recipeDTO = TestDataFactory.createDefaultRecipeDTO();
         reportDTO = TestDataFactory.createDefaultReportDTO();
@@ -66,6 +65,17 @@ class RecipeControllerTest {
     }
 
     @Test
+    void uploadDuplicateRecipeTest() throws Exception {
+        when(recipeService.uploadRecipe(any(RecipeDTO.class)))
+                .thenThrow(DuplicateRecipeException.class);
+
+        mockMvc.perform(post("/user/recipes")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(recipeDTO)))
+                .andExpect(status().isConflict());
+    }
+
+    @Test
     void reportRecipeTest() throws Exception {
         when(recipeService.reportRecipe(any(ReportDTO.class))).thenReturn(reportDTO);
 
@@ -82,6 +92,7 @@ class RecipeControllerTest {
                 .andExpect(jsonPath("$.recipeInstructions").value(reportDTO.getRecipeInstructions()));
     }
 
+    @Test
     void reportMissingRecipeTest() throws Exception {
         when(recipeService.reportRecipe(any(ReportDTO.class)))
                 .thenThrow(RecipeNotFoundException.class);
@@ -90,5 +101,16 @@ class RecipeControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(reportDTO)))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void reportRecipeWithInvalidDataTest() throws Exception {
+        ReportDTO invalidReport = reportDTO;
+        invalidReport.setRecipeId("");
+
+        mockMvc.perform(post("/user/recipes/report")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(invalidReport)))
+                .andExpect(status().isBadRequest());
     }
 }
