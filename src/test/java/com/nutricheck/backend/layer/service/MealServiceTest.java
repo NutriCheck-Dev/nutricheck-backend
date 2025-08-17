@@ -149,10 +149,10 @@ class MealServiceTest {
                 MediaType.IMAGE_PNG_VALUE,
                 FileUtils.readFileToByteArray(resource.getFile()));
 
-        when(aiModelClient.estimateMeal(image.getBytes()))
+        when(aiModelClient.estimateMeal(image.getBytes(), language))
                 .thenReturn(TestDataFactory.createDefaultMealDTO());
 
-        MealDTO actualMeal = mealService.estimateMeal(image);
+        MealDTO actualMeal = mealService.estimateMeal(image, language);
         assertEquals(actualMeal, TestDataFactory.createDefaultMealDTO());
     }
 }

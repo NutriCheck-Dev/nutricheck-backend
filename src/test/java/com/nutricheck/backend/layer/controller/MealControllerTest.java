@@ -113,11 +113,13 @@ class MealControllerTest {
                 "spaghetti.png",
                 MediaType.IMAGE_PNG_VALUE,
                 FileUtils.readFileToByteArray(resource.getFile()));
+        String language = "en";
 
-        when(mealService.estimateMeal(image)).thenReturn(mealDTO);
+        when(mealService.estimateMeal(image, language)).thenReturn(mealDTO);
 
         ResultActions response = mockMvc.perform(multipart("/user/meal")
                 .file(image)
+                .param("language", language)
                 .contentType(MediaType.MULTIPART_FORM_DATA));
 
         response
@@ -145,6 +147,24 @@ class MealControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    void estimateMealWithInvalidLanguageTest() throws Exception {
+        ClassPathResource resource = new ClassPathResource("spaghetti.png");
+        MockMultipartFile image = new MockMultipartFile(
+                "file",
+                "spaghetti.png",
+                MediaType.IMAGE_PNG_VALUE,
+                FileUtils.readFileToByteArray(resource.getFile()));
+
+        mockMvc.perform(multipart("/user/meal")
+                        .file(image)
+                        .param("language", "fr")
+                        .contentType(MediaType.MULTIPART_FORM_DATA))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.body.detail", containsString("estimateMeal.language: " +
+                        "Only german (de) and english (en) are allowed")));
+    }
+
 
     /*
      * Assumes a JSON parsing error occurs during deserialzation of the response from the
@@ -158,11 +178,13 @@ class MealControllerTest {
                 "spaghetti.png",
                 MediaType.IMAGE_PNG_VALUE,
                 FileUtils.readFileToByteArray(resource.getFile()));
+        String language = "en";
 
-        when(mealService.estimateMeal(image)).thenThrow(IOException.class);
+        when(mealService.estimateMeal(image, language)).thenThrow(IOException.class);
 
         mockMvc.perform(multipart("/user/meal")
                         .file(image)
+                        .param("language", language)
                         .contentType(MediaType.MULTIPART_FORM_DATA))
                 .andExpect(status().isInternalServerError());
     }

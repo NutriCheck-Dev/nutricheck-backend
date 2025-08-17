@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -44,6 +45,8 @@ class GeminiClientTest {
 
     private byte[] image;
 
+    private String language;
+
     @BeforeEach
     void setup() throws IOException {
         objectMapper = new ObjectMapper();
@@ -52,6 +55,7 @@ class GeminiClientTest {
         geminiClient = new GeminiClient("testKey", objectMapper, aiMealMapper);
         ReflectionTestUtils.setField(geminiClient, "apiClient", apiClient);
         ReflectionTestUtils.setField(apiClient, "models", models);
+        language = "en";
     }
 
     @Test
@@ -67,7 +71,15 @@ class GeminiClientTest {
         when(generateContentResponse.text()).thenReturn(rawResponse);
         when(aiMealMapper.toMealDTO(aiMealDTO)).thenReturn(expectedMealDTO);
 
-        MealDTO actualMealDTO = geminiClient.estimateMeal(image);
+        MealDTO actualMealDTO = geminiClient.estimateMeal(image, language);
         assertEquals(expectedMealDTO, actualMealDTO);
+    }
+
+    @Test
+    void estimateMealWithInvalidLanguageTest() {
+        language = "fr";
+        assertThrows(IllegalArgumentException.class, () -> {
+            geminiClient.estimateMeal(image, language);
+        });
     }
 }

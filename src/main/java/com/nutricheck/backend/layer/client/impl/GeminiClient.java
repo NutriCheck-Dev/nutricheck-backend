@@ -34,9 +34,9 @@ public class GeminiClient implements AIModelClient {
         this.aiMealMapper = aiMealMapper;
     }
     @Override
-    public MealDTO estimateMeal(byte[] image) throws IOException {
+    public MealDTO estimateMeal(byte[] image, String language) throws IOException {
         Content content = Content.fromParts(
-                Part.fromText(createRequestPrompt()),
+                Part.fromText(createRequestPrompt(language)),
                 Part.fromBytes(image, MediaType.IMAGE_PNG_VALUE));
 
         GenerateContentConfig config = GenerateContentConfig.builder()
@@ -50,13 +50,21 @@ public class GeminiClient implements AIModelClient {
         return aiMealMapper.toMealDTO(aiEstimatedMeal);
     }
 
-    private String createRequestPrompt() throws IOException {
+    private String createRequestPrompt(String language) throws IOException {
         ClassPathResource resource = new ClassPathResource("gemini-prompt.txt");
         // use input stream instead of file to avoid issues with classpath resources after packaging
-        return IOUtils.toString(
+        String generalPrompt = IOUtils.toString(
                 resource.getInputStream(),
-                StandardCharsets.UTF_8
-        );
+                StandardCharsets.UTF_8);
+        switch (language) {
+            case "de":
+                return generalPrompt + "Please translate the name of the meal into German";
+            case "en":
+                return generalPrompt;
+            default:
+                throw new IllegalArgumentException("This should never happen, " +
+                        "as the language is validated in the controller.");
+        }
                 
     }
 

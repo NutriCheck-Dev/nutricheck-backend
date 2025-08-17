@@ -37,7 +37,8 @@ public interface MealService {
      * Estimates a meal based on an image using an external AI model.
      *
      * @param image the image file of the meal to be estimated.
+     * @param language the language in which to perform the estimation.
      * @return a MealDTO object containing the estimated meal information.
      */
-    MealDTO estimateMeal(MultipartFile image) throws IOException;
+    MealDTO estimateMeal(MultipartFile image, String language) throws IOException;
 }
