@@ -34,6 +34,7 @@ public class MealController {
      * This endpoint allows users to search for food products by name.
      *
      * @param name the name of the food product to search for.
+     * @param language the language for the response, either "de" (German) or "en" (English).
      * @return a list of FoodProductDTO objects matching the search criteria.
      */
     @GetMapping("/search/products/{name}")
@@ -62,16 +63,21 @@ public class MealController {
      * This endpoint allows users to estimate a meal from an image.
      *
      * @param file the image file containing the meal to be estimated.
+     * @param language the language for the response, either "de" (German) or "en" (English).
      * @return the estimated MealDTO object.
      */
     @PostMapping(value = "/meal")
-    public ResponseEntity<MealDTO> estimateMeal(@RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseEntity<MealDTO> estimateMeal(@RequestParam("file") MultipartFile file,
+                                                @RequestParam(required = false, defaultValue = "de")
+                                                @Pattern(regexp = "^(de|en)$",
+                                                        message = "Only german (de) and english (en) are allowed")
+                                                String language) throws IOException {
         // for performance reasons validate image here
         String contentType = file.getContentType();
         if(file.isEmpty() || contentType == null || !contentType.equals(MediaType.IMAGE_PNG_VALUE))
             return ResponseEntity.badRequest().build();
 
-        MealDTO meal = mealService.estimateMeal(file);
+        MealDTO meal = mealService.estimateMeal(file, language);
         return ResponseEntity.ok(meal);
     }
 }

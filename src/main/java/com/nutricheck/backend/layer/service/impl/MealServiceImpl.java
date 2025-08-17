@@ -32,9 +32,9 @@ public class MealServiceImpl implements MealService {
     private final AIModelClient aiModelClient;
 
     @Override
-    public MealDTO estimateMeal(MultipartFile image) throws IOException {
+    public MealDTO estimateMeal(MultipartFile image, String language) throws IOException {
         byte[] imageBytes = image.getBytes();
-        return aiModelClient.estimateMeal(imageBytes);
+        return aiModelClient.estimateMeal(imageBytes, language);
 
     }
 
