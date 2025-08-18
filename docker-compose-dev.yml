@@ -1,0 +1,25 @@
+services:
+  nutricheck:
+    image: karchem/nutricheck-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    depends_on:
+      database:
+        condition: service_healthy
+
+  database:
+    image: mysql
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 3s
+      retries: 5
+      timeout: 10s
+
+
