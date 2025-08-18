@@ -1,6 +1,6 @@
 /target
 .idea
-**/secrets.properties
+.env
 backend.iml
 .env
 **/large.jpg
