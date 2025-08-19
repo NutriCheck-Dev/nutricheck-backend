@@ -50,7 +50,7 @@ class GeminiClientTest {
     @BeforeEach
     void setup() throws IOException {
         objectMapper = new ObjectMapper();
-        image = FileUtils.readFileToByteArray(new ClassPathResource("spaghetti.png").getFile());
+        image = FileUtils.readFileToByteArray(new ClassPathResource("spaghetti.jpg").getFile());
         // key is not used as apiClient is mocked but required for instantiation
         geminiClient = new GeminiClient("testKey", objectMapper, aiMealMapper);
         ReflectionTestUtils.setField(geminiClient, "apiClient", apiClient);

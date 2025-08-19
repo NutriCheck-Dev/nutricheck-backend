@@ -142,11 +142,11 @@ class MealServiceTest {
 
     @Test
     void estimateMealTest() throws Exception {
-        ClassPathResource resource = new ClassPathResource("spaghetti.png");
+        ClassPathResource resource = new ClassPathResource("spaghetti.jpg");
         MockMultipartFile image = new MockMultipartFile(
                 "file",
-                "spaghetti.png",
-                MediaType.IMAGE_PNG_VALUE,
+                "spaghetti.jpg",
+                MediaType.IMAGE_JPEG_VALUE,
                 FileUtils.readFileToByteArray(resource.getFile()));
 
         when(aiModelClient.estimateMeal(image.getBytes(), language))

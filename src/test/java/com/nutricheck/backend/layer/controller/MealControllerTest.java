@@ -107,11 +107,11 @@ class MealControllerTest {
     }
     @Test
     void estimateMealTest() throws Exception {
-        ClassPathResource resource = new ClassPathResource("spaghetti.png");
+        ClassPathResource resource = new ClassPathResource("spaghetti.jpg");
         MockMultipartFile image = new MockMultipartFile(
                 "file",
-                "spaghetti.png",
-                MediaType.IMAGE_PNG_VALUE,
+                "spaghetti.jpg",
+                MediaType.IMAGE_JPEG_VALUE,
                 FileUtils.readFileToByteArray(resource.getFile()));
         String language = "en";
 
@@ -149,11 +149,11 @@ class MealControllerTest {
 
     @Test
     void estimateMealWithInvalidLanguageTest() throws Exception {
-        ClassPathResource resource = new ClassPathResource("spaghetti.png");
+        ClassPathResource resource = new ClassPathResource("spaghetti.jpg");
         MockMultipartFile image = new MockMultipartFile(
                 "file",
-                "spaghetti.png",
-                MediaType.IMAGE_PNG_VALUE,
+                "spaghetti.jpg",
+                MediaType.IMAGE_JPEG_VALUE,
                 FileUtils.readFileToByteArray(resource.getFile()));
 
         mockMvc.perform(multipart("/user/meal")
@@ -172,11 +172,11 @@ class MealControllerTest {
      */
     @Test
     void estimateMealWithIOExceptionTest() throws Exception {
-        ClassPathResource resource = new ClassPathResource("spaghetti.png");
+        ClassPathResource resource = new ClassPathResource("spaghetti.jpg");
         MockMultipartFile image = new MockMultipartFile(
                 "file",
-                "spaghetti.png",
-                MediaType.IMAGE_PNG_VALUE,
+                "spaghetti.jpg",
+                MediaType.IMAGE_JPEG_VALUE,
                 FileUtils.readFileToByteArray(resource.getFile()));
         String language = "en";
 
@@ -188,4 +188,5 @@ class MealControllerTest {
                         .contentType(MediaType.MULTIPART_FORM_DATA))
                 .andExpect(status().isInternalServerError());
     }
+
 }

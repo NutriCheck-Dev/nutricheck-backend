@@ -37,7 +37,7 @@ public class GeminiClient implements AIModelClient {
     public MealDTO estimateMeal(byte[] image, String language) throws IOException {
         Content content = Content.fromParts(
                 Part.fromText(createRequestPrompt(language)),
-                Part.fromBytes(image, MediaType.IMAGE_PNG_VALUE));
+                Part.fromBytes(image, MediaType.IMAGE_JPEG_VALUE));
 
         GenerateContentConfig config = GenerateContentConfig.builder()
                 .candidateCount(1)

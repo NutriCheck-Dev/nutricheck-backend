@@ -74,7 +74,7 @@ public class MealController {
                                                 String language) throws IOException {
         // for performance reasons validate image here
         String contentType = file.getContentType();
-        if(file.isEmpty() || contentType == null || !contentType.equals(MediaType.IMAGE_PNG_VALUE))
+        if(file.isEmpty() || contentType == null || !contentType.equals(MediaType.IMAGE_JPEG_VALUE))
             return ResponseEntity.badRequest().build();
 
         MealDTO meal = mealService.estimateMeal(file, language);
