@@ -1,12 +1,15 @@
 package com.nutricheck.backend.exception;
 
 import jakarta.validation.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.unit.DataSize;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import java.io.IOException;
 
@@ -18,6 +21,13 @@ import java.io.IOException;
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    private final DataSize maxFileSize;
+
+
+    public GlobalExceptionHandler(@Value("${spring.servlet.multipart.max-file-size}") DataSize maxFileSize) {
+        this.maxFileSize = maxFileSize;
+    }
 
     /**
      * Handles MethodArgumentNotValidException, which occurs when DTO validation fails.
@@ -87,5 +97,18 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = ErrorResponse.create(ex, HttpStatus.INTERNAL_SERVER_ERROR,
                 ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
+    /**
+     * Handles a MaxUploadSizeExceededException, which occurs when the uploaded file exceeds the maximum allowed size
+     * in the application.properties.
+     *
+     * @param ex the exception that was thrown
+     * @return a ResponseEntity containing an ErrorResponse with details about the error
+     */
+    @ExceptionHandler(value = MaxUploadSizeExceededException.class)
+    public ResponseEntity<ErrorResponse> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException ex) {
+        ErrorResponse errorResponse = ErrorResponse.create(ex, HttpStatus.PAYLOAD_TOO_LARGE,
+                "The uploaded file exceeds the maximum allowed size of " + maxFileSize.toString() + ".");
+        return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE).body(errorResponse);
     }
 }
