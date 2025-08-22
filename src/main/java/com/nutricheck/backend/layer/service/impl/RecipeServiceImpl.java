@@ -19,6 +19,7 @@ import com.nutricheck.backend.layer.service.mapper.RecipeMapper;
 import com.nutricheck.backend.layer.service.mapper.ReportMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -40,6 +41,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     @Transactional
+    @CacheEvict(value = "recipes", key = "#recipeDTO.name.toLowerCase()")
     public RecipeDTO uploadRecipe(RecipeDTO recipeDTO) {
         List<Recipe> existingRecipes = recipeRepository.findByNameAndInstructions(recipeDTO.getName(), recipeDTO.getInstructions());
         if(isDuplicateRecipe(recipeDTO, recipeMapper.toDTO(existingRecipes))) {
