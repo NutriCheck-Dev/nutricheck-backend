@@ -3,6 +3,7 @@ package com.nutricheck.backend.layer.service;
 import com.nutricheck.backend.dto.FoodProductDTO;
 import com.nutricheck.backend.dto.MealDTO;
 import com.nutricheck.backend.dto.RecipeDTO;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
