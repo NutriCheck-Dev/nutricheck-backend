@@ -37,8 +37,8 @@ public class MealController {
      * @param language the language for the response, either "de" (German) or "en" (English).
      * @return a list of FoodProductDTO objects matching the search criteria.
      */
-    @GetMapping("/search/products/{name}")
-    public ResponseEntity<List<FoodProductDTO>> searchFoodProduct(@PathVariable @NotNull String name,
+    @GetMapping("/search/products")
+    public ResponseEntity<List<FoodProductDTO>> searchFoodProduct(@RequestParam @NotNull String name,
                                                                   @RequestParam(required = false, defaultValue = "de")
                                                                   @Pattern(regexp = "^(de|en)$",
                                                                           message = "Only german (de) and english (en) are allowed")
@@ -53,8 +53,8 @@ public class MealController {
      * @param name the name of the recipe to search for.
      * @return a list of RecipeDTO objects matching the search criteria.
      */
-    @GetMapping("/search/recipes/{name}")
-    public ResponseEntity<List<RecipeDTO>> searchRecipe(@PathVariable @NotNull String name) {
+    @GetMapping("/search/recipes")
+    public ResponseEntity<List<RecipeDTO>> searchRecipe(@RequestParam @NotNull String name) {
         List<RecipeDTO> recipes = mealService.searchRecipe(name);
         return ResponseEntity.ok(recipes);
     }
