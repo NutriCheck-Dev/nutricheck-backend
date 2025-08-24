@@ -58,8 +58,8 @@ class MealControllerTest {
         when(mealService.searchFoodProduct(foodProductDTO.getName(), "en"))
                 .thenReturn(foodProducts);
 
-        ResultActions response = mockMvc.perform(get("/user/search/products/{name}",
-                foodProductDTO.getName())
+        ResultActions response = mockMvc.perform(get("/user/search/products")
+                .param("name", foodProductDTO.getName())
                 .param("language", "en"));
         response
                 .andExpect(status().isOk())
@@ -76,7 +76,8 @@ class MealControllerTest {
 
     @Test
     void searchFoodProductWithInvalidLanguageTest() throws Exception {
-        mockMvc.perform(get("/user/search/products/{name}", foodProductDTO.getName())
+        mockMvc.perform(get("/user/search/products")
+                        .param("name", foodProductDTO.getName())
                         .param("language", "fr"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.body.detail", containsString("searchFoodProduct.language: Only german (de) and english (en) are allowed")));
@@ -88,8 +89,8 @@ class MealControllerTest {
 
         when(mealService.searchRecipe(recipeDTO.getName()))
                 .thenReturn(recipes);
-        ResultActions response = mockMvc.perform(get("/user/search/recipes/{name}",
-                recipeDTO.getName()));
+        ResultActions response = mockMvc.perform(get("/user/search/recipes")
+                .param("name", recipeDTO.getName()));
 
         response
                 .andExpect(status().isOk())
