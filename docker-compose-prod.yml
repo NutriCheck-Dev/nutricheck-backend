@@ -1,8 +1,6 @@
 services:
   nutricheck:
     image: karchem/nutricheck-backend:latest
-    ports:
-      - 8080:8080
     env_file:
       - .env
     depends_on:
@@ -43,7 +41,6 @@ services:
       - /etc/nginx/nginx-docker.conf:/etc/nginx/nginx.conf:ro # provides nginx config
     depends_on:
       - nutricheck
-
 
 volumes:
   db_data:
