@@ -11,6 +11,7 @@ import com.nutricheck.backend.layer.service.mapper.FoodProductMapper;
 import com.nutricheck.backend.layer.service.mapper.RecipeMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,6 +40,7 @@ public class MealServiceImpl implements MealService {
     }
 
     @Override
+    @Cacheable(value = "foodProducts", key = "#name.toLowerCase()")
     public List<FoodProductDTO> searchFoodProduct(String name, String language) {
         Set<FoodProductDTO> foodProducts = new LinkedHashSet<>();
 
@@ -62,6 +64,7 @@ public class MealServiceImpl implements MealService {
     }
 
     @Override
+    @Cacheable(value = "recipes", key = "#name.toLowerCase()")
     public List<RecipeDTO> searchRecipe(String name) {
         List<Recipe> recipes = recipeRepository.findByNameContainingIgnoreCase(name);
         return recipeMapper.toDTO(recipes);

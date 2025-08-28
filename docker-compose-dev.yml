@@ -1,0 +1,39 @@
+services:
+  nutricheck:
+    image: karchem/nutricheck-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      LOGGING_LEVEL_ROOT: DEBUG
+    depends_on:
+      database:
+        condition: service_healthy
+      cache:
+        condition: service_healthy
+
+  database:
+    image: mysql
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 3s
+      retries: 5
+      timeout: 10s
+
+  cache:
+    image: redis
+    ports:
+      - "6379:6379" # Expose Redis port for local development
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping", "|", "grep", "PONG"]
+      interval: 3s
+      retries: 5
+      timeout: 10s
+
+

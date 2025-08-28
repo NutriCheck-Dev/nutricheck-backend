@@ -1,0 +1,47 @@
+services:
+  nutricheck:
+    image: karchem/nutricheck-backend:latest
+    env_file:
+      - .env
+    depends_on:
+      database:
+        condition: service_healthy
+      cache:
+        condition: service_healthy
+
+  database:
+    image: mysql
+    env_file:
+      - .env
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 3s
+      retries: 5
+      timeout: 10s
+
+  cache:
+    image: redis
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping", "|", "grep", "PONG"]
+      interval: 3s
+      retries: 5
+      timeout: 10s
+
+  proxy:
+    image: nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt:ro # provides SSL certificates
+      - /etc/nginx/nginx-docker.conf:/etc/nginx/nginx.conf:ro # provides nginx config
+    depends_on:
+      - nutricheck
+
+volumes:
+  db_data:
+  redis_data:

@@ -12,6 +12,7 @@ import com.nutricheck.backend.layer.service.AdminService;
 import com.nutricheck.backend.layer.service.mapper.RecipeMapper;
 import com.nutricheck.backend.layer.service.mapper.ReportMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -69,6 +70,7 @@ public class AdminServiceImpl implements AdminService {
         return reportMapper.toDTO(allReports);
     }
     @Override
+    @CacheEvict(value = "recipes", allEntries = true)
     public RecipeDTO deleteRecipe(String recipeId) {
         Optional<Recipe> recipeToDelete = recipeRepository.findById(recipeId);
         if(recipeToDelete.isEmpty()) {
