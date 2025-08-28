@@ -3,7 +3,7 @@ services:
     image: karchem/nutricheck-backend:latest
     pull_policy: always
     ports:
-      - "8080:8080"
+      - 8080:8080
     env_file:
       - .env
     depends_on:
@@ -16,6 +16,8 @@ services:
     image: mysql
     env_file:
       - .env
+    volumes:
+      - db_data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 3s
@@ -24,10 +26,27 @@ services:
 
   cache:
     image: redis
+    volumes:
+      - redis_data:/data
     healthcheck:
       test: ["CMD", "redis-cli", "ping", "|", "grep", "PONG"]
       interval: 3s
       retries: 5
       timeout: 10s
 
-  # Add volumes and nginx service for https
+  proxy:
+    image: nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /etc/letsencrypt/live:/etc/nginx/certs:ro
+      - /etc/letsencrypt/ssh-dhparams.pem:/etc/nginx/ssh-dhparams.pem:ro
+      - /etc/nginx/nginx-docker.conf:/etc/nginx/nginx.conf:ro # nginx-docker.conf provides nginx config
+    depends_on:
+      - nutricheck
+
+
+volumes:
+  db_data:
+  redis_data:
