@@ -1,0 +1,41 @@
+{
+  "id": "0",
+  "name": "Test Recipe",
+  "instructions": "Test",
+  "servings": 1,
+  "calories": 100,
+  "carbohydrates": 50,
+  "fat": 20,
+  "protein": 10.0,
+  "ingredients":
+  [
+    {
+      "recipeId": "0",
+      "foodProductId": "0",
+      "quantity": 1.0,
+      "foodProduct":
+      {
+        "id": "0",
+        "name": "Test Food Product",
+        "calories": 50.0,
+        "carbohydrates": 25.0,
+        "fat": 10.0,
+        "protein": 5.0
+      }
+    },
+    {
+      "recipeId": "0",
+      "foodProductId": "1",
+      "quantity": 1.0,
+      "foodProduct":
+      {
+        "id": "1",
+        "name": "Test Food Product 2",
+        "calories": 50.0,
+        "carbohydrates": 25.0,
+        "fat": 10.0,
+        "protein": 5.0
+      }
+    }
+  ]
+}

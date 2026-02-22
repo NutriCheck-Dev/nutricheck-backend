@@ -12,7 +12,7 @@ import lombok.*;
 @ToString
 @Getter
 @Setter
-@EqualsAndHashCode(exclude = {"id"})
+@EqualsAndHashCode(exclude = {"id"}) // is generated for swiss food products and can therefore differ
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
