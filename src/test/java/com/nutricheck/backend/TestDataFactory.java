@@ -1,14 +1,14 @@
 package com.nutricheck.backend;
 
 import com.nutricheck.backend.dto.*;
-import com.nutricheck.backend.dto.external.AIMealDTO;
+import com.nutricheck.backend.dto.external.AiMealDto;
 import com.nutricheck.backend.layer.model.entity.*;
 
 import java.util.Set;
 
 public class TestDataFactory {
-    public static RecipeDTO createDefaultRecipeDTO() {
-        return RecipeDTO.builder()
+    public static RecipeDto createDefaultRecipeDTO() {
+        return RecipeDto.builder()
                 .id("testRecipeId")
                 .name("Test Recipe")
                 .instructions("This is a test recipe")
@@ -23,8 +23,8 @@ public class TestDataFactory {
                 )
                 .build();
     }
-    public static IngredientDTO createDefaultIngredientDTO() {
-        return IngredientDTO.builder()
+    public static IngredientDto createDefaultIngredientDTO() {
+        return IngredientDto.builder()
                 .recipeId("testRecipeId")
                 .foodProductId("testFoodProductId")
                 .foodProduct(createDefaultFoodProductDTO())
@@ -32,8 +32,8 @@ public class TestDataFactory {
                 .build();
     }
 
-    public static IngredientDTO createDefaultIngredientDTO2() {
-        return IngredientDTO.builder()
+    public static IngredientDto createDefaultIngredientDTO2() {
+        return IngredientDto.builder()
                 .recipeId("testRecipeId")
                 .foodProductId("testFoodProductId2")
                 .foodProduct(createDefaultFoodProductDTO2())
@@ -41,8 +41,8 @@ public class TestDataFactory {
                 .build();
     }
 
-    public static ReportDTO createDefaultReportDTO() {
-        return ReportDTO.builder()
+    public static ReportDto createDefaultReportDTO() {
+        return ReportDto.builder()
                 .id("testReportId")
                 .description("This is a test report")
                 .recipeId("testRecipeId")
@@ -52,8 +52,8 @@ public class TestDataFactory {
     }
 
 
-    public static FoodProductDTO createDefaultFoodProductDTO() {
-        return FoodProductDTO.builder()
+    public static FoodProductDto createDefaultFoodProductDTO() {
+        return FoodProductDto.builder()
                 .id("testFoodProductId")
                 .name("Test Food Product")
                 .calories(100)
@@ -63,8 +63,8 @@ public class TestDataFactory {
                 .build();
     }
 
-    public static FoodProductDTO createDefaultFoodProductDTO2() {
-        return FoodProductDTO.builder()
+    public static FoodProductDto createDefaultFoodProductDTO2() {
+        return FoodProductDto.builder()
                 .id("testFoodProductId2")
                 .name("Test Food Product 2")
                 .calories(100)
@@ -74,13 +74,13 @@ public class TestDataFactory {
                 .build();
     }
 
-    public static MealDTO createDefaultMealDTO() {
-        return MealDTO.builder()
+    public static MealDto createDefaultMealDTO() {
+        return MealDto.builder()
                 .calories(100)
                 .carbohydrates(25)
                 .protein(5)
                 .fat(2)
-                .items(Set.of(MealItemDTO.builder()
+                .items(Set.of(MealItemDto.builder()
                                 .foodProductId("testFoodProductId")
                                 .foodProduct(createDefaultFoodProductDTO())
                                 .build()
@@ -88,8 +88,8 @@ public class TestDataFactory {
                 )
                 .build();
     }
-    public static AIMealDTO createDefaultAIMealDTO() {
-        return AIMealDTO.builder()
+    public static AiMealDto createDefaultAIMealDTO() {
+        return AiMealDto.builder()
                 .name("Test AI Meal")
                 .calories(100)
                 .carbohydrates(25)
@@ -127,7 +127,7 @@ public class TestDataFactory {
     }
     public static Ingredient createDefaultIngredient() {
         return Ingredient.builder()
-                .id(IngredientID.builder()
+                .id(IngredientId.builder()
                         .recipeId("testRecipeId")
                         .foodProductId("testFoodProductId")
                         .build())
@@ -138,7 +138,7 @@ public class TestDataFactory {
 
     public static Ingredient createDefaultIngredient2() {
         return Ingredient.builder()
-                .id(IngredientID.builder()
+                .id(IngredientId.builder()
                         .recipeId("testRecipeId")
                         .foodProductId("testFoodProductId2")
                         .build())
@@ -168,8 +168,8 @@ public class TestDataFactory {
         return recipe;
     }
 
-    public static FoodProductDTO createFoodProductDTOOneFromSwissDB() {
-        return FoodProductDTO.builder()
+    public static FoodProductDto createFoodProductDTOOneFromSwissDB() {
+        return FoodProductDto.builder()
                 .name("Mashed potatoes, instant, prepared (with water and butter)")
                 .carbohydrates(11.5)
                 .fat(2.8)
@@ -178,8 +178,8 @@ public class TestDataFactory {
                 .build();
     }
 
-    public static FoodProductDTO createFoodProductDTOTwoFromSwissDB() {
-        return FoodProductDTO.builder()
+    public static FoodProductDto createFoodProductDTOTwoFromSwissDB() {
+        return FoodProductDto.builder()
                 .name("Mashed potatoes, prepared (with cream and butter)")
                 .carbohydrates(12.9)
                 .fat(8.4)
@@ -189,8 +189,8 @@ public class TestDataFactory {
     }
 
 
-    public static FoodProductDTO createFoodProductDTOOneFromOpenFoodFacts() {
-        return FoodProductDTO.builder()
+    public static FoodProductDto createFoodProductDTOOneFromOpenFoodFacts() {
+        return FoodProductDto.builder()
                 .id("5060042641000")
                 .name("Lightly Sea Salted")
                 .calories(476)
@@ -200,8 +200,8 @@ public class TestDataFactory {
                 .build();
     }
 
-    public static FoodProductDTO createFoodProductDTOTwoFromOpenFoodFacts() {
-        return FoodProductDTO.builder()
+    public static FoodProductDto createFoodProductDTOTwoFromOpenFoodFacts() {
+        return FoodProductDto.builder()
                 .id("5053990101597")
                 .name("Sour Cream & Onion")
                 .calories(519)
@@ -211,15 +211,15 @@ public class TestDataFactory {
                 .build();
     }
 
-    public static MealDTO createMealDTOFromGemini() {
-        return MealDTO.builder()
+    public static MealDto createMealDTOFromGemini() {
+        return MealDto.builder()
                 .calories(780)
                 .carbohydrates(91)
                 .protein(53)
                 .fat(23)
-                .items(Set.of(MealItemDTO.builder()
+                .items(Set.of(MealItemDto.builder()
                                 .foodProductId("testFoodProductId")
-                                .foodProduct(FoodProductDTO.builder()
+                                .foodProduct(FoodProductDto.builder()
                                         .id("testFoodProductId")
                                         .name("Spaghetti Bolognese")
                                         .calories(780)

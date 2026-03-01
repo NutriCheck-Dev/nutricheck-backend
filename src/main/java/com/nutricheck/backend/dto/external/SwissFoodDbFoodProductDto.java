@@ -16,10 +16,10 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SwissFoodCDFoodProductDTO {
+public class SwissFoodDbFoodProductDto {
     @JsonIgnore
     @Builder.Default
     private String id = UUID.randomUUID().toString();
     private String name;
-    private List<SwissFoodCDValueDTO> values;
+    private List<SwissFoodDbValueDto> values;
 }

@@ -14,7 +14,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class IngredientDTOValidationTest {
+class IngredientDtoValidationTest {
     private Validator validator;
 
     @BeforeAll
@@ -24,19 +24,19 @@ class IngredientDTOValidationTest {
     }
     @Test
     void validIngredientDTOTest() {
-        IngredientDTO ingredientDTO = TestDataFactory.createDefaultIngredientDTO();
+        IngredientDto ingredientDTO = TestDataFactory.createDefaultIngredientDTO();
 
-        Set<ConstraintViolation<IngredientDTO>> violations = validator.validate(ingredientDTO);
-        assertTrue(violations.isEmpty(), "Valid IngredientDTO should have no violations");
+        Set<ConstraintViolation<IngredientDto>> violations = validator.validate(ingredientDTO);
+        assertTrue(violations.isEmpty(), "Valid IngredientDto should have no violations");
     }
 
     // As an exemplary validation test case
     @Test
     void ingredientDTOWithNegativeQuantityTest() {
-        IngredientDTO ingredientDTO = TestDataFactory.createDefaultIngredientDTO();
+        IngredientDto ingredientDTO = TestDataFactory.createDefaultIngredientDTO();
         ingredientDTO.setQuantity(-100);
 
-        Set<ConstraintViolation<IngredientDTO>> violations = validator.validate(ingredientDTO);
+        Set<ConstraintViolation<IngredientDto>> violations = validator.validate(ingredientDTO);
         assertTrue(violations.stream().anyMatch(v -> v.getMessage().equals("Quantity of an ingredient must be a positive number")),
                 "Expected violation message for negative quantity of ingredient not found");
     }

@@ -1,7 +1,7 @@
 package com.nutricheck.backend.layer.service.impl;
 
-import com.nutricheck.backend.dto.RecipeDTO;
-import com.nutricheck.backend.dto.ReportDTO;
+import com.nutricheck.backend.dto.RecipeDto;
+import com.nutricheck.backend.dto.ReportDto;
 import com.nutricheck.backend.exception.RecipeNotFoundException;
 import com.nutricheck.backend.exception.ReportNotFoundException;
 import com.nutricheck.backend.layer.model.entity.Recipe;
@@ -30,10 +30,10 @@ public class AdminServiceImpl implements AdminService {
     private final RecipeMapper recipeMapper;
 
     @Override
-    public List<ReportDTO> getAllReports() {
+    public List<ReportDto> getAllReports() {
         List<Report> allReports = reportRepository.findAll();
-        List<ReportDTO> mappedReports = reportMapper.toDTO(allReports);
-        for(ReportDTO report : mappedReports) {
+        List<ReportDto> mappedReports = reportMapper.toDTO(allReports);
+        for(ReportDto report : mappedReports) {
             Optional<Recipe> recipe = recipeRepository.findById(report.getRecipeId());
             if(recipe.isPresent()) {
                 report.setRecipeName(recipe.get().getName());
@@ -44,14 +44,14 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public ReportDTO deleteReport(String reportId) {
+    public ReportDto deleteReport(String reportId) {
         Optional<Report> reportToDelete = reportRepository.findById(reportId);
         if(reportToDelete.isEmpty()) {
             throw new ReportNotFoundException(String.format(NOT_FOUND_MESSAGE, "Report", reportId));
         }
         reportRepository.deleteById(reportId);
 
-        ReportDTO mappedReport = reportMapper.toDTO(reportToDelete.get());
+        ReportDto mappedReport = reportMapper.toDTO(reportToDelete.get());
         Optional<Recipe> reportedRecipe = recipeRepository.findById(mappedReport.getRecipeId());
         if(reportedRecipe.isPresent()) {
             mappedReport.setRecipeId(reportedRecipe.get().getId());
@@ -61,7 +61,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<ReportDTO> deleteAllReports() {
+    public List<ReportDto> deleteAllReports() {
         List<Report> allReports = reportRepository.findAll();
         if(allReports.isEmpty()) {
             return List.of();
@@ -71,7 +71,7 @@ public class AdminServiceImpl implements AdminService {
     }
     @Override
     @CacheEvict(value = "recipes", allEntries = true)
-    public RecipeDTO deleteRecipe(String recipeId) {
+    public RecipeDto deleteRecipe(String recipeId) {
         Optional<Recipe> recipeToDelete = recipeRepository.findById(recipeId);
         if(recipeToDelete.isEmpty()) {
             throw new RecipeNotFoundException(String.format(NOT_FOUND_MESSAGE, "Recipe", recipeId));

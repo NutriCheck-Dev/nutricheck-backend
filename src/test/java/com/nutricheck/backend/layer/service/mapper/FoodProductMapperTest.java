@@ -1,7 +1,7 @@
 package com.nutricheck.backend.layer.service.mapper;
 
 import com.nutricheck.backend.TestDataFactory;
-import com.nutricheck.backend.dto.FoodProductDTO;
+import com.nutricheck.backend.dto.FoodProductDto;
 import com.nutricheck.backend.layer.model.entity.FoodProduct;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ class FoodProductMapperTest {
 
     private FoodProductMapper mapper;
     private List<FoodProduct> foodProducts;
-    private List<FoodProductDTO> foodProductDTOs;
+    private List<FoodProductDto> foodProductDtos;
 
 
     @BeforeEach
@@ -23,20 +23,20 @@ class FoodProductMapperTest {
         this.mapper = Mappers.getMapper(FoodProductMapper.class);
         this.foodProducts = List.of(TestDataFactory.createDefaultFoodProduct(),
                 TestDataFactory.createDefaultFoodProduct2());
-        this.foodProductDTOs = List.of(TestDataFactory.createDefaultFoodProductDTO(),
+        this.foodProductDtos = List.of(TestDataFactory.createDefaultFoodProductDTO(),
                 TestDataFactory.createDefaultFoodProductDTO2());
     }
 
     @Test
     void toFoodProductDTOTest() {
-        List<FoodProductDTO> mappedProducts = mapper.toDTO(foodProducts);
+        List<FoodProductDto> mappedProducts = mapper.toDTO(foodProducts);
 
-        assertEquals(foodProductDTOs, mappedProducts);
+        assertEquals(foodProductDtos, mappedProducts);
     }
 
     @Test
     void toFoodProductTest() {
-        List<FoodProduct> mappedProducts = mapper.toEntity(foodProductDTOs);
+        List<FoodProduct> mappedProducts = mapper.toEntity(foodProductDtos);
 
         assertEquals(foodProducts, mappedProducts);
     }

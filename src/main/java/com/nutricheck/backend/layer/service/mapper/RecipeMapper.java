@@ -1,6 +1,6 @@
 package com.nutricheck.backend.layer.service.mapper;
 
-import com.nutricheck.backend.dto.RecipeDTO;
+import com.nutricheck.backend.dto.RecipeDto;
 import com.nutricheck.backend.layer.model.entity.Recipe;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -15,8 +15,8 @@ import java.util.List;
 public interface RecipeMapper {
 
     @Mapping(target = "ingredients", ignore = true) // Ingredients will be created manually in RecipeService
-    Recipe toEntity(RecipeDTO recipeDTO);
-    RecipeDTO toDTO(Recipe recipe);
-    List<RecipeDTO> toDTO(List<Recipe> recipes);
+    Recipe toEntity(RecipeDto recipeDTO);
+    RecipeDto toDTO(Recipe recipe);
+    List<RecipeDto> toDTO(List<Recipe> recipes);
 
 }
