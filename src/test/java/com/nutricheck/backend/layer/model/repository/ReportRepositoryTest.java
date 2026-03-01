@@ -39,7 +39,7 @@ class ReportRepositoryTest {
         assertThat(reports)
                 .as("Check if report table only contains the saved report")
                 .hasSize(1);
-        assertThat(reports.get(0).getId())//
+        assertThat(reports.getFirst().getId())//
                 .as("Check that the saved report is the one we expect")
                 .isEqualTo(report.getId());
     }

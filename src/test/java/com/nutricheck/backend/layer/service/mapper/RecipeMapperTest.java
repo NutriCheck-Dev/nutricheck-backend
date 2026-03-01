@@ -37,21 +37,21 @@ class RecipeMapperTest {
 
     @Test
     void toRecipeDTOTest() {
-        when(ingredientMapper.toDTO(recipes.get(0).getIngredients()))
-                .thenReturn(recipeDtos.get(0).getIngredients());
+        when(ingredientMapper.toDTO(recipes.getFirst().getIngredients()))
+                .thenReturn(recipeDtos.getFirst().getIngredients());
 
-        RecipeDto mappedRecipeDto = mapper.toDTO(recipes.get(0));
-        assertEquals(mappedRecipeDto, recipeDtos.get(0));
+        RecipeDto mappedRecipeDto = mapper.toDTO(recipes.getFirst());
+        assertEquals(mappedRecipeDto, recipeDtos.getFirst());
 
     }
 
     @Test
     void toRecipeTest() {
-        Recipe mappedRecipe = mapper.toEntity(recipeDtos.get(0));
+        Recipe mappedRecipe = mapper.toEntity(recipeDtos.getFirst());
         assertThat(mappedRecipe)
                 .usingRecursiveComparison()
                 .ignoringFields("ingredients") // ingredients are handled separately
-                .isEqualTo(recipes.get(0));
+                .isEqualTo(recipes.getFirst());
     }
 
     @Test

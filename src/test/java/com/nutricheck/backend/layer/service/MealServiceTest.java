@@ -74,18 +74,15 @@ class MealServiceTest {
 
     @Test
     void searchFoodProductTest() {
-        Comparator<FoodProductDto> nameLengthComparator = (product1, product2) ->
-                Integer.compare(product1.getName().length(), product2.getName().length());
-        List<FoodProductDto> expectedSwissProducts = List.of(
+        Comparator<FoodProductDto> nameLengthComparator = Comparator.comparingInt(product -> product.getName().length());
+        List<FoodProductDto> expectedSwissProducts = Stream.of(
                 TestDataFactory.createFoodProductDTOOneFromSwissDB(),
                 TestDataFactory.createFoodProductDTOTwoFromSwissDB())
-                .stream()
                 .sorted(nameLengthComparator)
                 .toList();
-        List<FoodProductDto> expectedOpenProducts = List.of(
+        List<FoodProductDto> expectedOpenProducts = Stream.of(
                 TestDataFactory.createFoodProductDTOOneFromOpenFoodFacts(),
                 TestDataFactory.createFoodProductDTOTwoFromOpenFoodFacts())
-                .stream()
                 .sorted(nameLengthComparator)
                 .toList();
         List<FoodProductDto> expectedProducts = Stream.concat(

@@ -168,7 +168,7 @@ class MealControllerTest {
 
 
     /*
-     * Assumes a JSON parsing error occurs during deserialzation of the response from the
+     * Assumes a JSON parsing error occurs during deserialization of the response from the
      * AI model. Verifies that GlobalExceptionHandler handles the error.
      */
     @Test

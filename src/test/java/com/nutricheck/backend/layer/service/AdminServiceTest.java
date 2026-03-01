@@ -149,9 +149,9 @@ class AdminServiceTest {
         when(reportRepository.findById(reportId))
                 .thenReturn(Optional.empty());
 
-        assertThrows(ReportNotFoundException.class, () -> {
-            adminService.deleteReport(reportId);
-        });
+        assertThrows(ReportNotFoundException.class, () ->
+            adminService.deleteReport(reportId)
+        );
     }
 
     @Test
@@ -193,8 +193,8 @@ class AdminServiceTest {
         when(recipeRepository.findById(recipeId))
                 .thenReturn(Optional.empty());
 
-        assertThrows(RecipeNotFoundException.class, () -> {
-            adminService.deleteRecipe(recipeId);
-        });
+        assertThrows(RecipeNotFoundException.class, () ->
+            adminService.deleteRecipe(recipeId)
+        );
     }
 }

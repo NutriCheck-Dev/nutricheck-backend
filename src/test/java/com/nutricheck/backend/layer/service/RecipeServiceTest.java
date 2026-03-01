@@ -83,9 +83,9 @@ class RecipeServiceTest {
                 .thenReturn(List.of(existingRecipe));
         when(recipeMapper.toDTO(anyList())).thenReturn(List.of(recipeDTO));
 
-        assertThrows(DuplicateRecipeException.class, () -> {
-            recipeService.uploadRecipe(recipeDTO);
-        });
+        assertThrows(DuplicateRecipeException.class, () ->
+            recipeService.uploadRecipe(recipeDTO)
+        );
     }
 
     @Test
@@ -110,8 +110,8 @@ class RecipeServiceTest {
         when(recipeRepository.findById(reportDTO.getRecipeId()))
                 .thenReturn(Optional.empty());
 
-        assertThrows(RecipeNotFoundException.class, () -> {
-            recipeService.reportRecipe(reportDTO);
-        });
+        assertThrows(RecipeNotFoundException.class, () ->
+            recipeService.reportRecipe(reportDTO)
+        );
     }
 }

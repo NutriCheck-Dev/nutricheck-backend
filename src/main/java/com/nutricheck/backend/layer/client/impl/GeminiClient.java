@@ -56,15 +56,12 @@ public class GeminiClient implements AIModelClient {
         String generalPrompt = IOUtils.toString(
                 resource.getInputStream(),
                 StandardCharsets.UTF_8);
-        switch (language) {
-            case "de":
-                return generalPrompt + "Please translate the name of the meal into German";
-            case "en":
-                return generalPrompt;
-            default:
-                throw new IllegalArgumentException("This should never happen, " +
-                        "as the language is validated in the controller.");
-        }
+        return switch (language) {
+            case "de" -> generalPrompt + "Please translate the name of the meal into German";
+            case "en" -> generalPrompt;
+            default -> throw new IllegalArgumentException("This should never happen, " +
+                    "as the language is validated in the controller.");
+        };
                 
     }
 
