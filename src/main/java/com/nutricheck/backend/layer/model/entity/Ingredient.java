@@ -17,7 +17,7 @@ import lombok.*;
 public class Ingredient {
 
     @EmbeddedId
-    private IngredientID id;
+    private IngredientId id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("recipeId")

@@ -48,6 +48,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
+			<version>1.18.38</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -62,11 +63,6 @@
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
 			<version>1.6.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct-processor</artifactId>
-			<version>1.6.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.genai</groupId>
@@ -108,25 +104,26 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>1.18.38</version>
+						</path>
+						<path>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>1.6.2</version>
+						</path>
+					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+			<plugin>
     				<artifactId>maven-surefire-plugin</artifactId>
     				<version>${maven-surefire-plugin.version}</version>
-    			<dependencies>
-        			<dependency>
-            				<groupId>me.fabriciorby</groupId>
-            				<artifactId>maven-surefire-junit5-tree-reporter</artifactId>
-            				<version>1.4.0</version>
-        			</dependency>
-    			</dependencies>
-    			<configuration>
-        			<reportFormat>plain</reportFormat>
-        			<consoleOutputReporter>
-            				<disable>true</disable>
-        			</consoleOutputReporter>
-        			<statelessTestsetInfoReporter
-                			implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5StatelessTestsetInfoTreeReporter">
-                			<theme>UNICODE</theme>
-        			</statelessTestsetInfoReporter>
-    			</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.jacoco</groupId>

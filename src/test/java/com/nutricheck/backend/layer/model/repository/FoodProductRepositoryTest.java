@@ -53,7 +53,7 @@ class FoodProductRepositoryTest {
                 .as("Check if food product can be found by name")
                 .hasSize(1);
         // Verify that the found food product matches the one we saved
-        assertEquals(foodProducts.get(0), foodProduct);
+        assertEquals(foodProducts.getFirst(), foodProduct);
     }
 
     @Test

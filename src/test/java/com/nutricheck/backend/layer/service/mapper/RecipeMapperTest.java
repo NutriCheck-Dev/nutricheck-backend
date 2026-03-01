@@ -1,7 +1,7 @@
 package com.nutricheck.backend.layer.service.mapper;
 
 import com.nutricheck.backend.TestDataFactory;
-import com.nutricheck.backend.dto.RecipeDTO;
+import com.nutricheck.backend.dto.RecipeDto;
 import com.nutricheck.backend.layer.model.entity.Recipe;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,44 +24,44 @@ class RecipeMapperTest {
     @InjectMocks
     private RecipeMapperImpl mapper;
     private List<Recipe> recipes;
-    private List<RecipeDTO> recipeDTOs;
+    private List<RecipeDto> recipeDtos;
 
     @BeforeEach
     void setUp() {
         this.recipes = List.of(TestDataFactory.createDefaultRecipe(),
                                TestDataFactory.createDefaultRecipe());
-        this.recipeDTOs = List.of(TestDataFactory.createDefaultRecipeDTO(),
+        this.recipeDtos = List.of(TestDataFactory.createDefaultRecipeDTO(),
                                   TestDataFactory.createDefaultRecipeDTO());
 
     }
 
     @Test
     void toRecipeDTOTest() {
-        when(ingredientMapper.toDTO(recipes.get(0).getIngredients()))
-                .thenReturn(recipeDTOs.get(0).getIngredients());
+        when(ingredientMapper.toDTO(recipes.getFirst().getIngredients()))
+                .thenReturn(recipeDtos.getFirst().getIngredients());
 
-        RecipeDTO mappedRecipeDTO = mapper.toDTO(recipes.get(0));
-        assertEquals(mappedRecipeDTO, recipeDTOs.get(0));
+        RecipeDto mappedRecipeDto = mapper.toDTO(recipes.getFirst());
+        assertEquals(mappedRecipeDto, recipeDtos.getFirst());
 
     }
 
     @Test
     void toRecipeTest() {
-        Recipe mappedRecipe = mapper.toEntity(recipeDTOs.get(0));
+        Recipe mappedRecipe = mapper.toEntity(recipeDtos.getFirst());
         assertThat(mappedRecipe)
                 .usingRecursiveComparison()
                 .ignoringFields("ingredients") // ingredients are handled separately
-                .isEqualTo(recipes.get(0));
+                .isEqualTo(recipes.getFirst());
     }
 
     @Test
     void toRecipeDTOListTest() {
         when(ingredientMapper.toDTO(recipes.get(0).getIngredients()))
-                .thenReturn(recipeDTOs.get(0).getIngredients());
+                .thenReturn(recipeDtos.get(0).getIngredients());
         when(ingredientMapper.toDTO(recipes.get(1).getIngredients()))
-                .thenReturn(recipeDTOs.get(1).getIngredients());
+                .thenReturn(recipeDtos.get(1).getIngredients());
 
-        List<RecipeDTO> mappedRecipeDTOs = mapper.toDTO(recipes);
-        assertEquals(mappedRecipeDTOs, recipeDTOs);
+        List<RecipeDto> mappedRecipeDtos = mapper.toDTO(recipes);
+        assertEquals(mappedRecipeDtos, recipeDtos);
     }
 }

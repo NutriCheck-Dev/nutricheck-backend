@@ -2,7 +2,7 @@ package com.nutricheck.backend.layer.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nutricheck.backend.TestDataFactory;
-import com.nutricheck.backend.dto.FoodProductDTO;
+import com.nutricheck.backend.dto.FoodProductDto;
 import com.nutricheck.backend.layer.client.impl.OpenFoodFactsClient;
 import com.nutricheck.backend.layer.client.mapper.OpenFoodFactsMapper;
 import org.apache.commons.io.FileUtils;
@@ -40,7 +40,7 @@ class OpenFoodFactsClientTest {
         String searchTerm = "potato";
         ClassPathResource resource = new ClassPathResource("open-food-facts-example.json");
         String responseRaw = FileUtils.readFileToString(resource.getFile(), StandardCharsets.UTF_8);
-        List<FoodProductDTO> expectedProducts = List.of(
+        List<FoodProductDto> expectedProducts = List.of(
                 TestDataFactory.createFoodProductDTOOneFromOpenFoodFacts(),
                 TestDataFactory.createFoodProductDTOTwoFromOpenFoodFacts()
         );
@@ -54,7 +54,7 @@ class OpenFoodFactsClientTest {
         when(mapper.toFoodProductDTO(anyList()))
                 .thenReturn(expectedProducts);
 
-        List<FoodProductDTO> result = client.search(searchTerm, "en");
+        List<FoodProductDto> result = client.search(searchTerm, "en");
         assertEquals(expectedProducts, result);
     }
 }

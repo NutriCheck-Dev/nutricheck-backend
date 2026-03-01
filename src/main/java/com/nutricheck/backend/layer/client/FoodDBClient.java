@@ -1,6 +1,7 @@
 package com.nutricheck.backend.layer.client;
 
-import com.nutricheck.backend.dto.FoodProductDTO;
+import com.nutricheck.backend.dto.FoodProductDto;
+
 import java.util.List;
 
 /**
@@ -13,8 +14,8 @@ public interface FoodDBClient {
      * Searches for food products based on a request string.
      * @param request the search request string, which can be a food name
      * @param language the language in which the search should be performed
-     * @return a list of FoodProductDTO objects that match the search criteria
+     * @return a list of FoodProductDto objects that match the search criteria
      */
-    List<FoodProductDTO> search(String request, String language);
+    List<FoodProductDto> search(String request, String language);
 
 }

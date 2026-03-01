@@ -55,7 +55,7 @@ class RecipeRepositoryTest {
                 .as("Check if recipe can be found by name")
                 .hasSize(1);
         // Verify that the found recipe matches the one we saved
-        assertEquals(recipes.get(0), recipe);
+        assertEquals(recipes.getFirst(), recipe);
     }
 
     @Test

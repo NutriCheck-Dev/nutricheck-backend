@@ -1,7 +1,7 @@
 package com.nutricheck.backend.layer.client.mapper;
 
-import com.nutricheck.backend.dto.FoodProductDTO;
-import com.nutricheck.backend.dto.external.OpenFoodFactsFoodProductDTO;
+import com.nutricheck.backend.dto.FoodProductDto;
+import com.nutricheck.backend.dto.external.OpenFoodFactsFoodProductDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -18,7 +18,7 @@ public interface OpenFoodFactsMapper {
     @Mapping(source = "nutriments.energyKcal", target = "calories")
     @Mapping(source = "nutriments.carbohydrates", target = "carbohydrates")
     @Mapping(source = "nutriments.proteins", target = "protein")
-    FoodProductDTO toFoodProductDTO(OpenFoodFactsFoodProductDTO foodProduct);
+    FoodProductDto toFoodProductDTO(OpenFoodFactsFoodProductDto foodProduct);
 
-    List<FoodProductDTO> toFoodProductDTO(List<OpenFoodFactsFoodProductDTO> foodProducts);
+    List<FoodProductDto> toFoodProductDTO(List<OpenFoodFactsFoodProductDto> foodProducts);
 }

@@ -1,7 +1,7 @@
 package com.nutricheck.backend.layer.service.mapper;
 
 import com.nutricheck.backend.TestDataFactory;
-import com.nutricheck.backend.dto.ReportDTO;
+import com.nutricheck.backend.dto.ReportDto;
 import com.nutricheck.backend.layer.model.entity.Report;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ class ReportMapperTest {
 
     private ReportMapper mapper;
     private Report report;
-    private ReportDTO reportDTO;
+    private ReportDto reportDTO;
 
     @BeforeEach
     void setUp() {
@@ -27,8 +27,8 @@ class ReportMapperTest {
 
     @Test
     void toReportDTOTest() {
-        ReportDTO mappedReportDTO = mapper.toDTO(report);
-        assertThat(mappedReportDTO).usingRecursiveComparison()
+        ReportDto mappedReportDto = mapper.toDTO(report);
+        assertThat(mappedReportDto).usingRecursiveComparison()
                 // id is not set for default report as it is generated, recipe-specific fields are also not set
                 .ignoringFields("id", "recipeName", "recipeInstructions")
                 .isEqualTo(reportDTO);
@@ -43,19 +43,19 @@ class ReportMapperTest {
     @Test
     void toReportDTOListTest() {
         List<Report> reports = List.of(report, report);
-        List<ReportDTO> expectedReportDTOs = List.of(reportDTO, reportDTO);
-        List<ReportDTO> mappedReportDTOs = mapper.toDTO(reports);
-        assertThat(mappedReportDTOs)
+        List<ReportDto> expectedReportDtos = List.of(reportDTO, reportDTO);
+        List<ReportDto> mappedReportDtos = mapper.toDTO(reports);
+        assertThat(mappedReportDtos)
                 .usingRecursiveComparison()
                 .ignoringFields("id", "recipeName", "recipeInstructions")
-                .isEqualTo(expectedReportDTOs);
+                .isEqualTo(expectedReportDtos);
     }
 
     @Test
     void toReportListTest() {
-        List<ReportDTO> reportDTOs = List.of(reportDTO, reportDTO);
+        List<ReportDto> reportDtos = List.of(reportDTO, reportDTO);
         List<Report> expectedReports = List.of(report, report);
-        List<Report> mappedReports = mapper.toEntity(reportDTOs);
+        List<Report> mappedReports = mapper.toEntity(reportDtos);
         assertEquals(expectedReports, mappedReports);
     }
 }

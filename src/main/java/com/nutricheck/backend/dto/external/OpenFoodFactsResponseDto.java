@@ -14,6 +14,6 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OpenFoodFactsResponseDTO {
-    private List<OpenFoodFactsFoodProductDTO> products;
+public class OpenFoodFactsResponseDto {
+    private List<OpenFoodFactsFoodProductDto> products;
 }

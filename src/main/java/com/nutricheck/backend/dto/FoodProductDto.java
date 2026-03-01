@@ -16,7 +16,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FoodProductDTO {
+public class FoodProductDto {
     @NotBlank(message = "ID of a food product cannot be blank")
     private String id;
     @NotBlank(message = "Name of a food product cannot be blank")

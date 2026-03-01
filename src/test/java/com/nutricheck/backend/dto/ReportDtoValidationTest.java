@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class ReportDTOValidationTest {
+class ReportDtoValidationTest {
 
     private Validator validator;
 
@@ -27,18 +27,18 @@ class ReportDTOValidationTest {
 
     @Test
     void validReportDTOTest() {
-        ReportDTO reportDTO = TestDataFactory.createDefaultReportDTO();
+        ReportDto reportDTO = TestDataFactory.createDefaultReportDTO();
 
-        Set<ConstraintViolation<ReportDTO>> violations = validator.validate(reportDTO);
-        assertTrue(violations.isEmpty(), "Valid ReportDTO should have no violations");
+        Set<ConstraintViolation<ReportDto>> violations = validator.validate(reportDTO);
+        assertTrue(violations.isEmpty(), "Valid ReportDto should have no violations");
     }
 
     @Test
     void reportDTOWithBlankRecipeIdTest() {
-        ReportDTO reportDTO = TestDataFactory.createDefaultReportDTO();
+        ReportDto reportDTO = TestDataFactory.createDefaultReportDTO();
         reportDTO.setRecipeId("");
 
-        Set<ConstraintViolation<ReportDTO>> violations = validator.validate(reportDTO);
+        Set<ConstraintViolation<ReportDto>> violations = validator.validate(reportDTO);
         assertTrue(violations.stream().anyMatch(v -> v.getMessage().equals("Recipe ID for a Report cannot be blank")),
                 "Expected violation message for blank recipeId not found");
     }

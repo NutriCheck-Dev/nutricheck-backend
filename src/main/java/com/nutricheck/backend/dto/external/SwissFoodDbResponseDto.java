@@ -13,7 +13,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SwissFoodCDResponseDTO {
+public class SwissFoodDbResponseDto {
     private String id;
     @JsonProperty("foodName")
     private String name;

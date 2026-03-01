@@ -1,8 +1,8 @@
 package com.nutricheck.backend.layer.client.impl;
 
-import com.nutricheck.backend.dto.FoodProductDTO;
-import com.nutricheck.backend.dto.external.OpenFoodFactsFoodProductDTO;
-import com.nutricheck.backend.dto.external.OpenFoodFactsResponseDTO;
+import com.nutricheck.backend.dto.FoodProductDto;
+import com.nutricheck.backend.dto.external.OpenFoodFactsFoodProductDto;
+import com.nutricheck.backend.dto.external.OpenFoodFactsResponseDto;
 import com.nutricheck.backend.layer.client.FoodDBClient;
 import com.nutricheck.backend.layer.client.mapper.OpenFoodFactsMapper;
 import org.apache.commons.lang3.StringUtils;
@@ -34,17 +34,17 @@ public class OpenFoodFactsClient implements FoodDBClient {
                 .build();
     }
     @Override
-    public List<FoodProductDTO> search(String request, String language) {
-        OpenFoodFactsResponseDTO response = getData(request);
-        List<OpenFoodFactsFoodProductDTO> foodProducts;
+    public List<FoodProductDto> search(String request, String language) {
+        OpenFoodFactsResponseDto response = getData(request);
+        List<OpenFoodFactsFoodProductDto> foodProducts;
         if (response == null || response.getProducts() == null) {
             foodProducts = new ArrayList<>();
         }else {
             foodProducts= response.getProducts();
         }
-        List<FoodProductDTO> mappedProducts = mapper.toFoodProductDTO(foodProducts);
+        List<FoodProductDto> mappedProducts = mapper.toFoodProductDTO(foodProducts);
         for (int i = mappedProducts.size() - 1; i >= 0; i--) {
-            OpenFoodFactsFoodProductDTO foodProductToMap = foodProducts.get(i);
+            OpenFoodFactsFoodProductDto foodProductToMap = foodProducts.get(i);
             String nameToSet = getNameByLanguage(foodProductToMap, language);
             if (nameToSet != null) {
                 mappedProducts.get(i).setName(nameToSet);
@@ -55,7 +55,7 @@ public class OpenFoodFactsClient implements FoodDBClient {
         return mappedProducts;
     }
 
-    private OpenFoodFactsResponseDTO getData(String request) {
+    private OpenFoodFactsResponseDto getData(String request) {
         return restClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/cgi/search.pl")
@@ -67,15 +67,15 @@ public class OpenFoodFactsClient implements FoodDBClient {
                         .query("nutriment_3=energy-kcal&nutriment_compare_3=gt&nutriment_value_3=0")
                         .queryParam("sort_by", "unique_scans_n")
                         .queryParam("page", NUMBER_OF_SEARCH_PAGES)
-                        .queryParam("page_size", SwissFoodCDClient.MAX_SEARCH_RESULTS)
+                        .queryParam("page_size", SwissFoodDbClient.MAX_SEARCH_RESULTS)
                         .queryParam("json", "1")
                         .build())
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .body(OpenFoodFactsResponseDTO.class);
+                .body(OpenFoodFactsResponseDto.class);
     }
 
-    private String getNameByLanguage(OpenFoodFactsFoodProductDTO product, String language) {
+    private String getNameByLanguage(OpenFoodFactsFoodProductDto product, String language) {
         String languageSpecificName = switch (language) {
             case "de" -> product.getGermanName();
             case "en" -> product.getEnglishName();

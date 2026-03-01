@@ -1,9 +1,9 @@
 package com.nutricheck.backend.layer.service;
 
 import com.nutricheck.backend.TestDataFactory;
-import com.nutricheck.backend.dto.FoodProductDTO;
-import com.nutricheck.backend.dto.MealDTO;
-import com.nutricheck.backend.dto.RecipeDTO;
+import com.nutricheck.backend.dto.FoodProductDto;
+import com.nutricheck.backend.dto.MealDto;
+import com.nutricheck.backend.dto.RecipeDto;
 import com.nutricheck.backend.layer.client.AIModelClient;
 import com.nutricheck.backend.layer.client.FoodDBClient;
 import com.nutricheck.backend.layer.model.entity.FoodProduct;
@@ -74,21 +74,18 @@ class MealServiceTest {
 
     @Test
     void searchFoodProductTest() {
-        Comparator<FoodProductDTO> nameLengthComparator = (product1, product2) ->
-                Integer.compare(product1.getName().length(), product2.getName().length());
-        List<FoodProductDTO> expectedSwissProducts = List.of(
+        Comparator<FoodProductDto> nameLengthComparator = Comparator.comparingInt(product -> product.getName().length());
+        List<FoodProductDto> expectedSwissProducts = Stream.of(
                 TestDataFactory.createFoodProductDTOOneFromSwissDB(),
                 TestDataFactory.createFoodProductDTOTwoFromSwissDB())
-                .stream()
                 .sorted(nameLengthComparator)
                 .toList();
-        List<FoodProductDTO> expectedOpenProducts = List.of(
+        List<FoodProductDto> expectedOpenProducts = Stream.of(
                 TestDataFactory.createFoodProductDTOOneFromOpenFoodFacts(),
                 TestDataFactory.createFoodProductDTOTwoFromOpenFoodFacts())
-                .stream()
                 .sorted(nameLengthComparator)
                 .toList();
-        List<FoodProductDTO> expectedProducts = Stream.concat(
+        List<FoodProductDto> expectedProducts = Stream.concat(
                 expectedSwissProducts.stream(),
                 expectedOpenProducts.stream()
         ).toList();
@@ -101,7 +98,7 @@ class MealServiceTest {
         when(openFoodFactsClient.search(foodProductName, language))
                 .thenReturn(expectedOpenProducts);
 
-        List<FoodProductDTO> actualProducts = mealService.searchFoodProduct(foodProductName, language);
+        List<FoodProductDto> actualProducts = mealService.searchFoodProduct(foodProductName, language);
         assertEquals(expectedProducts, actualProducts);
 
     }
@@ -114,7 +111,7 @@ class MealServiceTest {
             internalProduct.setName(foodProductName + i);
             internalProducts.add(internalProduct);
         }
-        List<FoodProductDTO> expectedProducts = Mappers.getMapper(FoodProductMapper.class)
+        List<FoodProductDto> expectedProducts = Mappers.getMapper(FoodProductMapper.class)
                 .toDTO(internalProducts);
 
         when(foodProductRepository.findByNameContainingIgnoreCase(foodProductName))
@@ -122,21 +119,21 @@ class MealServiceTest {
         when(foodProductMapper.toDTO(anyList()))
                 .thenReturn(expectedProducts);
 
-        List<FoodProductDTO> actualProducts = mealService.searchFoodProduct(foodProductName, language);
+        List<FoodProductDto> actualProducts = mealService.searchFoodProduct(foodProductName, language);
         assertEquals(actualProducts, expectedProducts);
 
     }
 
     @Test
     void searchRecipeTest() {
-        List<RecipeDTO> expectedRecipes = List.of(TestDataFactory.createDefaultRecipeDTO());
+        List<RecipeDto> expectedRecipes = List.of(TestDataFactory.createDefaultRecipeDTO());
 
         when(recipeRepository.findByNameContainingIgnoreCase(recipeName))
                 .thenReturn(List.of(TestDataFactory.createDefaultRecipe()));
         when(recipeMapper.toDTO(anyList()))
                 .thenReturn(expectedRecipes);
 
-        List<RecipeDTO> actualRecipes = mealService.searchRecipe(recipeName);
+        List<RecipeDto> actualRecipes = mealService.searchRecipe(recipeName);
         assertEquals(actualRecipes, expectedRecipes);
     }
 
@@ -152,7 +149,7 @@ class MealServiceTest {
         when(aiModelClient.estimateMeal(image.getBytes(), language))
                 .thenReturn(TestDataFactory.createDefaultMealDTO());
 
-        MealDTO actualMeal = mealService.estimateMeal(image, language);
+        MealDto actualMeal = mealService.estimateMeal(image, language);
         assertEquals(actualMeal, TestDataFactory.createDefaultMealDTO());
     }
 }

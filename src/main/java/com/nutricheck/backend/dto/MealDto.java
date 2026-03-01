@@ -14,10 +14,10 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MealDTO {
+public class MealDto {
     private double calories;
     private double carbohydrates;
     private double protein;
     private double fat;
-    private Set<MealItemDTO> items;
+    private Set<MealItemDto> items;
 }

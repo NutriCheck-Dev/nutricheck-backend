@@ -1,10 +1,10 @@
 package com.nutricheck.backend.layer.client.impl;
 
-import com.nutricheck.backend.dto.FoodProductDTO;
-import com.nutricheck.backend.dto.external.SwissFoodCDFoodProductDTO;
-import com.nutricheck.backend.dto.external.SwissFoodCDResponseDTO;
+import com.nutricheck.backend.dto.FoodProductDto;
+import com.nutricheck.backend.dto.external.SwissFoodDbFoodProductDto;
+import com.nutricheck.backend.dto.external.SwissFoodDbResponseDto;
 import com.nutricheck.backend.layer.client.FoodDBClient;
-import com.nutricheck.backend.layer.client.mapper.SwissFoodCDMapper;
+import com.nutricheck.backend.layer.client.mapper.SwissFoodDbMapper;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -14,34 +14,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Client implementation for interacting with the Swiss Food Composition Database (SwissFoodCD).
+ * Client implementation for interacting with the Swiss Food Composition Database (SwissFoodDb).
  */
 @Component("swiss")
-public class SwissFoodCDClient implements FoodDBClient {
+public class SwissFoodDbClient implements FoodDBClient {
 
     static final String MAX_SEARCH_RESULTS = "40";
 
     private final RestClient restClient;
-    private final SwissFoodCDMapper mapper;
+    private final SwissFoodDbMapper mapper;
 
-    public SwissFoodCDClient(SwissFoodCDMapper mapper, RestClient.Builder builder) {
+    public SwissFoodDbClient(SwissFoodDbMapper mapper, RestClient.Builder builder) {
         this.mapper = mapper;
         this.restClient = builder
                 .baseUrl("https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api")
                 .build();
     }
     @Override
-    public List<FoodProductDTO> search(String request, String language) {
-        List<SwissFoodCDResponseDTO> foods = getFoods(request, language);
-        List<SwissFoodCDFoodProductDTO> foodProducts = new ArrayList<>();
-        for (SwissFoodCDResponseDTO food: foods) {
-            SwissFoodCDFoodProductDTO foodProductDTO = getParticularFood(food.getId(), language);
+    public List<FoodProductDto> search(String request, String language) {
+        List<SwissFoodDbResponseDto> foods = getFoods(request, language);
+        List<SwissFoodDbFoodProductDto> foodProducts = new ArrayList<>();
+        for (SwissFoodDbResponseDto food: foods) {
+            SwissFoodDbFoodProductDto foodProductDTO = getParticularFood(food.getId(), language);
             foodProducts.add(foodProductDTO);
         }
         return mapper.toFoodProductDTO(foodProducts);
     }
 
-    private List<SwissFoodCDResponseDTO> getFoods(String request, String language) {
+    private List<SwissFoodDbResponseDto> getFoods(String request, String language) {
         return restClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/foods")
@@ -54,7 +54,7 @@ public class SwissFoodCDClient implements FoodDBClient {
                 .body(new ParameterizedTypeReference<>() {});
     }
 
-    private SwissFoodCDFoodProductDTO getParticularFood(String id, String language) {
+    private SwissFoodDbFoodProductDto getParticularFood(String id, String language) {
         return restClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/food/{id}")
@@ -62,6 +62,6 @@ public class SwissFoodCDClient implements FoodDBClient {
                         .build(id))
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .body(SwissFoodCDFoodProductDTO.class);
+                .body(SwissFoodDbFoodProductDto.class);
     }
 }

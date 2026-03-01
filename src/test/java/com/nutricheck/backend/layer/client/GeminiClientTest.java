@@ -7,10 +7,10 @@ import com.google.genai.types.Content;
 import com.google.genai.types.GenerateContentConfig;
 import com.google.genai.types.GenerateContentResponse;
 import com.nutricheck.backend.TestDataFactory;
-import com.nutricheck.backend.dto.MealDTO;
-import com.nutricheck.backend.dto.external.AIMealDTO;
+import com.nutricheck.backend.dto.MealDto;
+import com.nutricheck.backend.dto.external.AiMealDto;
 import com.nutricheck.backend.layer.client.impl.GeminiClient;
-import com.nutricheck.backend.layer.client.mapper.AIMealMapper;
+import com.nutricheck.backend.layer.client.mapper.AiMealMapper;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ class GeminiClientTest {
     @Mock
     private GenerateContentResponse generateContentResponse;
     @Mock
-    private AIMealMapper aiMealMapper;
+    private AiMealMapper aiMealMapper;
 
     private ObjectMapper objectMapper;
 
@@ -60,19 +60,19 @@ class GeminiClientTest {
 
     @Test
     void estimateMealTest() throws IOException {
-        MealDTO expectedMealDTO = TestDataFactory.createMealDTOFromGemini();
+        MealDto expectedMealDto = TestDataFactory.createMealDTOFromGemini();
         String rawResponse = FileUtils.readFileToString(
                 new ClassPathResource("gemini-example.json").getFile(),
                 StandardCharsets.UTF_8);
-        AIMealDTO aiMealDTO = objectMapper.readValue(rawResponse, AIMealDTO.class);
+        AiMealDto aiMealDTO = objectMapper.readValue(rawResponse, AiMealDto.class);
 
         when(models.generateContent(any(String.class), any(Content.class), any(GenerateContentConfig.class)))
                 .thenReturn(generateContentResponse);
         when(generateContentResponse.text()).thenReturn(rawResponse);
-        when(aiMealMapper.toMealDTO(aiMealDTO)).thenReturn(expectedMealDTO);
+        when(aiMealMapper.toMealDto(aiMealDTO)).thenReturn(expectedMealDto);
 
-        MealDTO actualMealDTO = geminiClient.estimateMeal(image, language);
-        assertEquals(expectedMealDTO, actualMealDTO);
+        MealDto actualMealDto = geminiClient.estimateMeal(image, language);
+        assertEquals(expectedMealDto, actualMealDto);
     }
 
     @Test
