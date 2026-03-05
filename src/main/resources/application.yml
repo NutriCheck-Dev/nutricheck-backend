@@ -2,7 +2,7 @@ spring:
   application:
     name: nutricheck
   config:
-    import: file:.env[.properties]
+    import: optional:file:.env[.properties]
   servlet:
     multipart:
       max-file-size: 10MB
@@ -40,6 +40,12 @@ logging:
     org.apache.coyote: DEBUG
     org.apache.tomcat: DEBUG
 
-gemini:
-  api:
-    key: ${GEMINI_API_KEY}
+nutricheck:
+  llm:
+    model: gemini-2.5-flash
+    api-key: ${GEMINI_API_KEY}
+  openfoodfacts:
+    base-url: https://world.openfoodfacts.org
+    user-agent: NutriCheck/1.0 (uvtal@student.kit.edu)
+  swiss:
+    base-url: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api

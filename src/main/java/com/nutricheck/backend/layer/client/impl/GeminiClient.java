@@ -24,9 +24,11 @@ public class GeminiClient implements AIModelClient {
     private final ObjectMapper objectMapper;
     private final AiMealMapper aiMealMapper;
     private final Client apiClient;
+    private final String llmModel;
 
-    public GeminiClient(@Value("${gemini.api.key}") String geminiApiKey, ObjectMapper objectMapper,
-                        AiMealMapper aiMealMapper) {
+    public GeminiClient(@Value("${nutricheck.llm.api-key}") String geminiApiKey, ObjectMapper objectMapper,
+                        AiMealMapper aiMealMapper, @Value("${nutricheck.llm.model}") String llmModel) {
+        this.llmModel = llmModel;
         this.apiClient = Client.builder()
                 .apiKey(geminiApiKey)
                 .build();
@@ -45,7 +47,7 @@ public class GeminiClient implements AIModelClient {
                 .responseSchema(RESPONSE_SCHEMA)
                 .build();
         GenerateContentResponse response = apiClient
-                .models.generateContent("gemini-2.5-flash", content, config);
+                .models.generateContent(llmModel, content, config);
         AiMealDto aiEstimatedMeal = objectMapper.readValue(response.text(), AiMealDto.class);
         return aiMealMapper.toMealDto(aiEstimatedMeal);
     }

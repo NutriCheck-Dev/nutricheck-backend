@@ -52,7 +52,7 @@ class GeminiClientTest {
         objectMapper = new ObjectMapper();
         image = FileUtils.readFileToByteArray(new ClassPathResource("spaghetti.jpg").getFile());
         // key is not used as apiClient is mocked but required for instantiation
-        geminiClient = new GeminiClient("testKey", objectMapper, aiMealMapper);
+        geminiClient = new GeminiClient("testKey", objectMapper, aiMealMapper, "testModel");
         ReflectionTestUtils.setField(geminiClient, "apiClient", apiClient);
         ReflectionTestUtils.setField(apiClient, "models", models);
         language = "en";
@@ -78,8 +78,8 @@ class GeminiClientTest {
     @Test
     void estimateMealWithInvalidLanguageTest() {
         language = "fr";
-        assertThrows(IllegalArgumentException.class, () -> {
-            geminiClient.estimateMeal(image, language);
-        });
+        assertThrows(IllegalArgumentException.class, () ->
+            geminiClient.estimateMeal(image, language)
+        );
     }
 }

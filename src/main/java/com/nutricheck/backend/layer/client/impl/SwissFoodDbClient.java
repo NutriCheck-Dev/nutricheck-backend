@@ -5,6 +5,7 @@ import com.nutricheck.backend.dto.external.SwissFoodDbFoodProductDto;
 import com.nutricheck.backend.dto.external.SwissFoodDbResponseDto;
 import com.nutricheck.backend.layer.client.FoodDBClient;
 import com.nutricheck.backend.layer.client.mapper.SwissFoodDbMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -24,10 +25,11 @@ public class SwissFoodDbClient implements FoodDBClient {
     private final RestClient restClient;
     private final SwissFoodDbMapper mapper;
 
-    public SwissFoodDbClient(SwissFoodDbMapper mapper, RestClient.Builder builder) {
+    public SwissFoodDbClient(SwissFoodDbMapper mapper, RestClient.Builder builder,
+                             @Value("${nutricheck.swiss.base-url}") String baseUrl) {
         this.mapper = mapper;
         this.restClient = builder
-                .baseUrl("https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api")
+                .baseUrl(baseUrl)
                 .build();
     }
     @Override

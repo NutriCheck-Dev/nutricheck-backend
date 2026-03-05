@@ -6,6 +6,7 @@ import com.nutricheck.backend.dto.external.OpenFoodFactsResponseDto;
 import com.nutricheck.backend.layer.client.FoodDBClient;
 import com.nutricheck.backend.layer.client.mapper.OpenFoodFactsMapper;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -22,15 +23,16 @@ public class OpenFoodFactsClient implements FoodDBClient {
 
     private static final String NUMBER_OF_SEARCH_PAGES = "1";
 
-    private RestClient restClient;
+    private final RestClient restClient;
+    private final OpenFoodFactsMapper mapper;
 
-    private OpenFoodFactsMapper mapper;
-
-    public OpenFoodFactsClient(OpenFoodFactsMapper mapper, RestClient.Builder builder) {
+    public OpenFoodFactsClient(OpenFoodFactsMapper mapper, RestClient.Builder builder,
+                               @Value("${nutricheck.openfoodfacts.base-url}") String baseUrl,
+                               @Value("${nutricheck.openfoodfacts.user-agent}") String userAgent) {
         this.mapper = mapper;
         this.restClient = builder
-                .baseUrl("https://world.openfoodfacts.org")
-                .defaultHeader(HttpHeaders.USER_AGENT, "NutriCheck/1.0 (uvtal@student.kit.edu)")
+                .baseUrl(baseUrl)
+                .defaultHeader(HttpHeaders.USER_AGENT, userAgent)
                 .build();
     }
     @Override

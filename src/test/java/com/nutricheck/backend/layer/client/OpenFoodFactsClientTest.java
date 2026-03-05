@@ -1,6 +1,5 @@
 package com.nutricheck.backend.layer.client;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nutricheck.backend.TestDataFactory;
 import com.nutricheck.backend.dto.FoodProductDto;
 import com.nutricheck.backend.layer.client.impl.OpenFoodFactsClient;
@@ -32,8 +31,6 @@ class OpenFoodFactsClientTest {
     OpenFoodFactsMapper mapper;
     @Autowired
     OpenFoodFactsClient client;
-    @Autowired
-    ObjectMapper objectMapper;
 
     @Test
     void searchTest() throws Exception {
