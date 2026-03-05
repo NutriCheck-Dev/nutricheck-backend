@@ -1,9 +1,8 @@
 package com.nutricheck.backend.layer.service;
 
-import com.nutricheck.backend.dto.FoodProductDTO;
-import com.nutricheck.backend.dto.MealDTO;
-import com.nutricheck.backend.dto.RecipeDTO;
-import org.springframework.cache.annotation.Cacheable;
+import com.nutricheck.backend.dto.FoodProductDto;
+import com.nutricheck.backend.dto.MealDto;
+import com.nutricheck.backend.dto.RecipeDto;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -22,24 +21,24 @@ public interface MealService {
      *
      * @param name the name of the food product to search for.
      * @param language the language in which to perform the search.
-     * @return a list of FoodProductDTO objects matching the search criteria.
+     * @return a list of FoodProductDto objects matching the search criteria.
      */
-    List<FoodProductDTO> searchFoodProduct(String name, String language);
+    List<FoodProductDto> searchFoodProduct(String name, String language);
 
     /**
      * Searches for recipes by name.
      *
      * @param name the name of the recipe to search for.
-     * @return a list of RecipeDTO objects matching the search criteria.
+     * @return a list of RecipeDto objects matching the search criteria.
      */
-    List<RecipeDTO> searchRecipe(String name);
+    List<RecipeDto> searchRecipe(String name);
 
     /**
      * Estimates a meal based on an image using an external AI model.
      *
      * @param image the image file of the meal to be estimated.
      * @param language the language in which to perform the estimation.
-     * @return a MealDTO object containing the estimated meal information.
+     * @return a MealDto object containing the estimated meal information.
      */
-    MealDTO estimateMeal(MultipartFile image, String language) throws IOException;
+    MealDto estimateMeal(MultipartFile image, String language) throws IOException;
 }

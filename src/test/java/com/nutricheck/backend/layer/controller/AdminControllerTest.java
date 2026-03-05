@@ -1,8 +1,8 @@
 package com.nutricheck.backend.layer.controller;
 
 import com.nutricheck.backend.TestDataFactory;
-import com.nutricheck.backend.dto.RecipeDTO;
-import com.nutricheck.backend.dto.ReportDTO;
+import com.nutricheck.backend.dto.RecipeDto;
+import com.nutricheck.backend.dto.ReportDto;
 import com.nutricheck.backend.exception.RecipeNotFoundException;
 import com.nutricheck.backend.exception.ReportNotFoundException;
 import com.nutricheck.backend.layer.service.AdminService;
@@ -30,9 +30,9 @@ class AdminControllerTest {
     @MockitoBean
     private AdminService adminService;
 
-    private ReportDTO reportDTO;
+    private ReportDto reportDTO;
 
-    private RecipeDTO recipeDTO;
+    private RecipeDto recipeDTO;
 
     @BeforeAll
     void setup() {
@@ -43,7 +43,7 @@ class AdminControllerTest {
     @Test
     void getAllReportsTest() throws Exception {
         // Given (expected data)
-        List<ReportDTO> reports = List.of(reportDTO, reportDTO);
+        List<ReportDto> reports = List.of(reportDTO, reportDTO);
 
         // When (mocking the service call)
         when(adminService.getAllReports()).thenReturn(reports);
@@ -85,7 +85,7 @@ class AdminControllerTest {
 
     @Test
     void deleteAllReportsTest() throws Exception {
-        List<ReportDTO> reports = List.of(reportDTO, reportDTO);
+        List<ReportDto> reports = List.of(reportDTO, reportDTO);
 
         when(adminService.deleteAllReports()).thenReturn(reports);
 

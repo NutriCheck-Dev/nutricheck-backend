@@ -1,7 +1,7 @@
 package com.nutricheck.backend.layer.controller;
 
-import com.nutricheck.backend.dto.RecipeDTO;
-import com.nutricheck.backend.dto.ReportDTO;
+import com.nutricheck.backend.dto.RecipeDto;
+import com.nutricheck.backend.dto.ReportDto;
 import com.nutricheck.backend.layer.service.AdminService;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.ResponseEntity;
@@ -29,11 +29,11 @@ public class AdminController {
     /**
      * This endpoint retrieves all reports submitted by users.
      *
-     * @return a list of ReportDTO objects representing the reports.
+     * @return a list of ReportDto objects representing the reports.
      */
     @GetMapping("/reports")
-    public ResponseEntity<List<ReportDTO>> getAllReports() {
-        List<ReportDTO> reports = adminService.getAllReports();
+    public ResponseEntity<List<ReportDto>> getAllReports() {
+        List<ReportDto> reports = adminService.getAllReports();
         return ResponseEntity.ok(reports);
     }
 
@@ -41,22 +41,22 @@ public class AdminController {
      * This endpoint deletes a specific report by its ID.
      *
      * @param reportId the ID of the report to be deleted.
-     * @return the deleted ReportDTO object.
+     * @return the deleted ReportDto object.
      */
     @DeleteMapping("/reports/{reportId}")
-    public ResponseEntity<ReportDTO> deleteReport(@PathVariable @NotBlank String reportId) {
-        ReportDTO deletedReport = adminService.deleteReport(reportId);
+    public ResponseEntity<ReportDto> deleteReport(@PathVariable @NotBlank String reportId) {
+        ReportDto deletedReport = adminService.deleteReport(reportId);
         return ResponseEntity.ok(deletedReport);
     }
 
     /**
      * This endpoint deletes all reports submitted by the users.
      *
-     * @return a list of ReportDTO objects representing the deleted reports.
+     * @return a list of ReportDto objects representing the deleted reports.
      */
     @DeleteMapping("/reports")
-    public ResponseEntity<List<ReportDTO>> deleteAllReports() {
-        List<ReportDTO> deletedReports = adminService.deleteAllReports();
+    public ResponseEntity<List<ReportDto>> deleteAllReports() {
+        List<ReportDto> deletedReports = adminService.deleteAllReports();
         return ResponseEntity.ok(deletedReports);
     }
 
@@ -64,11 +64,11 @@ public class AdminController {
      * This endpoint deletes a specific recipe by its ID.
      *
      * @param recipeId the ID of the recipe to be deleted.
-     * @return the deleted RecipeDTO object.
+     * @return the deleted RecipeDto object.
      */
     @DeleteMapping("/recipes/{recipeId}")
-    public ResponseEntity<RecipeDTO> deleteRecipe(@PathVariable @NotBlank String recipeId) {
-        RecipeDTO deletedRecipe = adminService.deleteRecipe(recipeId);
+    public ResponseEntity<RecipeDto> deleteRecipe(@PathVariable @NotBlank String recipeId) {
+        RecipeDto deletedRecipe = adminService.deleteRecipe(recipeId);
         return ResponseEntity.ok(deletedRecipe);
 
     }

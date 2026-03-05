@@ -11,10 +11,11 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AIMealDTO {
+public class AiMealDto {
     private String name;
     private double calories;
     private double carbohydrates;
     private double protein;
     private double fat;
+
 }

@@ -1,7 +1,7 @@
 package com.nutricheck.backend.layer.controller;
 
-import com.nutricheck.backend.dto.RecipeDTO;
-import com.nutricheck.backend.dto.ReportDTO;
+import com.nutricheck.backend.dto.RecipeDto;
+import com.nutricheck.backend.dto.ReportDto;
 import com.nutricheck.backend.layer.service.RecipeService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -27,11 +27,11 @@ public class RecipeController {
      * This endpoint allows users to upload a recipe.
      *
      * @param recipeDTO the recipe data transfer object containing the recipe details.
-     * @return the uploaded RecipeDTO object.
+     * @return the uploaded RecipeDto object.
      */
     @PostMapping
-    public ResponseEntity<RecipeDTO> uploadRecipe(@RequestBody @Valid RecipeDTO recipeDTO) {
-        RecipeDTO uploadedRecipe = recipeService.uploadRecipe(recipeDTO);
+    public ResponseEntity<RecipeDto> uploadRecipe(@RequestBody @Valid RecipeDto recipeDTO) {
+        RecipeDto uploadedRecipe = recipeService.uploadRecipe(recipeDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(uploadedRecipe);
     }
 
@@ -39,11 +39,11 @@ public class RecipeController {
      * This endpoint allows users to report a specified recipe.
      *
      * @param reportDTO the report data transfer object containing the recipe ID.
-     * @return the uploaded ReportDTO object.
+     * @return the uploaded ReportDto object.
      */
     @PostMapping("/report")
-    public ResponseEntity<ReportDTO> reportRecipe(@RequestBody @Valid ReportDTO reportDTO) {
-        ReportDTO reportedRecipe = recipeService.reportRecipe(reportDTO);
+    public ResponseEntity<ReportDto> reportRecipe(@RequestBody @Valid ReportDto reportDTO) {
+        ReportDto reportedRecipe = recipeService.reportRecipe(reportDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(reportedRecipe);
     }
 

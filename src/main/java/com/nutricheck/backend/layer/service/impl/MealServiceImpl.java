@@ -33,7 +33,7 @@ public class MealServiceImpl implements MealService {
     private final AIModelClient aiModelClient;
 
     @Override
-    public MealDTO estimateMeal(MultipartFile image, String language) throws IOException {
+    public MealDto estimateMeal(MultipartFile image, String language) throws IOException {
         byte[] imageBytes = image.getBytes();
         return aiModelClient.estimateMeal(imageBytes, language);
 
@@ -41,23 +41,23 @@ public class MealServiceImpl implements MealService {
 
     @Override
     @Cacheable(value = "foodProducts", key = "#name.toLowerCase()")
-    public List<FoodProductDTO> searchFoodProduct(String name, String language) {
-        Set<FoodProductDTO> foodProducts = new LinkedHashSet<>();
+    public List<FoodProductDto> searchFoodProduct(String name, String language) {
+        Set<FoodProductDto> foodProducts = new LinkedHashSet<>();
 
-        List<FoodProductDTO> internalProducts = foodProductMapper.toDTO(foodProductRepository.findByNameContainingIgnoreCase(name));
+        List<FoodProductDto> internalProducts = foodProductMapper.toDTO(foodProductRepository.findByNameContainingIgnoreCase(name));
         foodProducts.addAll(internalProducts);
 
         if( foodProducts.size() < MAX_SEARCH_RESULTS) {
-            List<FoodProductDTO> swissFoodProducts = swissFoodCDClient.search(name, language);
+            List<FoodProductDto> swissFoodProducts = swissFoodCDClient.search(name, language);
             foodProducts.addAll(sortFoodProductsByNameLength(swissFoodProducts));
 
-            List<FoodProductDTO> openFoodFacts = openFoodFactsClient.search(name, language);
+            List<FoodProductDto> openFoodFacts = openFoodFactsClient.search(name, language);
             foodProducts.addAll(sortFoodProductsByNameLength(openFoodFacts));
         }
         return new ArrayList<>(foodProducts);
     }
 
-    private List<FoodProductDTO> sortFoodProductsByNameLength(List<FoodProductDTO> foodProducts) {
+    private List<FoodProductDto> sortFoodProductsByNameLength(List<FoodProductDto> foodProducts) {
         return foodProducts.stream()
                 .sorted(Comparator.comparingInt(product -> product.getName().length()))
                 .toList();
@@ -65,7 +65,7 @@ public class MealServiceImpl implements MealService {
 
     @Override
     @Cacheable(value = "recipes", key = "#name.toLowerCase()")
-    public List<RecipeDTO> searchRecipe(String name) {
+    public List<RecipeDto> searchRecipe(String name) {
         List<Recipe> recipes = recipeRepository.findByNameContainingIgnoreCase(name);
         return recipeMapper.toDTO(recipes);
     }

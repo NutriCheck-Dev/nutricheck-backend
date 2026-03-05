@@ -6,16 +6,18 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@ActiveProfiles("test")
 class ReportRepositoryTest {
 
     @Autowired
@@ -39,7 +41,7 @@ class ReportRepositoryTest {
         assertThat(reports)
                 .as("Check if report table only contains the saved report")
                 .hasSize(1);
-        assertThat(reports.get(0).getId())//
+        assertThat(reports.getFirst().getId())//
                 .as("Check that the saved report is the one we expect")
                 .isEqualTo(report.getId());
     }

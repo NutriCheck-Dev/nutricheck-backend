@@ -6,6 +6,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DataJpaTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@ActiveProfiles("test")
 class RecipeRepositoryTest {
     @Autowired
     private RecipeRepository recipeRepository;
@@ -55,7 +57,7 @@ class RecipeRepositoryTest {
                 .as("Check if recipe can be found by name")
                 .hasSize(1);
         // Verify that the found recipe matches the one we saved
-        assertEquals(recipes.get(0), recipe);
+        assertEquals(recipes.getFirst(), recipe);
     }
 
     @Test

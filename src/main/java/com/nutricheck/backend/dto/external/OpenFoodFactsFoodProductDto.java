@@ -12,7 +12,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OpenFoodFactsFoodProductDTO {
+public class OpenFoodFactsFoodProductDto {
     @JsonProperty("_id")
     private String id;
     @JsonProperty("product_name")
@@ -21,5 +21,5 @@ public class OpenFoodFactsFoodProductDTO {
     private String germanName;
     @JsonProperty("product_name_en")
     private String englishName;
-    private OpenFoodFactsNutrimentsDTO nutriments;
+    private OpenFoodFactsNutrimentsDto nutriments;
 }

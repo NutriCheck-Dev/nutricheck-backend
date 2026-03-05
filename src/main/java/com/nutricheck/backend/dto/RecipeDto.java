@@ -17,7 +17,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RecipeDTO {
+public class RecipeDto {
     @NotBlank(message = "ID of a recipe cannot be blank")
     private String id;
     @NotBlank(message = "Name of a recipe cannot be blank")
@@ -35,5 +35,5 @@ public class RecipeDTO {
     private double fat;
     @Valid
     @Size(min = 2, message = "A recipe must contain at least two ingredients")
-    private Set<IngredientDTO> ingredients;
+    private Set<IngredientDto> ingredients;
 }

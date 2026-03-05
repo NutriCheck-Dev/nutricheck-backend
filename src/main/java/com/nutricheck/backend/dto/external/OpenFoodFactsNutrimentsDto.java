@@ -12,7 +12,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OpenFoodFactsNutrimentsDTO {
+public class OpenFoodFactsNutrimentsDto {
     private double fat;
     @JsonProperty("energy-kcal")
     private double energyKcal;

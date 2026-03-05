@@ -11,8 +11,8 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SwissFoodCDValueDTO {
+public class SwissFoodDbValueDto {
     private int id;
     private Double value;
-    private SwissFoodCDComponentDTO component;
+    private SwissFoodDbComponentDto component;
 }

@@ -1,9 +1,9 @@
 package com.nutricheck.backend.layer.service.impl;
 
 import com.nutricheck.backend.Utils;
-import com.nutricheck.backend.dto.IngredientDTO;
-import com.nutricheck.backend.dto.RecipeDTO;
-import com.nutricheck.backend.dto.ReportDTO;
+import com.nutricheck.backend.dto.IngredientDto;
+import com.nutricheck.backend.dto.RecipeDto;
+import com.nutricheck.backend.dto.ReportDto;
 import com.nutricheck.backend.exception.DuplicateRecipeException;
 import com.nutricheck.backend.exception.RecipeNotFoundException;
 import com.nutricheck.backend.layer.model.entity.FoodProduct;
@@ -40,7 +40,7 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     @Transactional
     @CacheEvict(value = "recipes", key = "#recipeDTO.name.toLowerCase()")
-    public RecipeDTO uploadRecipe(RecipeDTO recipeDTO) {
+    public RecipeDto uploadRecipe(RecipeDto recipeDTO) {
         List<Recipe> existingRecipes = recipeRepository.findByNameAndInstructions(recipeDTO.getName(), recipeDTO.getInstructions());
         if(isDuplicateRecipe(recipeDTO, recipeMapper.toDTO(existingRecipes))) {
             throw new DuplicateRecipeException(
@@ -52,14 +52,14 @@ public class RecipeServiceImpl implements RecipeService {
         if(recipeRepository.findById(recipeDTO.getId()).isPresent()) {
             UUID newId = UUID.randomUUID();
             recipeDTO.setId(newId.toString());
-            for(IngredientDTO ingredientDTO : recipeDTO.getIngredients()) {
+            for(IngredientDto ingredientDTO : recipeDTO.getIngredients()) {
                 ingredientDTO.setRecipeId(newId.toString());
             }
         }
 
         Recipe recipe = recipeMapper.toEntity(recipeDTO);
         Set<Ingredient> ingredients = new HashSet<>();
-        for(IngredientDTO ingredientDTO : recipeDTO.getIngredients()) {
+        for(IngredientDto ingredientDTO : recipeDTO.getIngredients()) {
             Ingredient ingredient = ingredientMapper.toEntity(ingredientDTO);
             ingredient.setRecipe(recipe);
             // either use the existing food product or create a new one if it is missing
@@ -74,12 +74,12 @@ public class RecipeServiceImpl implements RecipeService {
         return recipeMapper.toDTO(managedRecipe);
     }
 
-    private boolean isDuplicateRecipe(RecipeDTO newRecipe, List<RecipeDTO> existingRecipes) {
+    private boolean isDuplicateRecipe(RecipeDto newRecipe, List<RecipeDto> existingRecipes) {
         // Instead of equals for DTOs use comparator to check for duplicate to keep equals pure
-        Comparator<IngredientDTO> ingredientComparator = Comparator
-                .comparing((IngredientDTO i) -> i.getFoodProduct().getName())
-                .thenComparing(IngredientDTO::getQuantity, Utils::compareDouble);
-        List<IngredientDTO> sortedNewIngredients = newRecipe.getIngredients().stream()
+        Comparator<IngredientDto> ingredientComparator = Comparator
+                .comparing((IngredientDto i) -> i.getFoodProduct().getName())
+                .thenComparing(IngredientDto::getQuantity, Utils::compareDouble);
+        List<IngredientDto> sortedNewIngredients = newRecipe.getIngredients().stream()
                 .sorted(ingredientComparator)
                 .toList();
         return existingRecipes.stream().anyMatch(existingRecipe ->
@@ -90,14 +90,14 @@ public class RecipeServiceImpl implements RecipeService {
         );
     }
 
-    private boolean areIngredientsEqual(Set<IngredientDTO> existingIngredients,
-                                        List<IngredientDTO> sortedNewIngredients,
-                                        Comparator<IngredientDTO> comparator) {
+    private boolean areIngredientsEqual(Set<IngredientDto> existingIngredients,
+                                        List<IngredientDto> sortedNewIngredients,
+                                        Comparator<IngredientDto> comparator) {
 
         if (existingIngredients.size() != sortedNewIngredients.size()) {
             return false;
         }
-        List<IngredientDTO> sortedExisting = existingIngredients.stream()
+        List<IngredientDto> sortedExisting = existingIngredients.stream()
                 .sorted(comparator)
                 .toList();
         for (int i = 0; i < sortedExisting.size(); i++) {
@@ -119,7 +119,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public ReportDTO reportRecipe(ReportDTO reportDTO) {
+    public ReportDto reportRecipe(ReportDto reportDTO) {
         Optional<Recipe> recipeToReport = recipeRepository.findById(reportDTO.getRecipeId());
         if (recipeToReport.isEmpty()) {
             throw new RecipeNotFoundException(String.format(AdminServiceImpl.NOT_FOUND_MESSAGE,

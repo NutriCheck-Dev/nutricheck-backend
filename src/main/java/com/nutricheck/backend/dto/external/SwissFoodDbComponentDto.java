@@ -12,7 +12,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SwissFoodCDComponentDTO {
+public class SwissFoodDbComponentDto {
     private String name;
     private String code;
 }
