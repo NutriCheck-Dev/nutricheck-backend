@@ -1,0 +1,18 @@
+spring:
+  servlet:
+    multipart: # smaller file size limits for tests
+      max-file-size: 5MB
+      max-request-size: 5MB
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop # Use create-drop for tests to ensure a clean database for each run
+
+gemini:
+  api:
+    key: test-key # use a dummy key to resolve placeholder issues in tests, unit tests will not need the actual Gemini API
