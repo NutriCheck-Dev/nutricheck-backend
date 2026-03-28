@@ -1,10 +1,14 @@
 package com.nutricheck.backend.layer.model.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -12,11 +16,6 @@ import java.util.Set;
  * This class is used to map recipe data to the database.
  */
 @Entity
-@Getter
-@Setter
-@SuperBuilder
-@NoArgsConstructor
-@AllArgsConstructor
 public class Recipe extends Nutriment {
 
     @Id
@@ -28,9 +27,61 @@ public class Recipe extends Nutriment {
     private String instructions;
     private int servings;
 
-    @Builder.Default
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Ingredient> ingredients = new HashSet<>();
+
+    public Recipe() {
+        this.ingredients = new HashSet<>();
+    }
+
+    public Recipe(String id, String name, String instructions, int servings, double calories, double carbohydrates, double protein, double fat, Set<Ingredient> ingredients) {
+        super(calories, carbohydrates, protein, fat);
+        this.id = id;
+        this.name = name;
+        this.instructions = instructions;
+        this.servings = servings;
+        this.ingredients = ingredients == null ? new HashSet<>() : ingredients;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getInstructions() {
+        return instructions;
+    }
+
+    public void setInstructions(String instructions) {
+        this.instructions = instructions;
+    }
+
+    public int getServings() {
+        return servings;
+    }
+
+    public void setServings(int servings) {
+        this.servings = servings;
+    }
+
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -39,8 +90,9 @@ public class Recipe extends Nutriment {
         Recipe recipe = (Recipe) o;
         return id != null && id.equals(recipe.id);
     }
+
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hash(id);
     }
 }

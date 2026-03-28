@@ -9,7 +9,6 @@ import com.nutricheck.backend.layer.model.repository.RecipeRepository;
 import com.nutricheck.backend.layer.service.MealService;
 import com.nutricheck.backend.layer.service.mapper.FoodProductMapper;
 import com.nutricheck.backend.layer.service.mapper.RecipeMapper;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,6 @@ import java.io.IOException;
 import java.util.*;
 
 @Service
-@RequiredArgsConstructor
 public class MealServiceImpl implements MealService {
 
     public static final int MAX_SEARCH_RESULTS = 100;
@@ -31,6 +29,22 @@ public class MealServiceImpl implements MealService {
     @Qualifier("openFoodFacts") private final FoodDBClient openFoodFactsClient;
     @Qualifier("swiss") private final FoodDBClient swissFoodCDClient;
     private final AIModelClient aiModelClient;
+
+    public MealServiceImpl(RecipeRepository recipeRepository,
+                           FoodProductRepository foodProductRepository,
+                           RecipeMapper recipeMapper,
+                           FoodProductMapper foodProductMapper,
+                           @Qualifier("openFoodFacts") FoodDBClient openFoodFactsClient,
+                           @Qualifier("swiss") FoodDBClient swissFoodCDClient,
+                           AIModelClient aiModelClient) {
+        this.recipeRepository = recipeRepository;
+        this.foodProductRepository = foodProductRepository;
+        this.recipeMapper = recipeMapper;
+        this.foodProductMapper = foodProductMapper;
+        this.openFoodFactsClient = openFoodFactsClient;
+        this.swissFoodCDClient = swissFoodCDClient;
+        this.aiModelClient = aiModelClient;
+    }
 
     @Override
     public MealDto estimateMeal(MultipartFile image, String language) throws IOException {

@@ -19,14 +19,12 @@ import com.nutricheck.backend.layer.service.mapper.IngredientMapper;
 import com.nutricheck.backend.layer.service.mapper.RecipeMapper;
 import com.nutricheck.backend.layer.service.mapper.ReportMapper;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
-@RequiredArgsConstructor
 public class RecipeServiceImpl implements RecipeService {
 
     private final RecipeRepository recipeRepository;
@@ -36,6 +34,22 @@ public class RecipeServiceImpl implements RecipeService {
     private final IngredientMapper ingredientMapper;
     private final ReportMapper reportMapper;
     private final FoodProductMapper foodProductMapper;
+
+    public RecipeServiceImpl(RecipeRepository recipeRepository,
+                             FoodProductRepository foodProductRepository,
+                             ReportRepository reportRepository,
+                             RecipeMapper recipeMapper,
+                             IngredientMapper ingredientMapper,
+                             ReportMapper reportMapper,
+                             FoodProductMapper foodProductMapper) {
+        this.recipeRepository = recipeRepository;
+        this.foodProductRepository = foodProductRepository;
+        this.reportRepository = reportRepository;
+        this.recipeMapper = recipeMapper;
+        this.ingredientMapper = ingredientMapper;
+        this.reportMapper = reportMapper;
+        this.foodProductMapper = foodProductMapper;
+    }
 
     @Override
     @Transactional

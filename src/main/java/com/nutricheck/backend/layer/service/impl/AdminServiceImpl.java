@@ -11,7 +11,6 @@ import com.nutricheck.backend.layer.model.repository.ReportRepository;
 import com.nutricheck.backend.layer.service.AdminService;
 import com.nutricheck.backend.layer.service.mapper.RecipeMapper;
 import com.nutricheck.backend.layer.service.mapper.ReportMapper;
-import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
 
     static final String NOT_FOUND_MESSAGE = "%s with id %s cannot be found.";
@@ -28,6 +26,16 @@ public class AdminServiceImpl implements AdminService {
     private final RecipeRepository recipeRepository;
     private final ReportMapper reportMapper;
     private final RecipeMapper recipeMapper;
+
+    public AdminServiceImpl(ReportRepository reportRepository,
+                            RecipeRepository recipeRepository,
+                            ReportMapper reportMapper,
+                            RecipeMapper recipeMapper) {
+        this.reportRepository = reportRepository;
+        this.recipeRepository = recipeRepository;
+        this.reportMapper = reportMapper;
+        this.recipeMapper = recipeMapper;
+    }
 
     @Override
     public List<ReportDto> getAllReports() {
