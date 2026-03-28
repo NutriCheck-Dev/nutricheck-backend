@@ -28,14 +28,13 @@ public interface AiMealMapper {
      */
     @AfterMapping
     default void setItems(AiMealDto aiEstimatedMeal, @MappingTarget MealDto estimatedMeal) {
-        FoodProductDto wholeMeal = FoodProductDto.builder()
-                .name(aiEstimatedMeal.getName() + " (AI)")
-                .id(UUID.randomUUID().toString())
-                .calories(aiEstimatedMeal.getCalories())
-                .carbohydrates(aiEstimatedMeal.getCarbohydrates())
-                .fat(aiEstimatedMeal.getFat())
-                .protein(aiEstimatedMeal.getProtein())
-                .build();
+        FoodProductDto wholeMeal = new FoodProductDto();
+        wholeMeal.setName(aiEstimatedMeal.getName() + " (AI)");
+        wholeMeal.setId(UUID.randomUUID().toString());
+        wholeMeal.setCalories(aiEstimatedMeal.getCalories());
+        wholeMeal.setCarbohydrates(aiEstimatedMeal.getCarbohydrates());
+        wholeMeal.setFat(aiEstimatedMeal.getFat());
+        wholeMeal.setProtein(aiEstimatedMeal.getProtein());
         estimatedMeal.setItems(Set.of(new MealItemDto(wholeMeal.getId(), wholeMeal)));
     }
 }
