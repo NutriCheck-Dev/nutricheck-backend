@@ -1,7 +1,8 @@
 package com.nutricheck.backend.layer.model.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+
+import java.util.Objects;
 
 
 /**
@@ -9,15 +10,10 @@ import lombok.*;
  * This class is used to map ingredient data to the database.
  */
 @Entity
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class Ingredient {
 
     @EmbeddedId
-    private IngredientID id;
+    private IngredientId id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("recipeId")
@@ -36,16 +32,58 @@ public class Ingredient {
 
     private double quantity;
 
+    public Ingredient() {
+    }
+
+    public Ingredient(IngredientId id, Recipe recipe, FoodProduct foodProduct, double quantity) {
+        this.id = id;
+        this.recipe = recipe;
+        this.foodProduct = foodProduct;
+        this.quantity = quantity;
+    }
+
+    public IngredientId getId() {
+        return id;
+    }
+
+    public void setId(IngredientId id) {
+        this.id = id;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
+    }
+
+    public FoodProduct getFoodProduct() {
+        return foodProduct;
+    }
+
+    public void setFoodProduct(FoodProduct foodProduct) {
+        this.foodProduct = foodProduct;
+    }
+
+    public double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(double quantity) {
+        this.quantity = quantity;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ingredient that = (Ingredient) o;
-        // check for null id to avoid comparing transient entities
-        return id != null && id.equals(that.id);
+        return Objects.equals(id, that.id);
     }
+
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hash(id);
     }
 }

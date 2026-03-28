@@ -1,6 +1,6 @@
 package com.nutricheck.backend.layer.client;
 
-import com.nutricheck.backend.dto.MealDTO;
+import com.nutricheck.backend.dto.MealDto;
 
 import java.io.IOException;
 
@@ -14,7 +14,7 @@ public interface AIModelClient {
      * @param image the byte array of the image file of the meal to be estimated.
      * @param language the language in which to perform the estimation.
      * @throws IOException if there is an error parsing the returned JSON.
-     * @return a MealDTO object containing the estimated meal information.
+     * @return a MealDto object containing the estimated meal information.
      */
-    MealDTO estimateMeal(byte[] image, String language) throws IOException;
+    MealDto estimateMeal(byte[] image, String language) throws IOException;
 }

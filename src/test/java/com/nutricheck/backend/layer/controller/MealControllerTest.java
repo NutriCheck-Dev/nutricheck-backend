@@ -1,9 +1,9 @@
 package com.nutricheck.backend.layer.controller;
 
 import com.nutricheck.backend.TestDataFactory;
-import com.nutricheck.backend.dto.FoodProductDTO;
-import com.nutricheck.backend.dto.MealDTO;
-import com.nutricheck.backend.dto.RecipeDTO;
+import com.nutricheck.backend.dto.FoodProductDto;
+import com.nutricheck.backend.dto.MealDto;
+import com.nutricheck.backend.dto.RecipeDto;
 import com.nutricheck.backend.exception.GlobalExceptionHandler;
 import com.nutricheck.backend.layer.service.MealService;
 import org.apache.commons.io.FileUtils;
@@ -39,11 +39,11 @@ class MealControllerTest {
     @MockitoBean
     private MealService mealService;
 
-    private MealDTO mealDTO;
+    private MealDto mealDTO;
 
-    private RecipeDTO recipeDTO;
+    private RecipeDto recipeDTO;
 
-    private FoodProductDTO foodProductDTO;
+    private FoodProductDto foodProductDTO;
 
     @BeforeAll
     void setup() {
@@ -53,7 +53,7 @@ class MealControllerTest {
     }
     @Test
     void searchFoodProductTest() throws Exception {
-        List<FoodProductDTO> foodProducts = List.of(foodProductDTO, foodProductDTO);
+        List<FoodProductDto> foodProducts = List.of(foodProductDTO, foodProductDTO);
 
         when(mealService.searchFoodProduct(foodProductDTO.getName(), "en"))
                 .thenReturn(foodProducts);
@@ -85,7 +85,7 @@ class MealControllerTest {
 
     @Test
     void searchRecipeTest() throws Exception {
-        List<RecipeDTO> recipes = List.of(recipeDTO, recipeDTO);
+        List<RecipeDto> recipes = List.of(recipeDTO, recipeDTO);
 
         when(mealService.searchRecipe(recipeDTO.getName()))
                 .thenReturn(recipes);
@@ -168,7 +168,7 @@ class MealControllerTest {
 
 
     /*
-     * Assumes a JSON parsing error occurs during deserialzation of the response from the
+     * Assumes a JSON parsing error occurs during deserialization of the response from the
      * AI model. Verifies that GlobalExceptionHandler handles the error.
      */
     @Test

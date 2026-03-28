@@ -2,8 +2,8 @@ package com.nutricheck.backend.layer.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nutricheck.backend.TestDataFactory;
-import com.nutricheck.backend.dto.RecipeDTO;
-import com.nutricheck.backend.dto.ReportDTO;
+import com.nutricheck.backend.dto.RecipeDto;
+import com.nutricheck.backend.dto.ReportDto;
 import com.nutricheck.backend.exception.DuplicateRecipeException;
 import com.nutricheck.backend.exception.GlobalExceptionHandler;
 import com.nutricheck.backend.exception.RecipeNotFoundException;
@@ -30,9 +30,9 @@ class RecipeControllerTest {
     @MockitoBean
     private RecipeService recipeService;
 
-    private RecipeDTO recipeDTO;
+    private RecipeDto recipeDTO;
 
-    private ReportDTO reportDTO;
+    private ReportDto reportDTO;
 
     private ObjectMapper objectMapper;
 
@@ -45,7 +45,7 @@ class RecipeControllerTest {
 
     @Test
     void uploadRecipeTest() throws Exception {
-        when(recipeService.uploadRecipe(any(RecipeDTO.class))).thenReturn(recipeDTO);
+        when(recipeService.uploadRecipe(any(RecipeDto.class))).thenReturn(recipeDTO);
 
         ResultActions response = mockMvc.perform(post("/user/recipes")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -66,7 +66,7 @@ class RecipeControllerTest {
 
     @Test
     void uploadDuplicateRecipeTest() throws Exception {
-        when(recipeService.uploadRecipe(any(RecipeDTO.class)))
+        when(recipeService.uploadRecipe(any(RecipeDto.class)))
                 .thenThrow(DuplicateRecipeException.class);
 
         mockMvc.perform(post("/user/recipes")
@@ -77,7 +77,7 @@ class RecipeControllerTest {
 
     @Test
     void reportRecipeTest() throws Exception {
-        when(recipeService.reportRecipe(any(ReportDTO.class))).thenReturn(reportDTO);
+        when(recipeService.reportRecipe(any(ReportDto.class))).thenReturn(reportDTO);
 
         ResultActions response = mockMvc.perform(post("/user/recipes/report")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -94,7 +94,7 @@ class RecipeControllerTest {
 
     @Test
     void reportMissingRecipeTest() throws Exception {
-        when(recipeService.reportRecipe(any(ReportDTO.class)))
+        when(recipeService.reportRecipe(any(ReportDto.class)))
                 .thenThrow(RecipeNotFoundException.class);
 
         mockMvc.perform(post("/user/recipes/report")
@@ -105,7 +105,7 @@ class RecipeControllerTest {
 
     @Test
     void reportRecipeWithInvalidDataTest() throws Exception {
-        ReportDTO invalidReport = reportDTO;
+        ReportDto invalidReport = reportDTO;
         invalidReport.setRecipeId("");
 
         mockMvc.perform(post("/user/recipes/report")

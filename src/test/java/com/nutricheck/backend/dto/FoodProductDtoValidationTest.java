@@ -14,7 +14,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class FoodProductDTOValidationTest {
+class FoodProductDtoValidationTest {
     private Validator validator;
 
     @BeforeAll
@@ -25,21 +25,21 @@ class FoodProductDTOValidationTest {
 
     @Test
     void validFoodProductDTOTest() {
-        FoodProductDTO foodProductDTO = TestDataFactory.createDefaultFoodProductDTO();
+        FoodProductDto foodProductDTO = TestDataFactory.createDefaultFoodProductDTO();
 
-        Set<ConstraintViolation<FoodProductDTO>> violations = validator.validate(foodProductDTO);
-        assertTrue(violations.isEmpty(), "Valid FoodProductDTO should have no violations");
+        Set<ConstraintViolation<FoodProductDto>> violations = validator.validate(foodProductDTO);
+        assertTrue(violations.isEmpty(), "Valid FoodProductDto should have no violations");
     }
 
     // As an exemplary validation test case
     @Test
     void foodProductDTOWithBlankIdTest() {
-        FoodProductDTO foodProductDTO = TestDataFactory.createDefaultFoodProductDTO();
+        FoodProductDto foodProductDTO = TestDataFactory.createDefaultFoodProductDTO();
         foodProductDTO.setId("");
 
-        Set<ConstraintViolation<FoodProductDTO>> violations = validator.validate(foodProductDTO);
+        Set<ConstraintViolation<FoodProductDto>> violations = validator.validate(foodProductDTO);
         assertTrue(violations.stream()
                 .anyMatch(v -> v.getMessage().equals("ID of a food product cannot be blank")),
-                "FoodProductDTO with blank ID should have a violation");
+                "FoodProductDto with blank ID should have a violation");
     }
 }

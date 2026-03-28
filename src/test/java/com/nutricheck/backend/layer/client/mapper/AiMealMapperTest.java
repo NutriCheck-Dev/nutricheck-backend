@@ -1,24 +1,24 @@
 package com.nutricheck.backend.layer.client.mapper;
 
 import com.nutricheck.backend.TestDataFactory;
-import com.nutricheck.backend.dto.MealDTO;
+import com.nutricheck.backend.dto.MealDto;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class AIMealMapperTest {
+class AiMealMapperTest {
 
     @Test
-    void  toMealDTOTest() {
-        AIMealMapper aiMealMapper = Mappers.getMapper(AIMealMapper.class);
-        MealDTO expectedMealDTO = TestDataFactory.createDefaultMealDTO();
+    void toMealDtoTest() {
+        AiMealMapper aiMealMapper = Mappers.getMapper(AiMealMapper.class);
+        MealDto expectedMealDto = TestDataFactory.createDefaultMealDTO();
 
-        MealDTO actualMealDTO = aiMealMapper.toMealDTO(TestDataFactory.createDefaultAIMealDTO());
-        assertThat(actualMealDTO)
+        MealDto actualMealDto = aiMealMapper.toMealDto(TestDataFactory.createDefaultAIMealDTO());
+        assertThat(actualMealDto)
                 .usingRecursiveComparison()
                 // ids are generated, names have (AI) appended
                 .ignoringFieldsMatchingRegexes(".*\\.id", ".*\\.name", ".*\\.foodProductId")
-                .isEqualTo(expectedMealDTO);
+                .isEqualTo(expectedMealDto);
     }
 }

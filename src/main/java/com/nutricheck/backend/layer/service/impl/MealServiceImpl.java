@@ -9,7 +9,6 @@ import com.nutricheck.backend.layer.model.repository.RecipeRepository;
 import com.nutricheck.backend.layer.service.MealService;
 import com.nutricheck.backend.layer.service.mapper.FoodProductMapper;
 import com.nutricheck.backend.layer.service.mapper.RecipeMapper;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,6 @@ import java.io.IOException;
 import java.util.*;
 
 @Service
-@RequiredArgsConstructor
 public class MealServiceImpl implements MealService {
 
     public static final int MAX_SEARCH_RESULTS = 100;
@@ -32,8 +30,24 @@ public class MealServiceImpl implements MealService {
     @Qualifier("swiss") private final FoodDBClient swissFoodCDClient;
     private final AIModelClient aiModelClient;
 
+    public MealServiceImpl(RecipeRepository recipeRepository,
+                           FoodProductRepository foodProductRepository,
+                           RecipeMapper recipeMapper,
+                           FoodProductMapper foodProductMapper,
+                           @Qualifier("openFoodFacts") FoodDBClient openFoodFactsClient,
+                           @Qualifier("swiss") FoodDBClient swissFoodCDClient,
+                           AIModelClient aiModelClient) {
+        this.recipeRepository = recipeRepository;
+        this.foodProductRepository = foodProductRepository;
+        this.recipeMapper = recipeMapper;
+        this.foodProductMapper = foodProductMapper;
+        this.openFoodFactsClient = openFoodFactsClient;
+        this.swissFoodCDClient = swissFoodCDClient;
+        this.aiModelClient = aiModelClient;
+    }
+
     @Override
-    public MealDTO estimateMeal(MultipartFile image, String language) throws IOException {
+    public MealDto estimateMeal(MultipartFile image, String language) throws IOException {
         byte[] imageBytes = image.getBytes();
         return aiModelClient.estimateMeal(imageBytes, language);
 
@@ -41,23 +55,23 @@ public class MealServiceImpl implements MealService {
 
     @Override
     @Cacheable(value = "foodProducts", key = "#name.toLowerCase()")
-    public List<FoodProductDTO> searchFoodProduct(String name, String language) {
-        Set<FoodProductDTO> foodProducts = new LinkedHashSet<>();
+    public List<FoodProductDto> searchFoodProduct(String name, String language) {
+        Set<FoodProductDto> foodProducts = new LinkedHashSet<>();
 
-        List<FoodProductDTO> internalProducts = foodProductMapper.toDTO(foodProductRepository.findByNameContainingIgnoreCase(name));
+        List<FoodProductDto> internalProducts = foodProductMapper.toDTO(foodProductRepository.findByNameContainingIgnoreCase(name));
         foodProducts.addAll(internalProducts);
 
         if( foodProducts.size() < MAX_SEARCH_RESULTS) {
-            List<FoodProductDTO> swissFoodProducts = swissFoodCDClient.search(name, language);
+            List<FoodProductDto> swissFoodProducts = swissFoodCDClient.search(name, language);
             foodProducts.addAll(sortFoodProductsByNameLength(swissFoodProducts));
 
-            List<FoodProductDTO> openFoodFacts = openFoodFactsClient.search(name, language);
+            List<FoodProductDto> openFoodFacts = openFoodFactsClient.search(name, language);
             foodProducts.addAll(sortFoodProductsByNameLength(openFoodFacts));
         }
         return new ArrayList<>(foodProducts);
     }
 
-    private List<FoodProductDTO> sortFoodProductsByNameLength(List<FoodProductDTO> foodProducts) {
+    private List<FoodProductDto> sortFoodProductsByNameLength(List<FoodProductDto> foodProducts) {
         return foodProducts.stream()
                 .sorted(Comparator.comparingInt(product -> product.getName().length()))
                 .toList();
@@ -65,7 +79,7 @@ public class MealServiceImpl implements MealService {
 
     @Override
     @Cacheable(value = "recipes", key = "#name.toLowerCase()")
-    public List<RecipeDTO> searchRecipe(String name) {
+    public List<RecipeDto> searchRecipe(String name) {
         List<Recipe> recipes = recipeRepository.findByNameContainingIgnoreCase(name);
         return recipeMapper.toDTO(recipes);
     }

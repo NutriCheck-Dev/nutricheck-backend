@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: nutricheck
+  config:
+    import: optional:file:.env[.properties]
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  cache:
+    type: Redis
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  security:
+    user:
+      name: ${ADMIN_USERNAME:admin}
+      password: ${ADMIN_PASSWORD:password}
+  datasource:
+    url: jdbc:mysql://localhost:3306/${MYSQL_DATABASE}
+    username: root
+    password: ${MYSQL_ROOT_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+# increase max swallow size so that tomcat swallow size exception (after default
+# 2MB swallowed) does not mask MaxUploadSizeExceededException which is
+# handled by GlobalExceptionHandler
+# only if this exceeded will tomcat send a generic 500 error
+server:
+  tomcat:
+    max-swallow-size: 10MB
+
+# For better debugging of tomcat errors
+logging:
+  level:
+    org.apache.coyote: DEBUG
+    org.apache.tomcat: DEBUG
+
+nutricheck:
+  llm:
+    model: gemini-2.5-flash
+    api-key: ${GEMINI_API_KEY}
+  openfoodfacts:
+    base-url: https://world.openfoodfacts.org
+    user-agent: NutriCheck/1.0 (uvtal@student.kit.edu)
+  swiss:
+    base-url: https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api

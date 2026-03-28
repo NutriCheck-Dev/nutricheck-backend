@@ -14,7 +14,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class RecipeDTOValidationTest {
+class RecipeDtoValidationTest {
     private Validator validator;
 
     @BeforeAll
@@ -25,19 +25,19 @@ class RecipeDTOValidationTest {
 
     @Test
     void validRecipeDTOTest() {
-        RecipeDTO recipeDTO = TestDataFactory.createDefaultRecipeDTO();
+        RecipeDto recipeDTO = TestDataFactory.createDefaultRecipeDTO();
 
-        Set<ConstraintViolation<RecipeDTO>> violations = validator.validate(recipeDTO);
-        assertTrue(violations.isEmpty(), "Valid RecipeDTO should have no violations");
+        Set<ConstraintViolation<RecipeDto>> violations = validator.validate(recipeDTO);
+        assertTrue(violations.isEmpty(), "Valid RecipeDto should have no violations");
     }
 
     // As an exemplary validation test case
     @Test
     void recipeDTOWithZeroIngredientsTest() {
-        RecipeDTO recipeDTO = TestDataFactory.createDefaultRecipeDTO();
+        RecipeDto recipeDTO = TestDataFactory.createDefaultRecipeDTO();
         recipeDTO.setIngredients(Set.of());
 
-        Set<ConstraintViolation<RecipeDTO>> violations = validator.validate(recipeDTO);
+        Set<ConstraintViolation<RecipeDto>> violations = validator.validate(recipeDTO);
         assertTrue(violations.stream().anyMatch(v -> v.getMessage().equals("A recipe must contain at least two ingredients")),
                 "Expected violation message for zero ingredients of a recipe not found");
     }
