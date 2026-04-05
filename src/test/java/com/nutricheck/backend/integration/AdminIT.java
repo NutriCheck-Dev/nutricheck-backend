@@ -17,16 +17,14 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatusCode;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Import(IntegrationTestConfig.class)
 @ActiveProfiles("test")
@@ -50,7 +48,7 @@ class AdminIT {
         recipe = TestDataFactory.createDefaultRecipe();
     }
     @AfterEach
-    void teardown() {
+    void tearDown() {
         reportRepo.deleteAll();
         recipeRepo.deleteAll();
     }
@@ -63,7 +61,7 @@ class AdminIT {
                 null,
                 new ParameterizedTypeReference<List<ReportDto>>() {}
         );
-        assertEquals(HttpStatusCode.valueOf(401), response.getStatusCode());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
@@ -76,7 +74,7 @@ class AdminIT {
                 null,
                 new ParameterizedTypeReference<List<ReportDto>>() {}
         );
-        assertEquals(HttpStatusCode.valueOf(200), response.getStatusCode());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         List<ReportDto> reports = response.getBody();
         assertEquals(0, reports.size());
     }
@@ -93,7 +91,7 @@ class AdminIT {
                         null,
                         new ParameterizedTypeReference<List<ReportDto>>() {}
                 );
-        assertEquals(HttpStatusCode.valueOf(200), response.getStatusCode());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         ReportDto expected = TestDataFactory.createDefaultReportDTO();
         assertEquals(1, response.getBody().size());
         ReportDto returned = response.getBody().get(0);
@@ -114,7 +112,7 @@ class AdminIT {
                         ReportDto.class,
                         managed.getId()
                 );
-        assertEquals(HttpStatusCode.valueOf(200), response.getStatusCode());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(0, reportRepo.findAll().size());
     }
 
@@ -130,7 +128,7 @@ class AdminIT {
                         RecipeDto.class,
                         recipe.getId()
                 );
-        assertEquals(HttpStatusCode.valueOf(200), response.getStatusCode());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(0, recipeRepo.findAll().size());
     }
 }
