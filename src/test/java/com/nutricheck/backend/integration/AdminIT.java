@@ -61,7 +61,7 @@ class AdminIT {
                 null,
                 new ParameterizedTypeReference<List<ReportDto>>() {}
         );
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
     }
 
     @Test
