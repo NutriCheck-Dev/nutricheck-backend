@@ -3,7 +3,7 @@ package com.nutricheck.backend.layer.client.impl;
 import com.nutricheck.backend.dto.FoodProductDto;
 import com.nutricheck.backend.dto.external.OpenFoodFactsFoodProductDto;
 import com.nutricheck.backend.dto.external.OpenFoodFactsResponseDto;
-import com.nutricheck.backend.layer.client.FoodDBClient;
+import com.nutricheck.backend.layer.client.FoodDbClient;
 import com.nutricheck.backend.layer.client.mapper.OpenFoodFactsMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +19,7 @@ import java.util.List;
  * Client implementation for interacting with the Open Food Facts API.
  */
 @Component("openFoodFacts")
-public class OpenFoodFactsClient implements FoodDBClient {
+public class OpenFoodFactsClient implements FoodDbClient {
 
     private static final String NUMBER_OF_SEARCH_PAGES = "1";
 

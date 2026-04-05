@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * Client interface for interacting with an external AI model over a REST API.
  */
-public interface AIModelClient {
+public interface AiModelClient {
     /**
      * Estimates a meal based on an image using the AI model.
      *

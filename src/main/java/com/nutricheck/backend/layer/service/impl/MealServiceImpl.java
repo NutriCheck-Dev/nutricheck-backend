@@ -1,8 +1,8 @@
 package com.nutricheck.backend.layer.service.impl;
 
 import com.nutricheck.backend.dto.*;
-import com.nutricheck.backend.layer.client.AIModelClient;
-import com.nutricheck.backend.layer.client.FoodDBClient;
+import com.nutricheck.backend.layer.client.AiModelClient;
+import com.nutricheck.backend.layer.client.FoodDbClient;
 import com.nutricheck.backend.layer.model.entity.Recipe;
 import com.nutricheck.backend.layer.model.repository.FoodProductRepository;
 import com.nutricheck.backend.layer.model.repository.RecipeRepository;
@@ -26,17 +26,17 @@ public class MealServiceImpl implements MealService {
     private final FoodProductRepository foodProductRepository;
     private final RecipeMapper recipeMapper;
     private final FoodProductMapper foodProductMapper;
-    @Qualifier("openFoodFacts") private final FoodDBClient openFoodFactsClient;
-    @Qualifier("swiss") private final FoodDBClient swissFoodCDClient;
-    private final AIModelClient aiModelClient;
+    private final FoodDbClient openFoodFactsClient;
+    private final FoodDbClient swissFoodCDClient;
+    private final AiModelClient aiModelClient;
 
     public MealServiceImpl(RecipeRepository recipeRepository,
                            FoodProductRepository foodProductRepository,
                            RecipeMapper recipeMapper,
                            FoodProductMapper foodProductMapper,
-                           @Qualifier("openFoodFacts") FoodDBClient openFoodFactsClient,
-                           @Qualifier("swiss") FoodDBClient swissFoodCDClient,
-                           AIModelClient aiModelClient) {
+                           @Qualifier("openFoodFacts") FoodDbClient openFoodFactsClient,
+                           @Qualifier("swiss") FoodDbClient swissFoodCDClient,
+                           AiModelClient aiModelClient) {
         this.recipeRepository = recipeRepository;
         this.foodProductRepository = foodProductRepository;
         this.recipeMapper = recipeMapper;

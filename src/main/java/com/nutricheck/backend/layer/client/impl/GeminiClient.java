@@ -6,7 +6,7 @@ import com.google.genai.Client;
 import com.google.genai.types.*;
 import com.nutricheck.backend.dto.MealDto;
 import com.nutricheck.backend.dto.external.AiMealDto;
-import com.nutricheck.backend.layer.client.AIModelClient;
+import com.nutricheck.backend.layer.client.AiModelClient;
 import com.nutricheck.backend.layer.client.mapper.AiMealMapper;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 @Component
-public class GeminiClient implements AIModelClient {
+public class GeminiClient implements AiModelClient {
     private static final Schema RESPONSE_SCHEMA = createResponseSchema();
     private final ObjectMapper objectMapper;
     private final AiMealMapper aiMealMapper;

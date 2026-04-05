@@ -3,7 +3,7 @@ package com.nutricheck.backend.layer.client.impl;
 import com.nutricheck.backend.dto.FoodProductDto;
 import com.nutricheck.backend.dto.external.SwissFoodDbFoodProductDto;
 import com.nutricheck.backend.dto.external.SwissFoodDbResponseDto;
-import com.nutricheck.backend.layer.client.FoodDBClient;
+import com.nutricheck.backend.layer.client.FoodDbClient;
 import com.nutricheck.backend.layer.client.mapper.SwissFoodDbMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -18,7 +18,7 @@ import java.util.List;
  * Client implementation for interacting with the Swiss Food Composition Database (SwissFoodDb).
  */
 @Component("swiss")
-public class SwissFoodDbClient implements FoodDBClient {
+public class SwissFoodDbClient implements FoodDbClient {
 
     static final String MAX_SEARCH_RESULTS = "40";
 
