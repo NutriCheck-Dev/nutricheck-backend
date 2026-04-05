@@ -8,7 +8,7 @@ import java.util.List;
  * Client interface for interacting with the FoodDB API.
  */
 
-public interface FoodDBClient {
+public interface FoodDbClient {
 
     /**
      * Searches for food products based on a request string.

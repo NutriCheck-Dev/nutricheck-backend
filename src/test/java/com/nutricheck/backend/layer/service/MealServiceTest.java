@@ -4,8 +4,8 @@ import com.nutricheck.backend.TestDataFactory;
 import com.nutricheck.backend.dto.FoodProductDto;
 import com.nutricheck.backend.dto.MealDto;
 import com.nutricheck.backend.dto.RecipeDto;
-import com.nutricheck.backend.layer.client.AIModelClient;
-import com.nutricheck.backend.layer.client.FoodDBClient;
+import com.nutricheck.backend.layer.client.AiModelClient;
+import com.nutricheck.backend.layer.client.FoodDbClient;
 import com.nutricheck.backend.layer.model.entity.FoodProduct;
 import com.nutricheck.backend.layer.model.repository.FoodProductRepository;
 import com.nutricheck.backend.layer.model.repository.RecipeRepository;
@@ -42,11 +42,11 @@ class MealServiceTest {
     @Mock
     private FoodProductMapper foodProductMapper;
     @Mock
-    private FoodDBClient openFoodFactsClient;
+    private FoodDbClient openFoodFactsClient;
     @Mock
-    private FoodDBClient swissFoodCDClient;
+    private FoodDbClient swissFoodCDClient;
     @Mock
-    private AIModelClient aiModelClient;
+    private AiModelClient aiModelClient;
 
     private MealServiceImpl mealService;
 
